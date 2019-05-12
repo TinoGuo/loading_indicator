@@ -6,7 +6,7 @@
 // connected to a callback that increments a counter.
 
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/indicator.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 void main() => runApp(MyApp());
 

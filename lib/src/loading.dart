@@ -1,7 +1,6 @@
 library loading;
 
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import 'decorate/decorate.dart';
 import 'indicators/audio_equalizer.dart';
