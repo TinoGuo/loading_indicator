@@ -2,7 +2,7 @@ name: loading_indicator
 description: A collection loading animations written in pure dart. Out of the box, no extra dependency.
 version: 0.0.1
 author: Tino Guo
-homepage: https://github.com/TinoGuo
+homepage: https://github.com/TinoGuo/loading_indicator
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
