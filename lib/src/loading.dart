@@ -36,6 +36,7 @@ import 'indicators/semi_circle_spin.dart';
 import 'indicators/square_spin.dart';
 import 'indicators/triangle_skew_spin.dart';
 
+///32 different types animation enums.
 enum Indicator {
   ballPulse,
   ballGridPulse,
@@ -71,8 +72,12 @@ enum Indicator {
   circleStrokeSpin,
 }
 
+/// Entrance of the loading.
 class LoadingIndicator extends StatelessWidget {
+  /// Indicate which type.
   final Indicator indicatorType;
+
+  /// The color you draw on the shape.
   final Color color;
 
   LoadingIndicator(
@@ -87,6 +92,7 @@ class LoadingIndicator extends StatelessWidget {
     );
   }
 
+  /// return the animation indicator.
   _buildIndicator() {
     switch (indicatorType) {
       case Indicator.ballPulse:

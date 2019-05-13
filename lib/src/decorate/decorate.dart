@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../loading.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
+/// Information about a piece of animation (e.g., color).
+@immutable
 class DecorateData {
   final Color color;
   final Indicator indicator;
@@ -9,13 +11,15 @@ class DecorateData {
   const DecorateData({@required this.indicator, this.color = Colors.white});
 
   @override
-  bool operator ==(other) =>
-      other is DecorateData &&
-      this.color == other.color &&
-      this.indicator == other.indicator;
+  bool operator ==(other) {
+    if (other.runtimeType != runtimeType) return false;
+    final DecorateData typedOther = other;
+    return this.color == typedOther.color &&
+        this.indicator == typedOther.indicator;
+  }
 
   @override
-  int get hashCode => 31 * this.color.hashCode + this.indicator.hashCode;
+  int get hashCode => hashValues(color, indicator);
 
   @override
   String toString() {
@@ -23,6 +27,7 @@ class DecorateData {
   }
 }
 
+/// Establishes a subtree in which decorate queries resolve to the given data.
 class DecorateContext extends InheritedWidget {
   final DecorateData decorateData;
 
@@ -33,10 +38,8 @@ class DecorateContext extends InheritedWidget {
   }) : super(key: key, child: child);
 
   @override
-  bool updateShouldNotify(InheritedWidget oldWidget) {
-    return !(oldWidget is DecorateContext &&
-        oldWidget.decorateData == this.decorateData);
-  }
+  bool updateShouldNotify(DecorateContext oldWidget) =>
+      oldWidget.decorateData == this.decorateData;
 
   static DecorateContext of(BuildContext context) {
     return context.inheritFromWidgetOfExactType(DecorateContext);
