@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/decorate/decorate.dart';
 
+const double _kMinIndicatorSize = 36.0;
+const double _kStrokeWidth = 2.0;
+
 enum Shape {
   circle,
   ringThirdFour,
@@ -52,16 +55,17 @@ class IndicatorShapeWidget extends StatelessWidget {
       );
     }
 
-    return CustomPaint(
-      size: Size(double.infinity, double.infinity),
-      foregroundPainter: _ShapePainter(color, shape, data: data),
+    return Container(
+      constraints: BoxConstraints(
+          minWidth: _kMinIndicatorSize, minHeight: _kMinIndicatorSize),
+      child: CustomPaint(
+        foregroundPainter: _ShapePainter(color, shape, data: data),
+      ),
     );
   }
 }
 
 class _ShapePainter extends CustomPainter {
-  static const double _strokeWidth = 2;
-
   final Color color;
   final Shape shape;
   final Path _path;
@@ -96,7 +100,7 @@ class _ShapePainter extends CustomPainter {
         _paint
           ..color = color
           ..style = PaintingStyle.stroke
-          ..strokeWidth = _strokeWidth;
+          ..strokeWidth = _kStrokeWidth;
         break;
       case Shape.rectangle:
         _path.moveTo(0, 0);
@@ -121,7 +125,7 @@ class _ShapePainter extends CustomPainter {
             -pi / 2);
         _paint
           ..color = color
-          ..strokeWidth = _strokeWidth
+          ..strokeWidth = _kStrokeWidth
           ..style = PaintingStyle.stroke;
         break;
       case Shape.ring:
@@ -133,7 +137,7 @@ class _ShapePainter extends CustomPainter {
             2 * pi);
         _paint
           ..color = color
-          ..strokeWidth = _strokeWidth
+          ..strokeWidth = _kStrokeWidth
           ..style = PaintingStyle.stroke;
         break;
       case Shape.line:
