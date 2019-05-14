@@ -79,6 +79,9 @@ class _AudioEqualizerState extends State<AudioEqualizer>
       }
     }
 
-    return Row(children: widgets);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: widgets,
+    );
   }
 }

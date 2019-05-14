@@ -48,6 +48,7 @@ class _SquareSpinState extends State<SquareSpin>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animationController,
+      child: IndicatorShapeWidget(shape: Shape.rectangle),
       builder: (_, child) {
         double x, y;
         if (_animationController.value < 0.5) {
@@ -65,7 +66,7 @@ class _SquareSpinState extends State<SquareSpin>
             ..setEntry(3, 2, 0.006)
             ..rotateX(x)
             ..rotateY(y),
-          child: IndicatorShapeWidget(shape: Shape.rectangle),
+          child: child,
         );
       },
     );

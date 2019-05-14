@@ -112,11 +112,12 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                   center.dy - satelliteSize / 2, satelliteSize, satelliteSize),
               child: AnimatedBuilder(
                 animation: _satelliteAnimation,
+                child: IndicatorShapeWidget(shape: Shape.circle),
                 builder: (_, child) {
                   return Transform.translate(
                     offset: Offset(sin(_satelliteAnimation.value) * deltaX,
                         -cos(_satelliteAnimation.value) * deltaY),
-                    child: IndicatorShapeWidget(shape: Shape.circle),
+                    child: child,
                   );
                 },
               ),

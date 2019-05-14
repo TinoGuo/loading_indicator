@@ -72,6 +72,7 @@ class _CubeTransitionState extends State<CubeTransition>
 
       return AnimatedBuilder(
         animation: _animationController,
+        child: IndicatorShapeWidget(shape: Shape.rectangle),
         builder: (_, child) => Stack(
               children: [
                 Positioned.fromRect(
@@ -83,7 +84,7 @@ class _CubeTransitionState extends State<CubeTransition>
                           _translateAnimation.value.height * deltaY)
                       ..rotateZ(_rotateAnimation.value)
                       ..scale(_scaleAnimation.value),
-                    child: IndicatorShapeWidget(shape: Shape.rectangle),
+                    child: child,
                   ),
                 ),
                 Positioned.fromRect(
@@ -99,7 +100,7 @@ class _CubeTransitionState extends State<CubeTransition>
                           -_translateAnimation.value.height * deltaY)
                       ..rotateZ(_rotateAnimation.value)
                       ..scale(_scaleAnimation.value),
-                    child: IndicatorShapeWidget(shape: Shape.rectangle),
+                    child: child,
                   ),
                 ),
               ],

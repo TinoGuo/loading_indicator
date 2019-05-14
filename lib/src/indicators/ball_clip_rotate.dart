@@ -50,9 +50,10 @@ class _BallClipRotateState extends State<BallClipRotate>
           transform: Matrix4.identity()
             ..scale(_scaleAnimation.value)
             ..rotateZ(_rotateAnimation.value),
-          child: IndicatorShapeWidget(shape: Shape.ringThirdFour),
+          child: child,
         );
       },
+      child: IndicatorShapeWidget(shape: Shape.ringThirdFour),
     );
   }
 }

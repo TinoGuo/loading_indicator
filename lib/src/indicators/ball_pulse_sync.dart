@@ -58,21 +58,21 @@ class _BallPulseSyncState extends State<BallPulseSync>
               builder: (_, child) {
                 return Transform.translate(
                   offset: Offset(0, _animations[i ~/ 2].value * deltaY),
-                  child: IndicatorShapeWidget(
-                    shape: Shape.circle,
-                  ),
+                  child: child,
                 );
               },
+              child: IndicatorShapeWidget(shape: Shape.circle),
             ),
           );
         } else {
-          widgets[i] = SizedBox(
-            width: 2,
-          );
+          widgets[i] = SizedBox(width: 2);
         }
       }
 
-      return Row(children: widgets);
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: widgets,
+      );
     });
   }
 }

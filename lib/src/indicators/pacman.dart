@@ -103,12 +103,13 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
             opacity: _opacityAnimations[i],
             child: AnimatedBuilder(
               animation: _translateXAnimations[i],
+              child: IndicatorShapeWidget(shape: Shape.circle),
               builder: (_, child) {
                 return Transform.translate(
                   offset: Offset(
                       _translateXAnimations[i].value * constraint.maxWidth / 2,
                       0.0),
-                  child: IndicatorShapeWidget(shape: Shape.circle),
+                  child: child,
                 );
               },
             ),

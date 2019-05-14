@@ -33,7 +33,6 @@ class _SemiCircleSpinState extends State<SemiCircleSpin>
   @override
   Widget build(BuildContext context) {
     return RotationTransition(
-      key: Key("semi_circle_spin"),
       turns: _animation,
       child: IndicatorShapeWidget(shape: Shape.circleSemi),
     );

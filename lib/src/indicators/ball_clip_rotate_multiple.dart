@@ -52,8 +52,7 @@ class _BallClipRotateMultipleState extends State<BallClipRotateMultiple>
                       transform: Matrix4.identity()
                         ..scale(_scaleAnimation.value)
                         ..rotateZ(_rotateAnimation.value),
-                      child: IndicatorShapeWidget(
-                          shape: Shape.ringTwoHalfVertical),
+                      child: child,
                     ),
                     Positioned(
                       left: constraint.maxWidth / 4,
@@ -65,12 +64,12 @@ class _BallClipRotateMultipleState extends State<BallClipRotateMultiple>
                         transform: Matrix4.identity()
                           ..scale(_scaleAnimation.value)
                           ..rotateZ(-_rotateAnimation.value),
-                        child: IndicatorShapeWidget(
-                            shape: Shape.ringTwoHalfVertical),
+                        child: child,
                       ),
                     ),
                   ],
                 ),
+            child: IndicatorShapeWidget(shape: Shape.ringTwoHalfVertical),
           ),
     );
   }

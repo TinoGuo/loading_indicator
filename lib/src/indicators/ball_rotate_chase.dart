@@ -65,10 +65,11 @@ class _BallRotateChaseState extends State<BallRotateChase>
                 /// scale must in child, if upper would align topLeft.
                 child: ScaleTransition(
                   scale: _scaleAnimations[i],
-                  child: IndicatorShapeWidget(shape: Shape.circle),
+                  child: child,
                 ),
               );
             },
+            child: IndicatorShapeWidget(shape: Shape.circle),
           ),
         );
       }

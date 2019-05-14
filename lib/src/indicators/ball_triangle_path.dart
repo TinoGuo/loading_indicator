@@ -100,9 +100,10 @@ class _BallTrianglePathState extends State<BallTrianglePath>
               animation.value.dx * (size.width - circleSize),
               animation.value.dy * (size.height - circleSize),
             ),
-          child: IndicatorShapeWidget(shape: Shape.ring),
+          child: child,
         );
       },
+      child: IndicatorShapeWidget(shape: Shape.ring),
     );
   }
 }

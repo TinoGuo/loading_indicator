@@ -97,9 +97,10 @@ class _BallPulseRiseState extends State<BallPulseRise>
                     ? _evenTranslateAnimation.value * deltaY
                     : _oddTranslateAnimation.value * deltaY)
             ..setEntry(3, 2, 0.006),
-          child: IndicatorShapeWidget(shape: Shape.circle),
+          child: child,
         );
       },
+      child: IndicatorShapeWidget(shape: Shape.circle),
     );
   }
 }
