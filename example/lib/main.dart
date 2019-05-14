@@ -100,14 +100,14 @@ class GridWidget extends StatelessWidget {
           childAspectRatio: 1,
         ),
         itemBuilder: (ctx, index) => Stack(
+              fit: StackFit.expand,
+              alignment: Alignment.center,
               children: <Widget>[
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: LoadingIndicator(
-                        color: Colors.white,
-                        indicatorType: Indicator.values[index]),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: LoadingIndicator(
+                      color: Colors.white,
+                      indicatorType: Indicator.values[index]),
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
