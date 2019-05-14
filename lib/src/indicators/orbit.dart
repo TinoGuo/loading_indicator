@@ -22,9 +22,8 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
     super.initState();
 //    final cubic = Cubic(0.19, 1.0, 0.22, 1.0);
 
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 1900))
-          ..addListener(() => setState(() {}));
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1900));
 
     _ring1ScaleAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.3), weight: 0.01),
@@ -83,27 +82,27 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
           children: <Widget>[
             Positioned.fromRect(
               rect: Rect.fromCircle(center: center, radius: coreSize / 2),
-              child: Transform.scale(
-                scale: _coreAnimation.value,
+              child: ScaleTransition(
+                scale: _coreAnimation,
                 child: IndicatorShapeWidget(shape: Shape.circle),
               ),
             ),
             Positioned.fromRect(
               rect: Rect.fromCircle(center: center, radius: coreSize / 2),
-              child: Opacity(
-                opacity: _ring1OpacityAnimation.value,
-                child: Transform.scale(
-                  scale: _ring1ScaleAnimation.value,
+              child: FadeTransition(
+                opacity: _ring1OpacityAnimation,
+                child: ScaleTransition(
+                  scale: _ring1ScaleAnimation,
                   child: IndicatorShapeWidget(shape: Shape.circle),
                 ),
               ),
             ),
             Positioned.fromRect(
               rect: Rect.fromCircle(center: center, radius: coreSize / 2),
-              child: Opacity(
-                opacity: _ring2OpacityAnimation.value,
-                child: Transform.scale(
-                  scale: _ring2ScaleAnimation.value,
+              child: FadeTransition(
+                opacity: _ring2OpacityAnimation,
+                child: ScaleTransition(
+                  scale: _ring2ScaleAnimation,
                   child: IndicatorShapeWidget(shape: Shape.circle),
                 ),
               ),
@@ -111,10 +110,15 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
             Positioned.fromRect(
               rect: Rect.fromLTWH(center.dx - satelliteSize / 2,
                   center.dy - satelliteSize / 2, satelliteSize, satelliteSize),
-              child: Transform.translate(
-                offset: Offset(sin(_satelliteAnimation.value) * deltaX,
-                    -cos(_satelliteAnimation.value) * deltaY),
-                child: IndicatorShapeWidget(shape: Shape.circle),
+              child: AnimatedBuilder(
+                animation: _satelliteAnimation,
+                builder: (_, child) {
+                  return Transform.translate(
+                    offset: Offset(sin(_satelliteAnimation.value) * deltaX,
+                        -cos(_satelliteAnimation.value) * deltaY),
+                    child: IndicatorShapeWidget(shape: Shape.circle),
+                  );
+                },
               ),
             )
           ],

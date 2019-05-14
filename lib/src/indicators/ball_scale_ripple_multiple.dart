@@ -23,8 +23,7 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
     final cubic = Cubic(0.21, 0.53, 0.56, 0.8);
     for (int i = 0; i < 3; i++) {
       _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 1250))
-        ..addListener(() => setState(() {}));
+          vsync: this, duration: const Duration(milliseconds: 1250));
       _opacityAnimations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.7), weight: 70),
         TweenSequenceItem(tween: Tween(begin: 0.7, end: 0.0), weight: 30),
@@ -45,7 +44,7 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
   @override
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    _animationControllers.forEach((f) => f?.dispose());
     super.dispose();
   }
 
@@ -53,16 +52,19 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
   Widget build(BuildContext context) {
     List<Widget> widgets = List(3);
     for (int i = 0; i < widgets.length; i++) {
-      widgets[i] = Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.identity()..scale(_scaleAnimations[i].value),
-        child: Opacity(
-          opacity: _opacityAnimations[i].value,
+      widgets[i] = ScaleTransition(
+        scale: _scaleAnimations[i],
+        child: FadeTransition(
+          opacity: _opacityAnimations[i],
           child: IndicatorShapeWidget(shape: Shape.ring),
         ),
       );
     }
 
-    return Stack(children: widgets);
+    return Stack(
+      alignment: Alignment.center,
+      fit: StackFit.expand,
+      children: widgets,
+    );
   }
 }

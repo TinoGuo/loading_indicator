@@ -9,15 +9,17 @@ class BallScale extends StatefulWidget {
 class _BallScaleState extends State<BallScale>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
-  Animation<double> _animation;
+  Animation<double> _scaleAnimation;
+  Animation<double> _opacityAnimation;
 
   @override
   void initState() {
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    _animation = Tween(begin: 0.0, end: 1.0).animate(
+    _scaleAnimation = Tween(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+    _opacityAnimation = ReverseAnimation(_scaleAnimation);
     _animationController.repeat();
   }
 
@@ -29,17 +31,12 @@ class _BallScaleState extends State<BallScale>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (ctx, child) => Container(
-            child: Opacity(
-              opacity: 1 - _animation.value,
-              child: Transform.scale(
-                scale: _animation.value,
-                child: IndicatorShapeWidget(shape: Shape.circle),
-              ),
-            ),
-          ),
+    return FadeTransition(
+      opacity: _opacityAnimation,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: IndicatorShapeWidget(shape: Shape.circle),
+      ),
     );
   }
 }

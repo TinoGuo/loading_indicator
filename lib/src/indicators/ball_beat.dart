@@ -20,8 +20,7 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
     super.initState();
     for (int i = 0; i < 3; i++) {
       _animationControllers[i] = AnimationController(
-          vsync: this, duration: Duration(milliseconds: 700))
-        ..addListener(() => setState(() {}));
+          vsync: this, duration: Duration(milliseconds: 700));
       _scaleAnimations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.75), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.75, end: 1.0), weight: 1),
@@ -54,12 +53,10 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
       for (int i = 0; i < 5; i++) {
         if (i.isEven) {
           widgets[i] = Expanded(
-            child: Opacity(
-              opacity: _opacityAnimations[i ~/ 2].value,
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..scale(_scaleAnimations[i ~/ 2].value),
+            child: FadeTransition(
+              opacity: _opacityAnimations[i ~/ 2],
+              child: ScaleTransition(
+                scale: _scaleAnimations[i ~/ 2],
                 child: IndicatorShapeWidget(
                   shape: Shape.circle,
                 ),

@@ -22,9 +22,8 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
   void initState() {
     super.initState();
     for (int i = 0; i < _animationControllers.length; i++) {
-      _animationControllers[i] =
-          AnimationController(vsync: this, duration: const Duration(seconds: 1))
-            ..addListener(() => setState(() {}));
+      _animationControllers[i] = AnimationController(
+          vsync: this, duration: const Duration(seconds: 1));
       _opacityAnimations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.3), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.3, end: 1.0), weight: 1),
@@ -67,18 +66,21 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
             circleSize / 2,
             circleSize / 2,
           ),
-          child: Opacity(
-            opacity: _opacityAnimations[i].value,
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()..scale(_scaleAnimations[i].value),
+          child: FadeTransition(
+            opacity: _opacityAnimations[i],
+            child: ScaleTransition(
+              scale: _scaleAnimations[i],
               child: IndicatorShapeWidget(shape: Shape.circle),
             ),
           ),
         );
       }
 
-      return Stack(children: widgets);
+      return Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: widgets,
+      );
     });
   }
 }

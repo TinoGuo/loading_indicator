@@ -37,15 +37,12 @@ class _BallScaleRippleState extends State<BallScaleRipple>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (ctx, _) => Opacity(
-            opacity: _opacityAnimation.value,
-            child: Transform.scale(
-              scale: _scaleAnimation.value,
-              child: IndicatorShapeWidget(shape: Shape.ring),
-            ),
-          ),
+    return FadeTransition(
+      opacity: _opacityAnimation,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: IndicatorShapeWidget(shape: Shape.ring),
+      ),
     );
   }
 }

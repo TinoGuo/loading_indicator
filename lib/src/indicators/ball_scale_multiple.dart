@@ -20,9 +20,8 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
-      _animationControllers[i] =
-          AnimationController(vsync: this, duration: const Duration(seconds: 1))
-            ..addListener(() => setState(() {}));
+      _animationControllers[i] = AnimationController(
+          vsync: this, duration: const Duration(seconds: 1));
 
       _scaleAnimations[i] = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.linear));
@@ -50,16 +49,19 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
   Widget build(BuildContext context) {
     List<Widget> widgets = List(3);
     for (int i = 0; i < 3; i++) {
-      widgets[i] = Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.identity()..scale(_scaleAnimations[i].value),
-        child: Opacity(
-          opacity: _opacityAnimations[i].value,
+      widgets[i] = ScaleTransition(
+        scale: _scaleAnimations[i],
+        child: FadeTransition(
+          opacity: _opacityAnimations[i],
           child: IndicatorShapeWidget(shape: Shape.circle),
         ),
       );
     }
 
-    return Stack(children: widgets);
+    return Stack(
+      alignment: Alignment.center,
+      fit: StackFit.expand,
+      children: widgets,
+    );
   }
 }

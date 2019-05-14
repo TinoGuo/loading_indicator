@@ -14,7 +14,6 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
   static const _BEGIN_TIMES = [0, 120, 240, 360, 480, 600, 720, 840];
 
   List<AnimationController> _animationControllers = List(8);
-  List<Animation<double>> _scaleAnimations = List(8);
   List<Animation<double>> _opacityAnimations = List(8);
   List<CancelableOperation<int>> _delayFeatures = List(8);
 
@@ -22,17 +21,11 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
   void initState() {
     super.initState();
     for (int i = 0; i < _animationControllers.length; i++) {
-      _animationControllers[i] =
-          AnimationController(vsync: this, duration: const Duration(seconds: 1))
-            ..addListener(() => setState(() {}));
+      _animationControllers[i] = AnimationController(
+          vsync: this, duration: const Duration(seconds: 1));
       _opacityAnimations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.3), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.3, end: 1.0), weight: 1),
-      ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
-      _scaleAnimations[i] = TweenSequence([
-        TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.4), weight: 1),
-        TweenSequenceItem(tween: Tween(begin: 0.4, end: 1.0), weight: 1),
       ]).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.linear));
 
@@ -66,8 +59,8 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
             circleSize / 2,
             circleSize,
           ),
-          child: Opacity(
-            opacity: _opacityAnimations[i].value,
+          child: FadeTransition(
+            opacity: _opacityAnimations[i],
             child: Transform.rotate(
               angle: -angle,
               child: IndicatorShapeWidget(shape: Shape.line),
@@ -75,7 +68,11 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
           ),
         );
       }
-      return Stack(children: widgets);
+      return Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: widgets,
+      );
     });
   }
 }
