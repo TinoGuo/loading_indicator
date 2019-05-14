@@ -64,13 +64,14 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
             ),
           );
         } else {
-          widgets[i] = SizedBox(
-            width: 2,
-          );
+          widgets[i] = SizedBox(width: 2);
         }
       }
 
-      return Row(children: widgets);
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: widgets,
+      );
     });
   }
 }
