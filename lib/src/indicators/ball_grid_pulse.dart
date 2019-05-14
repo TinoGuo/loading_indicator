@@ -54,7 +54,7 @@ class _BallGridPulseState extends State<BallGridPulse>
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f?.cancel());
+    _delayFeatures.forEach((f) => f.cancel());
     _animationControllers.forEach((f) => f?.dispose());
     super.dispose();
   }
@@ -68,7 +68,7 @@ class _BallGridPulseState extends State<BallGridPulse>
         scale: _scaleAnimations[i],
         child: FadeTransition(
           opacity: _opacityAnimations[i],
-          child: IndicatorShapeWidget(Shape.circle),
+          child: IndicatorShapeWidget(shape: Shape.circle),
         ),
       );
     }

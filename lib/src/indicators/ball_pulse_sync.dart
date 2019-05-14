@@ -57,7 +57,7 @@ class _BallPulseSyncState extends State<BallPulseSync>
             child: Transform.translate(
               offset: Offset(0, _animations[i ~/ 2].value * deltaY),
               child: IndicatorShapeWidget(
-                Shape.circle,
+                shape: Shape.circle,
               ),
             ),
           );

@@ -64,7 +64,7 @@ class _SquareSpinState extends State<SquareSpin>
         ..setEntry(3, 2, 0.006)
         ..rotateX(x)
         ..rotateY(y),
-      child: IndicatorShapeWidget(Shape.rectangle),
+      child: IndicatorShapeWidget(shape: Shape.rectangle),
     );
   }
 }

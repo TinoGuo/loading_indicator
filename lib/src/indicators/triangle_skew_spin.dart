@@ -51,7 +51,7 @@ class _TriangleSkewSpinState extends State<TriangleSkewSpin>
         ..setEntry(3, 2, 0.006)
         ..rotateX(_animation.value.dx)
         ..rotateY(_animation.value.dy),
-      child: IndicatorShapeWidget(Shape.triangle),
+      child: IndicatorShapeWidget(shape: Shape.triangle),
     );
   }
 }

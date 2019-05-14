@@ -82,7 +82,7 @@ class _CubeTransitionState extends State<CubeTransition>
                     _translateAnimation.value.height * deltaY)
                 ..rotateZ(_rotateAnimation.value)
                 ..scale(_scaleAnimation.value),
-              child: IndicatorShapeWidget(Shape.rectangle),
+              child: IndicatorShapeWidget(shape: Shape.rectangle),
             ),
           ),
           Positioned.fromRect(
@@ -95,7 +95,7 @@ class _CubeTransitionState extends State<CubeTransition>
                     -_translateAnimation.value.height * deltaY)
                 ..rotateZ(_rotateAnimation.value)
                 ..scale(_scaleAnimation.value),
-              child: IndicatorShapeWidget(Shape.rectangle),
+              child: IndicatorShapeWidget(shape: Shape.rectangle),
             ),
           ),
         ],

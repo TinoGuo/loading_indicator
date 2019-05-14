@@ -54,7 +54,7 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
             alignment: Alignment.center,
             transform: Matrix4.identity()
               ..scale(1.0, _animations[i ~/ 2].value),
-            child: IndicatorShapeWidget(Shape.line),
+            child: IndicatorShapeWidget(shape: Shape.line),
           ),
         );
       } else {

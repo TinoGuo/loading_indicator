@@ -53,7 +53,7 @@ class _BallZigZagState extends State<BallZigZag>
               transform: Matrix4.identity()
                 ..translate(
                     deltaX * _animation.value.dx, deltaY * _animation.value.dy),
-              child: IndicatorShapeWidget(Shape.circle),
+              child: IndicatorShapeWidget(shape: Shape.circle),
             ),
           ),
           Positioned.fromRect(
@@ -62,7 +62,7 @@ class _BallZigZagState extends State<BallZigZag>
               transform: Matrix4.identity()
                 ..translate(deltaX * -_animation.value.dx,
                     deltaY * -_animation.value.dy),
-              child: IndicatorShapeWidget(Shape.circle),
+              child: IndicatorShapeWidget(shape: Shape.circle),
             ),
           )
         ],

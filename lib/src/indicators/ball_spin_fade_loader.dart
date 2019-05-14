@@ -72,7 +72,7 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
             child: Transform(
               alignment: Alignment.center,
               transform: Matrix4.identity()..scale(_scaleAnimations[i].value),
-              child: IndicatorShapeWidget(Shape.circle),
+              child: IndicatorShapeWidget(shape: Shape.circle),
             ),
           ),
         );

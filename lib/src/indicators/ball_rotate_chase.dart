@@ -61,7 +61,7 @@ class _BallRotateChaseState extends State<BallRotateChase>
               ),
             child: ScaleTransition(
               scale: _scaleAnimations[i],
-              child: IndicatorShapeWidget(Shape.circle),
+              child: IndicatorShapeWidget(shape: Shape.circle),
             ),
           ),
         );

@@ -55,7 +55,7 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
         transform: Matrix4.identity()..scale(_scaleAnimations[i].value),
         child: Opacity(
           opacity: _opacityAnimations[i].value,
-          child: IndicatorShapeWidget(Shape.circle),
+          child: IndicatorShapeWidget(shape: Shape.circle),
         ),
       );
     }

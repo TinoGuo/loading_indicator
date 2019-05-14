@@ -36,7 +36,7 @@ class _BallScaleState extends State<BallScale>
               opacity: 1 - _animation.value,
               child: Transform.scale(
                 scale: _animation.value,
-                child: IndicatorShapeWidget(Shape.circle),
+                child: IndicatorShapeWidget(shape: Shape.circle),
               ),
             ),
           ),

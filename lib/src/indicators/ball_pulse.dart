@@ -53,7 +53,7 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _delayFeature.forEach((f) => f?.cancel());
+    _delayFeature.forEach((f) => f.cancel());
     _animationController.forEach((f) => f?.dispose());
     super.dispose();
   }
@@ -65,7 +65,7 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
       widgets[i] = FadeTransition(
         opacity: _opacityAnimations[i],
         child: ScaleTransition(
-          child: IndicatorShapeWidget(Shape.circle),
+          child: IndicatorShapeWidget(shape: Shape.circle),
           scale: _scaleAnimations[i],
         ),
       );

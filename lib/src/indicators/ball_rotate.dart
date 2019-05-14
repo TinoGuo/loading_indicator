@@ -62,7 +62,7 @@ class _BallRotateState extends State<BallRotate>
   _buildSingleCircle({double opacity: 1.0}) {
     return Opacity(
       opacity: opacity,
-      child: IndicatorShapeWidget(Shape.circle),
+      child: IndicatorShapeWidget(shape: Shape.circle),
     );
   }
 }

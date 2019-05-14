@@ -56,7 +56,7 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
               child: Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()..scale(1.0, val),
-                child: IndicatorShapeWidget(Shape.line),
+                child: IndicatorShapeWidget(shape: Shape.line),
               ),
             ))
         .toList();

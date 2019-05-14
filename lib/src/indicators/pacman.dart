@@ -70,7 +70,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
     _pacmanAnimationController.dispose();
-    _ballAnimationControllers.forEach((f) => f.dispose());
+    _ballAnimationControllers.forEach((f) => f?.dispose());
     super.dispose();
   }
 
@@ -81,7 +81,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
 
       final pacman = Positioned.fromRect(
         child: IndicatorShapeWidget(
-          Shape.arc,
+          shape: Shape.arc,
           data: _rotateAnimation.value,
         ),
         rect: Rect.fromLTWH(
@@ -102,7 +102,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
               offset: Offset(
                   _translateXAnimations[i].value * constraint.maxWidth / 2,
                   0.0),
-              child: IndicatorShapeWidget(Shape.circle),
+              child: IndicatorShapeWidget(shape: Shape.circle),
             ),
           ),
           rect: Rect.fromLTWH(

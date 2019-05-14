@@ -95,7 +95,7 @@ class _BallPulseRiseState extends State<BallPulseRise>
     return Transform(
       alignment: Alignment.center,
       transform: transform..setEntry(3, 2, 0.006),
-      child: IndicatorShapeWidget(Shape.circle),
+      child: IndicatorShapeWidget(shape: Shape.circle),
     );
   }
 }

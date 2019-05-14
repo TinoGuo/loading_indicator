@@ -8,7 +8,6 @@ class BallClipRotatePulse extends StatefulWidget {
   _BallClipRotatePulseState createState() => _BallClipRotatePulseState();
 }
 
-/// TODO. remove every build to improve the performance.
 class _BallClipRotatePulseState extends State<BallClipRotatePulse>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
@@ -21,8 +20,7 @@ class _BallClipRotatePulseState extends State<BallClipRotatePulse>
     super.initState();
     final cubic = Cubic(0.09, 0.57, 0.49, 0.9);
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1))
-          ..addListener(() => setState(() {}));
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
     _outCircleScale = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.6), weight: 1),
@@ -47,21 +45,25 @@ class _BallClipRotatePulseState extends State<BallClipRotatePulse>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.identity()
-            ..scale(_outCircleScale.value)
-            ..rotateZ(_outCircleRotate.value),
-          child: IndicatorShapeWidget(Shape.ringTwoHalfVertical),
-        ),
-        Transform.scale(
-          scale: _innerCircle.value * 0.3,
-          child: IndicatorShapeWidget(Shape.circle),
-        ),
-      ],
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (_, child) => Stack(
+            alignment: Alignment.center,
+            fit: StackFit.expand,
+            children: <Widget>[
+              Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..scale(_outCircleScale.value)
+                  ..rotateZ(_outCircleRotate.value),
+                child: IndicatorShapeWidget(shape: Shape.ringTwoHalfVertical),
+              ),
+              Transform.scale(
+                scale: _innerCircle.value * 0.3,
+                child: IndicatorShapeWidget(shape: Shape.circle),
+              ),
+            ],
+          ),
     );
   }
 }

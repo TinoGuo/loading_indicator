@@ -77,7 +77,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
                 _topCenterAnimation.value.dy *
                     (constraint.maxHeight - circleSize),
               ),
-            child: IndicatorShapeWidget(Shape.ring),
+            child: IndicatorShapeWidget(shape: Shape.ring),
           ),
         );
         widgets[1] = Positioned.fromRect(
@@ -91,7 +91,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
                 _leftBottomAnimation.value.dy *
                     (constraint.maxHeight - circleSize),
               ),
-            child: IndicatorShapeWidget(Shape.ring),
+            child: IndicatorShapeWidget(shape: Shape.ring),
           ),
         );
         widgets[2] = Positioned.fromRect(
@@ -105,7 +105,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
                 _rightBottomAnimation.value.dy *
                     (constraint.maxHeight - circleSize),
               ),
-            child: IndicatorShapeWidget(Shape.ring),
+            child: IndicatorShapeWidget(shape: Shape.ring),
           ),
         );
 

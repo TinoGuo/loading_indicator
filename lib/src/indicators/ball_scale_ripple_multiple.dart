@@ -58,7 +58,7 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
         transform: Matrix4.identity()..scale(_scaleAnimations[i].value),
         child: Opacity(
           opacity: _opacityAnimations[i].value,
-          child: IndicatorShapeWidget(Shape.ring),
+          child: IndicatorShapeWidget(shape: Shape.ring),
         ),
       );
     }

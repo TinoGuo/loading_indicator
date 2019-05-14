@@ -70,7 +70,7 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
             opacity: _opacityAnimations[i].value,
             child: Transform.rotate(
               angle: -angle,
-              child: IndicatorShapeWidget(Shape.line),
+              child: IndicatorShapeWidget(shape: Shape.line),
             ),
           ),
         );

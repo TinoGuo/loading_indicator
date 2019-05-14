@@ -51,7 +51,7 @@ class _AudioEqualizerState extends State<AudioEqualizer>
 
   @override
   void dispose() {
-    _animationControllers.forEach((f) => f?.dispose());
+    _animationControllers.forEach((f) => f.dispose());
     super.dispose();
   }
 
@@ -71,7 +71,7 @@ class _AudioEqualizerState extends State<AudioEqualizer>
                 alignment: Alignment.bottomCenter,
               );
             },
-            child: IndicatorShapeWidget(Shape.rectangle),
+            child: IndicatorShapeWidget(shape: Shape.rectangle),
           ),
         );
       } else {

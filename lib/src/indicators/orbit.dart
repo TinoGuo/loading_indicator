@@ -20,7 +20,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    final cubic = Cubic(0.19, 1.0, 0.22, 1.0);
+//    final cubic = Cubic(0.19, 1.0, 0.22, 1.0);
 
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 1900))
@@ -61,7 +61,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    _animationController?.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -85,7 +85,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
               rect: Rect.fromCircle(center: center, radius: coreSize / 2),
               child: Transform.scale(
                 scale: _coreAnimation.value,
-                child: IndicatorShapeWidget(Shape.circle),
+                child: IndicatorShapeWidget(shape: Shape.circle),
               ),
             ),
             Positioned.fromRect(
@@ -94,7 +94,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                 opacity: _ring1OpacityAnimation.value,
                 child: Transform.scale(
                   scale: _ring1ScaleAnimation.value,
-                  child: IndicatorShapeWidget(Shape.circle),
+                  child: IndicatorShapeWidget(shape: Shape.circle),
                 ),
               ),
             ),
@@ -104,7 +104,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                 opacity: _ring2OpacityAnimation.value,
                 child: Transform.scale(
                   scale: _ring2ScaleAnimation.value,
-                  child: IndicatorShapeWidget(Shape.circle),
+                  child: IndicatorShapeWidget(shape: Shape.circle),
                 ),
               ),
             ),
@@ -114,7 +114,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
               child: Transform.translate(
                 offset: Offset(sin(_satelliteAnimation.value) * deltaX,
                     -cos(_satelliteAnimation.value) * deltaY),
-                child: IndicatorShapeWidget(Shape.circle),
+                child: IndicatorShapeWidget(shape: Shape.circle),
               ),
             )
           ],
