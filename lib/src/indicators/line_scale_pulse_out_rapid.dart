@@ -1,6 +1,7 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/ScaleYTransition.dart';
 
 class LineScalePulseOutRapid extends StatefulWidget {
   @override
@@ -21,8 +22,7 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
     final cubic = Cubic(0.11, 0.49, 0.38, 0.78);
     for (int i = 0; i < 5; i++) {
       _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 900))
-        ..addListener(() => setState(() {}));
+          vsync: this, duration: const Duration(milliseconds: 900));
       _animations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.3), weight: 80),
         TweenSequenceItem(tween: Tween(begin: 0.3, end: 1.0), weight: 10),
@@ -50,10 +50,8 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
     for (int i = 0; i < widgets.length; i++) {
       if (i.isEven) {
         widgets[i] = Expanded(
-          child: Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..scale(1.0, _animations[i ~/ 2].value),
+          child: ScaleYTransition(
+            scaleY: _animations[i ~/ 2],
             child: IndicatorShapeWidget(shape: Shape.line),
           ),
         );
@@ -61,6 +59,9 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
         widgets[i] = Expanded(child: Container());
       }
     }
-    return Row(children: widgets);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: widgets,
+    );
   }
 }

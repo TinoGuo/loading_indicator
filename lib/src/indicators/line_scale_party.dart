@@ -1,6 +1,7 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/ScaleYTransition.dart';
 
 class LineScaleParty extends StatefulWidget {
   @override
@@ -22,8 +23,7 @@ class _LineScalePartyState extends State<LineScaleParty>
 
     for (int i = 0; i < 4; i++) {
       _animationControllers[i] = AnimationController(
-          vsync: this, duration: Duration(milliseconds: _DURATION[i]))
-        ..addListener(() => setState(() {}));
+          vsync: this, duration: Duration(milliseconds: _DURATION[i]));
 
       _animations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.5), weight: 1),
@@ -40,23 +40,17 @@ class _LineScalePartyState extends State<LineScaleParty>
 
   @override
   void dispose() {
-    for (var value1 in _delayFeatures) {
-      value1.cancel();
-    }
-    for (var value in _animationControllers) {
-      value.dispose();
-    }
+    _delayFeatures.forEach((f) => f.cancel());
+    _animationControllers.forEach((f) => f?.dispose());
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = _animations
-        .map((Animation<double> anim) => anim.value)
-        .map((double val) => Expanded(
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()..scale(1.0, val),
+        .map((Animation<double> anim) => Expanded(
+              child: ScaleYTransition(
+                scaleY: anim,
                 child: IndicatorShapeWidget(shape: Shape.line),
               ),
             ))
@@ -68,6 +62,9 @@ class _LineScalePartyState extends State<LineScaleParty>
       }
     }
 
-    return Row(children: widgets);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: widgets,
+    );
   }
 }

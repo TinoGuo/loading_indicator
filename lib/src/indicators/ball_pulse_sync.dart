@@ -20,8 +20,7 @@ class _BallPulseSyncState extends State<BallPulseSync>
     super.initState();
     for (int i = 0; i < 3; i++) {
       _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 600))
-        ..addListener(() => setState(() {}));
+          vsync: this, duration: const Duration(milliseconds: 600));
 
       _animations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 1),
@@ -40,7 +39,7 @@ class _BallPulseSyncState extends State<BallPulseSync>
   @override
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    _animationControllers.forEach((f) => f?.dispose());
     super.dispose();
   }
 
@@ -54,11 +53,16 @@ class _BallPulseSyncState extends State<BallPulseSync>
       for (int i = 0; i < 5; i++) {
         if (i.isEven) {
           widgets[i] = Expanded(
-            child: Transform.translate(
-              offset: Offset(0, _animations[i ~/ 2].value * deltaY),
-              child: IndicatorShapeWidget(
-                shape: Shape.circle,
-              ),
+            child: AnimatedBuilder(
+              animation: _animationControllers[i ~/ 2],
+              builder: (_, child) {
+                return Transform.translate(
+                  offset: Offset(0, _animations[i ~/ 2].value * deltaY),
+                  child: IndicatorShapeWidget(
+                    shape: Shape.circle,
+                  ),
+                );
+              },
             ),
           );
         } else {

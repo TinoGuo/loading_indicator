@@ -19,8 +19,7 @@ class _BallPulseRiseState extends State<BallPulseRise>
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1))
-          ..addListener(() => setState(() {}));
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     final cubic = Cubic(0.15, 0.46, 0.9, 0.6);
 
     _oddScaleAnimation = TweenSequence([
@@ -64,16 +63,7 @@ class _BallPulseRiseState extends State<BallPulseRise>
         final deltaY = constraint.maxHeight / 3;
 
         for (int i = 0; i < 5; i++) {
-          Widget child;
-          if (i.isEven) {
-            child = _buildSingleCircle(Matrix4.identity()
-              ..scale(_evenScaleAnimation.value)
-              ..translate(0.0, deltaY * _evenTranslateAnimation.value));
-          } else {
-            child = _buildSingleCircle(Matrix4.identity()
-              ..scale(_oddScaleAnimation.value)
-              ..translate(0.0, deltaY * _oddTranslateAnimation.value));
-          }
+          Widget child = _buildSingleCircle(i, deltaY);
           widgets[i] = Positioned.fromRect(
             child: child,
             rect: Rect.fromLTWH(
@@ -91,11 +81,25 @@ class _BallPulseRiseState extends State<BallPulseRise>
     );
   }
 
-  _buildSingleCircle(Matrix4 transform) {
-    return Transform(
-      alignment: Alignment.center,
-      transform: transform..setEntry(3, 2, 0.006),
-      child: IndicatorShapeWidget(shape: Shape.circle),
+  _buildSingleCircle(int index, double deltaY) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (_, child) {
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
+            ..scale(index.isEven
+                ? _evenScaleAnimation.value
+                : _oddScaleAnimation.value)
+            ..translate(
+                0.0,
+                index.isEven
+                    ? _evenTranslateAnimation.value * deltaY
+                    : _oddTranslateAnimation.value * deltaY)
+            ..setEntry(3, 2, 0.006),
+          child: IndicatorShapeWidget(shape: Shape.circle),
+        );
+      },
     );
   }
 }

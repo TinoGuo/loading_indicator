@@ -20,8 +20,7 @@ class _SquareSpinState extends State<SquareSpin>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 3000))
-      ..addListener(() => setState(() {}));
+        vsync: this, duration: const Duration(milliseconds: 3000));
     final cubic = Cubic(.09, .57, .49, .9);
     _xAnimation = Tween<double>(begin: 0, end: pi).animate(CurvedAnimation(
         parent: _animationController, curve: Interval(0, 0.25, curve: cubic)));
@@ -47,24 +46,28 @@ class _SquareSpinState extends State<SquareSpin>
 
   @override
   Widget build(BuildContext context) {
-    double x, y;
-    if (_animationController.value < 0.5) {
-      x = _xAnimation.value;
-      y = _yAnimation.value;
-    } else if (_animationController.value < 1) {
-      x = _xAnimation2.value;
-      y = _yAnimation2.value;
-    }
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (_, child) {
+        double x, y;
+        if (_animationController.value < 0.5) {
+          x = _xAnimation.value;
+          y = _yAnimation.value;
+        } else if (_animationController.value < 1) {
+          x = _xAnimation2.value;
+          y = _yAnimation2.value;
+        }
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
 
-    return Transform(
-      alignment: Alignment.center,
-      transform: Matrix4.identity()
-
-        /// Whooops, must add this line to 3D effect.
-        ..setEntry(3, 2, 0.006)
-        ..rotateX(x)
-        ..rotateY(y),
-      child: IndicatorShapeWidget(shape: Shape.rectangle),
+            /// Whooops, must add this line to 3D effect.
+            ..setEntry(3, 2, 0.006)
+            ..rotateX(x)
+            ..rotateY(y),
+          child: IndicatorShapeWidget(shape: Shape.rectangle),
+        );
+      },
     );
   }
 }

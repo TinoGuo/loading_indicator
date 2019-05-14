@@ -19,8 +19,7 @@ class _CubeTransitionState extends State<CubeTransition>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1600))
-      ..addListener(() => setState(() {}));
+        vsync: this, duration: const Duration(milliseconds: 1600));
     _translateAnimation = TweenSequence([
       TweenSequenceItem(
           tween: SizeTween(begin: Size(0.0, 0.0), end: Size(1.0, 0.0)),
@@ -71,34 +70,40 @@ class _CubeTransitionState extends State<CubeTransition>
       final deltaX = constraint.maxWidth - squareSize;
       final deltaY = constraint.maxHeight - squareSize;
 
-      return Stack(
-        children: [
-          Positioned.fromRect(
-            rect: Rect.fromLTWH(0, 0, squareSize, squareSize),
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..translate(_translateAnimation.value.width * deltaX,
-                    _translateAnimation.value.height * deltaY)
-                ..rotateZ(_rotateAnimation.value)
-                ..scale(_scaleAnimation.value),
-              child: IndicatorShapeWidget(shape: Shape.rectangle),
+      return AnimatedBuilder(
+        animation: _animationController,
+        builder: (_, child) => Stack(
+              children: [
+                Positioned.fromRect(
+                  rect: Rect.fromLTWH(0, 0, squareSize, squareSize),
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..translate(_translateAnimation.value.width * deltaX,
+                          _translateAnimation.value.height * deltaY)
+                      ..rotateZ(_rotateAnimation.value)
+                      ..scale(_scaleAnimation.value),
+                    child: IndicatorShapeWidget(shape: Shape.rectangle),
+                  ),
+                ),
+                Positioned.fromRect(
+                  rect: Rect.fromLTWH(
+                      constraint.maxWidth - squareSize,
+                      constraint.maxHeight - squareSize,
+                      squareSize,
+                      squareSize),
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..translate(-_translateAnimation.value.width * deltaX,
+                          -_translateAnimation.value.height * deltaY)
+                      ..rotateZ(_rotateAnimation.value)
+                      ..scale(_scaleAnimation.value),
+                    child: IndicatorShapeWidget(shape: Shape.rectangle),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Positioned.fromRect(
-            rect: Rect.fromLTWH(constraint.maxWidth - squareSize,
-                constraint.maxHeight - squareSize, squareSize, squareSize),
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..translate(-_translateAnimation.value.width * deltaX,
-                    -_translateAnimation.value.height * deltaY)
-                ..rotateZ(_rotateAnimation.value)
-                ..scale(_scaleAnimation.value),
-              child: IndicatorShapeWidget(shape: Shape.rectangle),
-            ),
-          ),
-        ],
       );
     });
   }

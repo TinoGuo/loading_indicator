@@ -16,8 +16,7 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
     super.initState();
 
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 700))
-      ..addListener(() => setState(() {}));
+        vsync: this, duration: const Duration(milliseconds: 700));
 
     _animation = TweenSequence([
       TweenSequenceItem(
@@ -45,27 +44,30 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
       final deltaX = constraint.maxWidth / 2 - circleSize / 2;
       final deltaY = constraint.maxHeight / 2 - circleSize / 2;
 
-      return Stack(
-        children: <Widget>[
-          Positioned.fromRect(
-            rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
-            child: Transform(
-              transform: Matrix4.identity()
-                ..translate(
-                    deltaX * _animation.value.dx, deltaY * _animation.value.dy),
-              child: IndicatorShapeWidget(shape: Shape.circle),
+      return AnimatedBuilder(
+        animation: _animationController,
+        builder: (_, child) => Stack(
+              children: <Widget>[
+                Positioned.fromRect(
+                  rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
+                  child: Transform(
+                    transform: Matrix4.identity()
+                      ..translate(deltaX * _animation.value.dx,
+                          deltaY * _animation.value.dy),
+                    child: IndicatorShapeWidget(shape: Shape.circle),
+                  ),
+                ),
+                Positioned.fromRect(
+                  rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
+                  child: Transform(
+                    transform: Matrix4.identity()
+                      ..translate(deltaX * -_animation.value.dx,
+                          deltaY * -_animation.value.dy),
+                    child: IndicatorShapeWidget(shape: Shape.circle),
+                  ),
+                )
+              ],
             ),
-          ),
-          Positioned.fromRect(
-            rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
-            child: Transform(
-              transform: Matrix4.identity()
-                ..translate(deltaX * -_animation.value.dx,
-                    deltaY * -_animation.value.dy),
-              child: IndicatorShapeWidget(shape: Shape.circle),
-            ),
-          )
-        ],
       );
     });
   }

@@ -17,8 +17,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2))
-          ..addListener(() => setState(() {}));
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
 
     _topCenterAnimation = TweenSequence([
       TweenSequenceItem(
@@ -64,52 +63,45 @@ class _BallTrianglePathState extends State<BallTrianglePath>
     return LayoutBuilder(
       builder: (ctx, constraint) {
         final circleSize = constraint.maxWidth / 5;
+        final container = Size(constraint.maxWidth, constraint.maxHeight);
 
         List<Widget> widgets = List(3);
         widgets[0] = Positioned.fromRect(
           rect: Rect.fromLTWH(constraint.maxWidth / 2 - circleSize / 2, 0,
               circleSize, circleSize),
-          child: Transform(
-            transform: Matrix4.identity()
-              ..translate(
-                _topCenterAnimation.value.dx *
-                    (constraint.maxWidth - circleSize),
-                _topCenterAnimation.value.dy *
-                    (constraint.maxHeight - circleSize),
-              ),
-            child: IndicatorShapeWidget(shape: Shape.ring),
-          ),
+          child: _buildAnimatedRing(container, circleSize, _topCenterAnimation),
         );
         widgets[1] = Positioned.fromRect(
           rect: Rect.fromLTWH(
               0, constraint.maxHeight - circleSize, circleSize, circleSize),
-          child: Transform(
-            transform: Matrix4.identity()
-              ..translate(
-                _leftBottomAnimation.value.dx *
-                    (constraint.maxWidth - circleSize),
-                _leftBottomAnimation.value.dy *
-                    (constraint.maxHeight - circleSize),
-              ),
-            child: IndicatorShapeWidget(shape: Shape.ring),
-          ),
+          child:
+              _buildAnimatedRing(container, circleSize, _leftBottomAnimation),
         );
         widgets[2] = Positioned.fromRect(
           rect: Rect.fromLTWH(constraint.maxWidth - circleSize,
               constraint.maxHeight - circleSize, circleSize, circleSize),
-          child: Transform(
-            transform: Matrix4.identity()
-              ..translate(
-                _rightBottomAnimation.value.dx *
-                    (constraint.maxWidth - circleSize),
-                _rightBottomAnimation.value.dy *
-                    (constraint.maxHeight - circleSize),
-              ),
-            child: IndicatorShapeWidget(shape: Shape.ring),
-          ),
+          child:
+              _buildAnimatedRing(container, circleSize, _rightBottomAnimation),
         );
 
         return Stack(children: widgets);
+      },
+    );
+  }
+
+  _buildAnimatedRing(
+      Size size, double circleSize, Animation<Offset> animation) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (_, child) {
+        return Transform(
+          transform: Matrix4.identity()
+            ..translate(
+              animation.value.dx * (size.width - circleSize),
+              animation.value.dy * (size.height - circleSize),
+            ),
+          child: IndicatorShapeWidget(shape: Shape.ring),
+        );
       },
     );
   }

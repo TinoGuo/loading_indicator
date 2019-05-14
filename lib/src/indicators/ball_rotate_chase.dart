@@ -19,9 +19,8 @@ class _BallRotateChaseState extends State<BallRotateChase>
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 1500))
-          ..addListener(() => setState(() {}));
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1500));
     for (int i = 0; i < _BALL_NUM; i++) {
       final rate = i / 5;
       final cubic = Cubic(0.5, 0.15 + rate, 0.25, 1.0);
@@ -52,17 +51,24 @@ class _BallRotateChaseState extends State<BallRotateChase>
       for (int i = 0; i < _BALL_NUM; i++) {
         widgets[i] = Positioned.fromRect(
           rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
-          child: Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..translate(
-                deltaX * sin(_translateAnimations[i].value),
-                deltaY * -cos(_translateAnimations[i].value),
-              ),
-            child: ScaleTransition(
-              scale: _scaleAnimations[i],
-              child: IndicatorShapeWidget(shape: Shape.circle),
-            ),
+          child: AnimatedBuilder(
+            animation: _animationController,
+            builder: (_, child) {
+              return Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..translate(
+                    deltaX * sin(_translateAnimations[i].value),
+                    deltaY * -cos(_translateAnimations[i].value),
+                  ),
+
+                /// scale must in child, if upper would align topLeft.
+                child: ScaleTransition(
+                  scale: _scaleAnimations[i],
+                  child: IndicatorShapeWidget(shape: Shape.circle),
+                ),
+              );
+            },
           ),
         );
       }

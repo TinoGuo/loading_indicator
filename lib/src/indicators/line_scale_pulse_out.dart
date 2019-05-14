@@ -1,6 +1,7 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/ScaleYTransition.dart';
 
 class LineScalePulseOut extends StatefulWidget {
   @override
@@ -20,9 +21,8 @@ class _LineScalePulseOutState extends State<LineScalePulseOut>
     super.initState();
     final cubic = Cubic(0.85, 0.25, 0.37, 0.85);
     for (int i = 0; i < 5; i++) {
-      _animationControllers[i] =
-          AnimationController(vsync: this, duration: const Duration(seconds: 1))
-            ..addListener(() => setState(() {}));
+      _animationControllers[i] = AnimationController(
+          vsync: this, duration: const Duration(seconds: 1));
       _animations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.4), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.4, end: 1.0), weight: 1),
@@ -39,7 +39,7 @@ class _LineScalePulseOutState extends State<LineScalePulseOut>
   @override
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    _animationControllers.forEach((f) => f?.dispose());
     super.dispose();
   }
 
@@ -49,10 +49,8 @@ class _LineScalePulseOutState extends State<LineScalePulseOut>
     for (int i = 0; i < widgets.length; i++) {
       if (i.isEven) {
         widgets[i] = Expanded(
-          child: Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..scale(1.0, _animations[i ~/ 2].value),
+          child: ScaleYTransition(
+            scaleY: _animations[i ~/ 2],
             child: IndicatorShapeWidget(shape: Shape.line),
           ),
         );
@@ -60,6 +58,9 @@ class _LineScalePulseOutState extends State<LineScalePulseOut>
         widgets[i] = Expanded(child: Container());
       }
     }
-    return Row(children: widgets);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: widgets,
+    );
   }
 }

@@ -30,8 +30,7 @@ class _TriangleSkewSpinState extends State<TriangleSkewSpin>
       TweenSequenceItem(
           tween: Tween(begin: Offset(pi, 0.0), end: Offset(0.0, 0.0)),
           weight: 1),
-    ]).animate(CurvedAnimation(parent: _animationController, curve: cubic))
-      ..addListener(() => setState(() {}));
+    ]).animate(CurvedAnimation(parent: _animationController, curve: cubic));
     _animationController.repeat();
   }
 
@@ -43,15 +42,19 @@ class _TriangleSkewSpinState extends State<TriangleSkewSpin>
 
   @override
   Widget build(BuildContext context) {
-    return Transform(
-      alignment: Alignment.center,
-      transform: Matrix4.identity()
+    return AnimatedBuilder(
+        animation: _animationController,
+        builder: (_, child) {
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
 
-        /// Whooops, must add this line to 3D effect.
-        ..setEntry(3, 2, 0.006)
-        ..rotateX(_animation.value.dx)
-        ..rotateY(_animation.value.dy),
-      child: IndicatorShapeWidget(shape: Shape.triangle),
-    );
+              /// Whooops, must add this line to 3D effect.
+              ..setEntry(3, 2, 0.006)
+              ..rotateX(_animation.value.dx)
+              ..rotateY(_animation.value.dy),
+            child: IndicatorShapeWidget(shape: Shape.triangle),
+          );
+        });
   }
 }
