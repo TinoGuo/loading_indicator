@@ -1,5 +1,6 @@
 # LoadingIndicator
 [![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
+[中文版](README_CN.md)
 
 A collection of out of the box loading animations written in pure dart, no extra dependency, inspired by [loaders.css](https://github.com/ConnorAtherton/loaders.css) and [NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView).
 
@@ -25,7 +26,11 @@ Install the latest version from [pub](https://pub.dev/packages/loading_indicator
 
 ## Usage
 very simple to use
+
 `LoadingIndicator(indicatorType: Indicator.ballPulse, color: Colors.white,)`
 
+## License
+[Apache 2.0](LICENSE)
+
 ## Todo
-⬜️ remove `setState` to improve performance
+☑️ remove `setState` to improve performance
