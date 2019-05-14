@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 import 'package:loading_indicator/src/transition/ScaleYTransition.dart';
 
+/// LineScalePulseOutRapid.
 class LineScalePulseOutRapid extends StatefulWidget {
   @override
   _LineScalePulseOutRapidState createState() => _LineScalePulseOutRapidState();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// BallScale.
 class BallScale extends StatefulWidget {
   @override
   _BallScaleState createState() => _BallScaleState();

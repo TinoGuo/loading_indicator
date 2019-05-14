@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// CubeTransition.
 class CubeTransition extends StatefulWidget {
   @override
   _CubeTransitionState createState() => _CubeTransitionState();

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// TriangleSkewSpin.
 class TriangleSkewSpin extends StatefulWidget {
   @override
   _TriangleSkewSpinState createState() => _TriangleSkewSpinState();

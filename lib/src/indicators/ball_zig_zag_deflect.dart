@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// BallZigZagDeflect.
 class BallZigZagDeflect extends StatefulWidget {
   @override
   _BallZigZagDeflectState createState() => _BallZigZagDeflectState();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// BallTrianglePath.
 class BallTrianglePath extends StatefulWidget {
   @override
   _BallTrianglePathState createState() => _BallTrianglePathState();

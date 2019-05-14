@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// BallGridBeat.
 class BallGridBeat extends StatefulWidget {
   @override
   _BallGridBeatState createState() => _BallGridBeatState();

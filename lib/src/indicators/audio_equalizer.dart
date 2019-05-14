@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// AudioEqualizer
 class AudioEqualizer extends StatefulWidget {
   @override
   _AudioEqualizerState createState() => _AudioEqualizerState();

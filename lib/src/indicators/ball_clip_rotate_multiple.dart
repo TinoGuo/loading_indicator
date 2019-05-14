@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// BallClipRotateMultiple.
 class BallClipRotateMultiple extends StatefulWidget {
   @override
   _BallClipRotateMultipleState createState() => _BallClipRotateMultipleState();

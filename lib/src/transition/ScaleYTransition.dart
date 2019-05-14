@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Animates the y axis scale of a transformed widget.
 class ScaleYTransition extends AnimatedWidget {
   const ScaleYTransition({
     Key key,

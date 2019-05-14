@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// Pacman.
 class Pacman extends StatefulWidget {
   @override
   _PacmanState createState() => _PacmanState();

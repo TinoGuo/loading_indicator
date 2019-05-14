@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// BallZigZag.
 class BallZigZag extends StatefulWidget {
   @override
   _BallZigZagState createState() => _BallZigZagState();

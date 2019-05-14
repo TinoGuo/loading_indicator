@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+/// SemiCircleSpin.
 class SemiCircleSpin extends StatefulWidget {
   @override
   _SemiCircleSpinState createState() => _SemiCircleSpinState();

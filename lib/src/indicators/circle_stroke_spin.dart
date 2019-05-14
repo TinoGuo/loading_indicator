@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/decorate/decorate.dart';
 
+/// CircleStrokeSpin.
 class CircleStrokeSpin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
