@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.pink,
+        primaryColor: Colors.white,
       ),
       home: MainWidget(),
     );
@@ -35,16 +36,14 @@ class MainWidget extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(indicator.toString().split('.').last),
+              backgroundColor: Colors.pink,
             ),
             backgroundColor: Colors.teal,
             body: Padding(
               padding: const EdgeInsets.all(64),
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: LoadingIndicator(
-                  indicatorType: indicator,
-                  color: Colors.white,
-                ),
+              child: LoadingIndicator(
+                indicatorType: indicator,
+                color: Colors.white,
               ),
             ),
           );
@@ -57,6 +56,7 @@ class MainWidget extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text('Demo'),
+          backgroundColor: Colors.pink,
         ),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.grid_on),
@@ -106,8 +106,9 @@ class GridWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: LoadingIndicator(
-                      color: Colors.white,
-                      indicatorType: Indicator.values[index]),
+                    color: Colors.white,
+                    indicatorType: Indicator.values[index],
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
