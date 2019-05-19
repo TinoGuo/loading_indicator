@@ -80,14 +80,17 @@ class LoadingIndicator extends StatelessWidget {
   /// The color you draw on the shape.
   final Color color;
 
-  LoadingIndicator(
-      {Key key, @required this.indicatorType, @required this.color})
-      : super(key: key);
+  LoadingIndicator({
+    Key key,
+    @required this.indicatorType,
+    this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final actualColor = color ?? Theme.of(context).primaryColor;
     return DecorateContext(
-      decorateData: DecorateData(indicator: indicatorType, color: color),
+      decorateData: DecorateData(indicator: indicatorType, color: actualColor),
       child: _buildIndicator(),
     );
   }
