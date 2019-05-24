@@ -6,7 +6,7 @@ A collection of out of the box loading animations written in pure dart, no extra
 
 
 ## Demo
-![](gif/demo_2019_05_15.gif)
+![](gif/demo_2019_05_24.gif)
 
 ## Animation types
 
