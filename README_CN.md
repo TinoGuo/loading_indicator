@@ -5,6 +5,9 @@
 
 
 ## Demo
+
+现在你可以点击这个[地址](https://tinoguo.github.io/loading_indicator/)来进行预览.**3D效果在web上会失效.**
+
 ![](gif/demo_2019_05_24.gif)
 
 ## 动画类型

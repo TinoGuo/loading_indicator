@@ -6,6 +6,9 @@ A collection of out of the box loading animations written in pure dart, no extra
 
 
 ## Demo
+
+Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to preview.**3D effect will be invalid in web.**
+
 ![](gif/demo_2019_05_24.gif)
 
 ## Animation types
