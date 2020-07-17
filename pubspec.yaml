@@ -5,12 +5,17 @@ author: Tino <guochenghaha@gmail.com>
 homepage: https://github.com/TinoGuo/loading_indicator
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   async: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  test: ^1.14.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
