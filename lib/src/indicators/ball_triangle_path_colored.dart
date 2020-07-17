@@ -5,13 +5,16 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 class BallTrianglePathColored extends StatefulWidget {
   final bool isFilled;
 
-  const BallTrianglePathColored({Key key, this.isFilled = false}) : super(key: key);
+  const BallTrianglePathColored({Key key, this.isFilled = false})
+      : super(key: key);
 
   @override
-  _BallTrianglePathColoredState createState() => _BallTrianglePathColoredState();
+  _BallTrianglePathColoredState createState() =>
+      _BallTrianglePathColoredState();
 }
 
-class _BallTrianglePathColoredState extends State<BallTrianglePathColored> with SingleTickerProviderStateMixin {
+class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
+    with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation<Offset> _topCenterAnimation;
   Animation<Offset> _leftBottomAnimation;
@@ -20,25 +23,38 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored> with 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
 
     _topCenterAnimation = TweenSequence([
-      TweenSequenceItem(tween: Tween(begin: Offset(0, 0), end: Offset(0.5, 1)), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: Offset(0.5, 1), end: Offset(-0.5, 1)), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: Offset(-0.5, 1), end: Offset(0, 0)), weight: 1),
-    ]).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(0, 0), end: Offset(0.5, 1)), weight: 1),
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(0.5, 1), end: Offset(-0.5, 1)), weight: 1),
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(-0.5, 1), end: Offset(0, 0)), weight: 1),
+    ]).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
 
     _leftBottomAnimation = TweenSequence([
-      TweenSequenceItem(tween: Tween(begin: Offset(0, 0), end: Offset(0.5, -1)), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: Offset(0.5, -1), end: Offset(1, 0)), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: Offset(1, 0), end: Offset(0, 0)), weight: 1),
-    ]).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(0, 0), end: Offset(0.5, -1)), weight: 1),
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(0.5, -1), end: Offset(1, 0)), weight: 1),
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(1, 0), end: Offset(0, 0)), weight: 1),
+    ]).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
 
     _rightBottomAnimation = TweenSequence([
-      TweenSequenceItem(tween: Tween(begin: Offset(0, 0), end: Offset(-1, 0)), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: Offset(-1, 0), end: Offset(-0.5, -1)), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: Offset(-0.5, -1), end: Offset(0, 0)), weight: 1),
-    ]).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(0, 0), end: Offset(-1, 0)), weight: 1),
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(-1, 0), end: Offset(-0.5, -1)), weight: 1),
+      TweenSequenceItem(
+          tween: Tween(begin: Offset(-0.5, -1), end: Offset(0, 0)), weight: 1),
+    ]).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
 
     _animationController.repeat();
   }
@@ -58,16 +74,22 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored> with 
 
         List<Widget> widgets = List(3);
         widgets[0] = Positioned.fromRect(
-          rect: Rect.fromLTWH(constraint.maxWidth / 2 - circleSize / 2, 0, circleSize, circleSize),
-          child: _buildAnimatedRing(container, circleSize, _topCenterAnimation, 0),
+          rect: Rect.fromLTWH(constraint.maxWidth / 2 - circleSize / 2, 0,
+              circleSize, circleSize),
+          child:
+              _buildAnimatedRing(container, circleSize, _topCenterAnimation, 0),
         );
         widgets[1] = Positioned.fromRect(
-          rect: Rect.fromLTWH(0, constraint.maxHeight - circleSize, circleSize, circleSize),
-          child: _buildAnimatedRing(container, circleSize, _leftBottomAnimation, 1),
+          rect: Rect.fromLTWH(
+              0, constraint.maxHeight - circleSize, circleSize, circleSize),
+          child: _buildAnimatedRing(
+              container, circleSize, _leftBottomAnimation, 1),
         );
         widgets[2] = Positioned.fromRect(
-          rect: Rect.fromLTWH(constraint.maxWidth - circleSize, constraint.maxHeight - circleSize, circleSize, circleSize),
-          child: _buildAnimatedRing(container, circleSize, _rightBottomAnimation, 2),
+          rect: Rect.fromLTWH(constraint.maxWidth - circleSize,
+              constraint.maxHeight - circleSize, circleSize, circleSize),
+          child: _buildAnimatedRing(
+              container, circleSize, _rightBottomAnimation, 2),
         );
 
         return Stack(children: widgets);
@@ -75,7 +97,8 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored> with 
     );
   }
 
-  _buildAnimatedRing(Size size, double circleSize, Animation<Offset> animation, int index) {
+  _buildAnimatedRing(
+      Size size, double circleSize, Animation<Offset> animation, int index) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {

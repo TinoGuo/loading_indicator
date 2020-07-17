@@ -94,7 +94,8 @@ class LoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final actualColor = color ?? Theme.of(context).primaryColor;
     return DecorateContext(
-      decorateData: DecorateData(indicator: indicatorType, color: actualColor, colors: colors),
+      decorateData: DecorateData(
+          indicator: indicatorType, color: actualColor, colors: colors),
       child: AspectRatio(
         aspectRatio: 1,
         child: _buildIndicator(),
