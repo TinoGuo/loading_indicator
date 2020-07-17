@@ -49,6 +49,7 @@ class _BallGridPulseState extends State<BallGridPulse>
       _delayFeatures[i] = CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: delay)).then((t) {
         _animationControllers[i].repeat();
+        return 0;
       }));
     }
   }

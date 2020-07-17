@@ -35,6 +35,7 @@ class _LineScalePartyState extends State<LineScaleParty>
       _delayFeatures[i] = CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
+        return 0;
       }));
     }
   }

@@ -34,6 +34,7 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
       _delayFeatures[i] = CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
+        return 0;
       }));
     }
   }
