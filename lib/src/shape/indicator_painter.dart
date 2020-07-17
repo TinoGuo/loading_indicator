@@ -34,8 +34,12 @@ class IndicatorShapeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DecorateData decorateData = DecorateContext.of(context).decorateData;
-    final bool shouldUseColors = decorateData.colors != null && colorIndex != null && colorIndex < decorateData.colors.length;
-    final color = shouldUseColors ? decorateData.colors[colorIndex] : DecorateContext.of(context).decorateData.color;
+    final bool shouldUseColors = decorateData.colors != null &&
+        colorIndex != null &&
+        colorIndex < decorateData.colors.length;
+    final color = shouldUseColors
+        ? decorateData.colors[colorIndex]
+        : DecorateContext.of(context).decorateData.color;
 
 //    if (shape == Shape.circle) {
 //      return Container(
@@ -106,7 +110,14 @@ class _ShapePainter extends CustomPainter {
           ..color = color
           ..style = PaintingStyle.stroke
           ..strokeWidth = _strokeWidth;
-        canvas.drawArc(Rect.fromCircle(center: Offset(size.width / 2, size.height / 2), radius: size.shortestSide / 2), -3 * pi / 4, 3 * pi / 2, false, _paint);
+        canvas.drawArc(
+            Rect.fromCircle(
+                center: Offset(size.width / 2, size.height / 2),
+                radius: size.shortestSide / 2),
+            -3 * pi / 4,
+            3 * pi / 2,
+            false,
+            _paint);
         break;
       case Shape.rectangle:
         _paint
@@ -119,7 +130,8 @@ class _ShapePainter extends CustomPainter {
           ..color = color
           ..strokeWidth = _strokeWidth
           ..style = PaintingStyle.stroke;
-        final rect = Rect.fromLTWH(size.width / 4, size.height / 4, size.width / 2, size.height / 2);
+        final rect = Rect.fromLTWH(
+            size.width / 4, size.height / 4, size.width / 2, size.height / 2);
         canvas.drawArc(rect, -3 * pi / 4, pi / 2, false, _paint);
         canvas.drawArc(rect, 3 * pi / 4, -pi / 2, false, _paint);
         break;
@@ -128,13 +140,18 @@ class _ShapePainter extends CustomPainter {
           ..color = color
           ..strokeWidth = _strokeWidth
           ..style = PaintingStyle.stroke;
-        canvas.drawCircle(Offset(size.width / 2, size.height / 2), size.shortestSide / 2, _paint);
+        canvas.drawCircle(Offset(size.width / 2, size.height / 2),
+            size.shortestSide / 2, _paint);
         break;
       case Shape.line:
         _paint
           ..color = color
           ..style = PaintingStyle.fill;
-        canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, size.width, size.height), Radius.circular(size.shortestSide / 2)), _paint);
+        canvas.drawRRect(
+            RRect.fromRectAndRadius(
+                Rect.fromLTWH(0, 0, size.width, size.height),
+                Radius.circular(size.shortestSide / 2)),
+            _paint);
         break;
       case Shape.triangle:
         final offsetY = size.height / 4;
@@ -153,7 +170,8 @@ class _ShapePainter extends CustomPainter {
         _paint
           ..color = color
           ..style = PaintingStyle.fill;
-        canvas.drawArc(Offset.zero & size, data, pi * 2 - 2 * data, true, _paint);
+        canvas.drawArc(
+            Offset.zero & size, data, pi * 2 - 2 * data, true, _paint);
         break;
       case Shape.circleSemi:
         _paint
@@ -165,5 +183,8 @@ class _ShapePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_ShapePainter oldDelegate) => this.shape != oldDelegate.shape || this.color != oldDelegate.color || this.data != oldDelegate.data;
+  bool shouldRepaint(_ShapePainter oldDelegate) =>
+      this.shape != oldDelegate.shape ||
+      this.color != oldDelegate.color ||
+      this.data != oldDelegate.data;
 }
