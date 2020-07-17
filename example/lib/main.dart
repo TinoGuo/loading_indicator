@@ -44,6 +44,7 @@ class MainWidget extends StatelessWidget {
               child: LoadingIndicator(
                 indicatorType: indicator,
                 color: Colors.white,
+                colors: [Colors.cyan, Colors.purple, Colors.yellow],
               ),
             ),
           );
@@ -100,28 +101,28 @@ class GridWidget extends StatelessWidget {
           childAspectRatio: 1,
         ),
         itemBuilder: (ctx, index) => Stack(
-              fit: StackFit.expand,
-              alignment: Alignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: LoadingIndicator(
-                    color: Colors.white,
-                    indicatorType: Indicator.values[index],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    '${index + 1}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                )
-              ],
+          fit: StackFit.expand,
+          alignment: Alignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: LoadingIndicator(
+                color: Colors.white,
+                indicatorType: Indicator.values[index],
+              ),
             ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                '${index + 1}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -21,7 +21,6 @@ import 'indicators/ball_scale_ripple.dart';
 import 'indicators/ball_scale_ripple_multiple.dart';
 import 'indicators/ball_spin_fade_loader.dart';
 import 'indicators/ball_triangle_path.dart';
-import 'indicators/ball_triangle_path_colored.dart';
 import 'indicators/ball_zig_zag.dart';
 import 'indicators/ball_zig_zag_deflect.dart';
 import 'indicators/circle_stroke_spin.dart';
@@ -51,6 +50,7 @@ enum Indicator {
   ballZigZag,
   ballZigZagDeflect,
   ballTrianglePath,
+  ballTrianglePathFilled,
   ballTrianglePathColored,
   ballTrianglePathColoredFilled,
   ballScale,
@@ -129,10 +129,12 @@ class LoadingIndicator extends StatelessWidget {
         return BallZigZagDeflect();
       case Indicator.ballTrianglePath:
         return BallTrianglePath();
+      case Indicator.ballTrianglePathFilled:
+        return BallTrianglePath(isFilled: true);
       case Indicator.ballTrianglePathColored:
-        return BallTrianglePathColored();
+        return BallTrianglePath(isColored: true);
       case Indicator.ballTrianglePathColoredFilled:
-        return BallTrianglePathColored(isFilled: true);
+        return BallTrianglePath(isColored: true, isFilled: true);
       case Indicator.ballScale:
         return BallScale();
       case Indicator.lineScale:
