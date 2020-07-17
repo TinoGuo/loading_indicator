@@ -22,4 +22,3 @@ jobs:
       run: |
         flutter build aot
         flutter analyze
-        flutter test
