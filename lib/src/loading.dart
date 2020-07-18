@@ -21,6 +21,7 @@ import 'indicators/ball_scale_ripple.dart';
 import 'indicators/ball_scale_ripple_multiple.dart';
 import 'indicators/ball_spin_fade_loader.dart';
 import 'indicators/ball_triangle_path.dart';
+import 'indicators/ball_triangle_path_colored.dart';
 import 'indicators/ball_zig_zag.dart';
 import 'indicators/ball_zig_zag_deflect.dart';
 import 'indicators/circle_stroke_spin.dart';
@@ -50,6 +51,8 @@ enum Indicator {
   ballZigZag,
   ballZigZagDeflect,
   ballTrianglePath,
+  ballTrianglePathColored,
+  ballTrianglePathColoredFilled,
   ballScale,
   lineScale,
   lineScaleParty,
@@ -79,18 +82,20 @@ class LoadingIndicator extends StatelessWidget {
 
   /// The color you draw on the shape.
   final Color color;
-
+  final List<Color> colors;
   LoadingIndicator({
     Key key,
     @required this.indicatorType,
     this.color,
+    this.colors,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final actualColor = color ?? Theme.of(context).primaryColor;
     return DecorateContext(
-      decorateData: DecorateData(indicator: indicatorType, color: actualColor),
+      decorateData: DecorateData(
+          indicator: indicatorType, color: actualColor, colors: colors),
       child: AspectRatio(
         aspectRatio: 1,
         child: _buildIndicator(),
@@ -125,6 +130,10 @@ class LoadingIndicator extends StatelessWidget {
         return BallZigZagDeflect();
       case Indicator.ballTrianglePath:
         return BallTrianglePath();
+      case Indicator.ballTrianglePathColored:
+        return BallTrianglePathColored();
+      case Indicator.ballTrianglePathColoredFilled:
+        return BallTrianglePathColored(isFilled: true);
       case Indicator.ballScale:
         return BallScale();
       case Indicator.lineScale:

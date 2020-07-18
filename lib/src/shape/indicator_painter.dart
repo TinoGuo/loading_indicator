@@ -22,16 +22,24 @@ enum Shape {
 class IndicatorShapeWidget extends StatelessWidget {
   final Shape shape;
   final double data;
+  final int colorIndex;
 
   IndicatorShapeWidget({
     Key key,
     @required this.shape,
     this.data,
+    this.colorIndex,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final color = DecorateContext.of(context).decorateData.color;
+    final DecorateData decorateData = DecorateContext.of(context).decorateData;
+    final bool shouldUseColors = decorateData.colors != null &&
+        colorIndex != null &&
+        colorIndex < decorateData.colors.length;
+    final color = shouldUseColors
+        ? decorateData.colors[colorIndex]
+        : DecorateContext.of(context).decorateData.color;
 
 //    if (shape == Shape.circle) {
 //      return Container(

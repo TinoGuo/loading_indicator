@@ -6,14 +6,17 @@ import 'package:loading_indicator/loading_indicator.dart';
 class DecorateData {
   final Color color;
   final Indicator indicator;
+  final List<Color> colors;
 
-  const DecorateData({@required this.indicator, this.color = Colors.white});
+  const DecorateData(
+      {@required this.indicator, this.color = Colors.white, this.colors});
 
   @override
   bool operator ==(other) {
     if (other.runtimeType != runtimeType) return false;
     final DecorateData typedOther = other;
     return this.color == typedOther.color &&
+        this.colors == typedOther.colors &&
         this.indicator == typedOther.indicator;
   }
 
