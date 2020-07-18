@@ -1,4 +1,5 @@
 # LoadingIndicator
+![](https://github.com/TinoGuo/loading_indicator/workflows/Flutter%20Build%20Test%20CI/badge.svg?branch=master)
 [![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
 [中文版](README_CN.md)
 
