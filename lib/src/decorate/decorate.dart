@@ -16,6 +16,7 @@ class DecorateData {
     if (other.runtimeType != runtimeType) return false;
     final DecorateData typedOther = other;
     return this.color == typedOther.color &&
+        this.colors == typedOther.colors &&
         this.indicator == typedOther.indicator;
   }
 
