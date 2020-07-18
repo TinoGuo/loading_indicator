@@ -35,6 +35,3 @@ very simple to use
 
 ## License
 [Apache 2.0](LICENSE)
-
-## Todo
-☑️ remove `setState` to improve performance

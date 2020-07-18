@@ -1,4 +1,5 @@
 # LoadingIndicator
+![](https://github.com/TinoGuo/loading_indicator/workflows/Flutter%20Build%20Test%20CI/badge.svg?branch=master)
 [![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
 
 一个开箱即用的loading加载库，包含32个不同类型动画，灵感来源于[loaders.css](https://github.com/ConnorAtherton/loaders.css)和[NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView)。
@@ -33,6 +34,3 @@
 
 ## 开源协议
 [Apache 2.0](LICENSE)
-
-## Todo
-☑️ 移除`setState`提升性能
