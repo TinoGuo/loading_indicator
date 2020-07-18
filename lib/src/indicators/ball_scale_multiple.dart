@@ -35,6 +35,7 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
       _delayFeatures[i] = CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
+        return 0;
       }));
     }
   }

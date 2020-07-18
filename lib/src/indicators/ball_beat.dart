@@ -36,6 +36,7 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
       _delayFeatures[i] = CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
+        return 0;
       }));
     }
   }

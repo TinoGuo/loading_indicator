@@ -48,6 +48,7 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
       _delayFeature[i] = CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _beginTimes[i])).then((_) {
         _animationController[i].repeat();
+        return 0;
       }));
     }
   }

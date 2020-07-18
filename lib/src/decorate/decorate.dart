@@ -43,6 +43,6 @@ class DecorateContext extends InheritedWidget {
       oldWidget.decorateData == this.decorateData;
 
   static DecorateContext of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(DecorateContext);
+    return context.dependOnInheritedWidgetOfExactType();
   }
 }
