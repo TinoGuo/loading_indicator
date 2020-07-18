@@ -37,7 +37,7 @@ import 'indicators/semi_circle_spin.dart';
 import 'indicators/square_spin.dart';
 import 'indicators/triangle_skew_spin.dart';
 
-///32 different types animation enums.
+///34 different types animation enums.
 enum Indicator {
   ballPulse,
   ballGridPulse,
