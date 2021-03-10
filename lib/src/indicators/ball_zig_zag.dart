@@ -9,8 +9,8 @@ class BallZigZag extends StatefulWidget {
 
 class _BallZigZagState extends State<BallZigZag>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<Offset> _animation;
+  late AnimationController _animationController;
+  late Animation<Offset> _animation;
 
   @override
   void initState() {

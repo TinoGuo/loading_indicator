@@ -9,10 +9,10 @@ class BallTrianglePath extends StatefulWidget {
 
 class _BallTrianglePathState extends State<BallTrianglePath>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<Offset> _topCenterAnimation;
-  Animation<Offset> _leftBottomAnimation;
-  Animation<Offset> _rightBottomAnimation;
+  late AnimationController _animationController;
+  Animation<Offset>? _topCenterAnimation;
+  Animation<Offset>? _leftBottomAnimation;
+  Animation<Offset>? _rightBottomAnimation;
 
   @override
   void initState() {
@@ -91,14 +91,14 @@ class _BallTrianglePathState extends State<BallTrianglePath>
   }
 
   _buildAnimatedRing(
-      Size size, double circleSize, Animation<Offset> animation) {
+      Size size, double circleSize, Animation<Offset>? animation) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {
         return Transform(
           transform: Matrix4.identity()
             ..translate(
-              animation.value.dx * (size.width - circleSize),
+              animation!.value.dx * (size.width - circleSize),
               animation.value.dy * (size.height - circleSize),
             ),
           child: child,

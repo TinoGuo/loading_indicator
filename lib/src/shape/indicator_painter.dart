@@ -21,25 +21,25 @@ enum Shape {
 /// Wrapper class for basic shape.
 class IndicatorShapeWidget extends StatelessWidget {
   final Shape shape;
-  final double data;
-  final int colorIndex;
+  final double? data;
+  final int? colorIndex;
 
   IndicatorShapeWidget({
-    Key key,
-    @required this.shape,
+    Key? key,
+    required this.shape,
     this.data,
     this.colorIndex,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final DecorateData decorateData = DecorateContext.of(context).decorateData;
+    final DecorateData decorateData = DecorateContext.of(context)!.decorateData;
     final bool shouldUseColors = decorateData.colors != null &&
         colorIndex != null &&
-        colorIndex < decorateData.colors.length;
+        colorIndex! < decorateData.colors!.length;
     final color = shouldUseColors
-        ? decorateData.colors[colorIndex]
-        : DecorateContext.of(context).decorateData.color;
+        ? decorateData.colors![colorIndex!]
+        : DecorateContext.of(context)!.decorateData.color;
 
 //    if (shape == Shape.circle) {
 //      return Container(
@@ -84,7 +84,7 @@ class _ShapePainter extends CustomPainter {
   final Color color;
   final Shape shape;
   final Paint _paint;
-  final double data;
+  final double? data;
 
   static const double _strokeWidth = 2.0;
 
@@ -171,7 +171,7 @@ class _ShapePainter extends CustomPainter {
           ..color = color
           ..style = PaintingStyle.fill;
         canvas.drawArc(
-            Offset.zero & size, data, pi * 2 - 2 * data, true, _paint);
+            Offset.zero & size, data!, pi * 2 - 2 * data!, true, _paint);
         break;
       case Shape.circleSemi:
         _paint

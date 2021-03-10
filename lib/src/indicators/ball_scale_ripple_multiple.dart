@@ -46,7 +46,7 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
   @override
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f?.dispose());
+    _animationControllers.forEach((f) => f.dispose());
     super.dispose();
   }
 

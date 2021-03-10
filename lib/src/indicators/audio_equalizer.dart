@@ -30,25 +30,22 @@ class _AudioEqualizerState extends State<AudioEqualizer>
     0.75,
     0.01,
   ];
-  List<AnimationController> _animationControllers =
-      List.filled(_LINE_NUM, AnimationController(vsync: null));
-  List<Animation<double>> _animations =
-      List.filled(_LINE_NUM, AnimationController(vsync: null));
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _animations = [];
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < _LINE_NUM; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: Duration(milliseconds: _DURATIONS[i]));
-      final sequences = List<TweenSequenceItem<double>>.filled(
-          _VALUES.length - 1, TweenSequenceItem(tween: null, weight: null));
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: Duration(milliseconds: _DURATIONS[i])));
+      final sequences = <TweenSequenceItem<double>>[];
       for (int j = 0; j < _VALUES.length - 1; j++) {
         sequences[j] = TweenSequenceItem(
             tween: Tween(begin: _VALUES[j], end: _VALUES[j + 1]), weight: 1);
       }
-      _animations[i] =
-          TweenSequence(sequences).animate(_animationControllers[i]);
+      _animations
+          .add(TweenSequence(sequences).animate(_animationControllers[i]));
       _animationControllers[i].repeat();
     }
   }

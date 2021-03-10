@@ -14,10 +14,10 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [0, 500];
   static const _BALL_NUM = 2;
 
-  AnimationController _pacmanAnimationController;
+  late AnimationController _pacmanAnimationController;
   List<AnimationController> _ballAnimationControllers = [];
 
-  Animation<double> _rotateAnimation;
+  late Animation<double> _rotateAnimation;
   List<Animation<double>> _translateXAnimations = [];
   List<Animation<double>> _opacityAnimations = [];
 
@@ -70,7 +70,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
     _pacmanAnimationController.dispose();
-    _ballAnimationControllers.forEach((f) => f?.dispose());
+    _ballAnimationControllers.forEach((f) => f.dispose());
     super.dispose();
   }
 

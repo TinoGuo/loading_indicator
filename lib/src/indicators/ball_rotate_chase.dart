@@ -13,7 +13,7 @@ class _BallRotateChaseState extends State<BallRotateChase>
     with SingleTickerProviderStateMixin {
   static const _BALL_NUM = 5;
 
-  AnimationController _animationController;
+  late AnimationController _animationController;
   List<Animation<double>> _scaleAnimations = [];
   List<Animation<double>> _translateAnimations = [];
 

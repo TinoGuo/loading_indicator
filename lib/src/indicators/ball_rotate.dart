@@ -10,9 +10,9 @@ class BallRotate extends StatefulWidget {
 
 class _BallRotateState extends State<BallRotate>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _scaleAnimation;
-  Animation<double> _rotateAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _rotateAnimation;
 
   @override
   void initState() {

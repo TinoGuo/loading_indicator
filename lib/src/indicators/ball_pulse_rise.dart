@@ -9,12 +9,12 @@ class BallPulseRise extends StatefulWidget {
 
 class _BallPulseRiseState extends State<BallPulseRise>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _oddScaleAnimation;
-  Animation<double> _oddTranslateAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _oddScaleAnimation;
+  late Animation<double> _oddTranslateAnimation;
 
-  Animation<double> _evenScaleAnimation;
-  Animation<double> _evenTranslateAnimation;
+  late Animation<double> _evenScaleAnimation;
+  late Animation<double> _evenTranslateAnimation;
 
   @override
   void initState() {

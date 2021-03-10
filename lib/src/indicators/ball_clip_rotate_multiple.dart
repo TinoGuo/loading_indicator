@@ -11,9 +11,9 @@ class BallClipRotateMultiple extends StatefulWidget {
 
 class _BallClipRotateMultipleState extends State<BallClipRotateMultiple>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _rotateAnimation;
-  Animation<double> _scaleAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _rotateAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {

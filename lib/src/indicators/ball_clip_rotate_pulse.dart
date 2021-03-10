@@ -11,10 +11,10 @@ class BallClipRotatePulse extends StatefulWidget {
 
 class _BallClipRotatePulseState extends State<BallClipRotatePulse>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _outCircleScale;
-  Animation<double> _outCircleRotate;
-  Animation<double> _innerCircle;
+  late AnimationController _animationController;
+  late Animation<double> _outCircleScale;
+  late Animation<double> _outCircleRotate;
+  late Animation<double> _innerCircle;
 
   @override
   void initState() {

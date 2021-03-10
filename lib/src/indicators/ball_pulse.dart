@@ -56,7 +56,7 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
   @override
   void dispose() {
     _delayFeature.forEach((f) => f.cancel());
-    _animationController.forEach((f) => f?.dispose());
+    _animationController.forEach((f) => f.dispose());
     super.dispose();
   }
 

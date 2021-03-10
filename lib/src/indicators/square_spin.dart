@@ -11,11 +11,11 @@ class SquareSpin extends StatefulWidget {
 
 class _SquareSpinState extends State<SquareSpin>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _xAnimation;
-  Animation<double> _yAnimation;
-  Animation<double> _xAnimation2;
-  Animation<double> _yAnimation2;
+  late AnimationController _animationController;
+  late Animation<double> _xAnimation;
+  late Animation<double> _yAnimation;
+  late Animation<double> _xAnimation2;
+  late Animation<double> _yAnimation2;
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _SquareSpinState extends State<SquareSpin>
       animation: _animationController,
       child: IndicatorShapeWidget(shape: Shape.rectangle),
       builder: (_, child) {
-        double x, y;
+        late double x, y;
         if (_animationController.value < 0.5) {
           x = _xAnimation.value;
           y = _yAnimation.value;

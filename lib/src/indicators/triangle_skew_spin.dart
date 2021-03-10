@@ -11,8 +11,8 @@ class TriangleSkewSpin extends StatefulWidget {
 
 class _TriangleSkewSpinState extends State<TriangleSkewSpin>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<Offset> _animation;
+  late AnimationController _animationController;
+  late Animation<Offset> _animation;
 
   @override
   void initState() {

@@ -81,11 +81,11 @@ class LoadingIndicator extends StatelessWidget {
   final Indicator indicatorType;
 
   /// The color you draw on the shape.
-  final Color color;
-  final List<Color> colors;
+  final Color? color;
+  final List<Color>? colors;
   LoadingIndicator({
-    Key key,
-    @required this.indicatorType,
+    Key? key,
+    required this.indicatorType,
     this.color,
     this.colors,
   }) : super(key: key);
