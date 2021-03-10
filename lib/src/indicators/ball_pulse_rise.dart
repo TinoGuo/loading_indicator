@@ -60,7 +60,7 @@ class _BallPulseRiseState extends State<BallPulseRise>
         final circleSize = (constraint.maxWidth - 4 * circleSpacing) / 5;
         final x = 0;
         final y = (constraint.maxHeight - circleSize) / 2;
-        final widgets = List<Widget>(5);
+        final widgets = List<Widget>.filled(5, Container());
         final deltaY = constraint.maxHeight / 3;
 
         for (int i = 0; i < 5; i++) {

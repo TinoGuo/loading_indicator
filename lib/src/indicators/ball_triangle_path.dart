@@ -66,7 +66,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
         final circleSize = constraint.maxWidth / 5;
         final container = Size(constraint.maxWidth, constraint.maxHeight);
 
-        List<Widget> widgets = List(3);
+        List<Widget> widgets = List.filled(3, Container());
         widgets[0] = Positioned.fromRect(
           rect: Rect.fromLTWH(constraint.maxWidth / 2 - circleSize / 2, 0,
               circleSize, circleSize),

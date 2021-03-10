@@ -12,9 +12,9 @@ class LineScale extends StatefulWidget {
 class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [100, 200, 300, 400, 500];
 
-  List<AnimationController> _animationControllers = List(5);
-  List<Animation<double>> _animations = List(5);
-  List<CancelableOperation<int>> _delayFeatures = List(5);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _animations = [];
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
@@ -22,20 +22,20 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
     final cubic = Cubic(0.2, 0.68, 0.18, 0.08);
 
     for (int i = 0; i < 5; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(seconds: 1));
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: const Duration(seconds: 1)));
 
-      _animations[i] = TweenSequence([
+      _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.4), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.4, end: 1.0), weight: 1),
       ]).animate(
-          CurvedAnimation(parent: _animationControllers[i], curve: cubic));
+          CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
 
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 

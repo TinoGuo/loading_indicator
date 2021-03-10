@@ -30,8 +30,10 @@ class _AudioEqualizerState extends State<AudioEqualizer>
     0.75,
     0.01,
   ];
-  List<AnimationController> _animationControllers = List(_LINE_NUM);
-  List<Animation<double>> _animations = List(_LINE_NUM);
+  List<AnimationController> _animationControllers =
+      List.filled(_LINE_NUM, AnimationController(vsync: null));
+  List<Animation<double>> _animations =
+      List.filled(_LINE_NUM, AnimationController(vsync: null));
 
   @override
   void initState() {
@@ -39,7 +41,8 @@ class _AudioEqualizerState extends State<AudioEqualizer>
     for (int i = 0; i < _LINE_NUM; i++) {
       _animationControllers[i] = AnimationController(
           vsync: this, duration: Duration(milliseconds: _DURATIONS[i]));
-      final sequences = List<TweenSequenceItem<double>>(_VALUES.length - 1);
+      final sequences = List<TweenSequenceItem<double>>.filled(
+          _VALUES.length - 1, TweenSequenceItem(tween: null, weight: null));
       for (int j = 0; j < _VALUES.length - 1; j++) {
         sequences[j] = TweenSequenceItem(
             tween: Tween(begin: _VALUES[j], end: _VALUES[j + 1]), weight: 1);
@@ -58,7 +61,7 @@ class _AudioEqualizerState extends State<AudioEqualizer>
 
   @override
   Widget build(BuildContext context) {
-    final widgets = List<Widget>(7);
+    final widgets = List<Widget>.filled(7, Container());
     for (int i = 0; i < widgets.length; i++) {
       if (i.isEven) {
         widgets[i] = Expanded(

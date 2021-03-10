@@ -14,27 +14,27 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
     with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [0, 120, 240, 360, 480, 600, 720, 840];
 
-  List<AnimationController> _animationControllers = List(8);
-  List<Animation<double>> _opacityAnimations = List(8);
-  List<CancelableOperation<int>> _delayFeatures = List(8);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _opacityAnimations = [];
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < _animationControllers.length; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(seconds: 1));
-      _opacityAnimations[i] = TweenSequence([
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: const Duration(seconds: 1)));
+      _opacityAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.3), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.3, end: 1.0), weight: 1),
       ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
+          parent: _animationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 
@@ -50,7 +50,7 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
     return LayoutBuilder(builder: (ctx, constraint) {
       final circleSize = constraint.maxWidth / 3;
 
-      final widgets = List<Widget>(8);
+      final widgets = List<Widget>.filled(8, Container());
       final center = Offset(constraint.maxWidth / 2, constraint.maxHeight / 2);
       for (int i = 0; i < widgets.length; i++) {
         final angle = pi * i / 4;
