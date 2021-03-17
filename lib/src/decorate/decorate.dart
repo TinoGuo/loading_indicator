@@ -13,11 +13,12 @@ class DecorateData {
 
   @override
   bool operator ==(other) {
-    if (other.runtimeType != runtimeType) return false;
-    final DecorateData typedOther = other as DecorateData;
-    return this.color == typedOther.color &&
-        this.colors == typedOther.colors &&
-        this.indicator == typedOther.indicator;
+    if (other.runtimeType != this.runtimeType) return false;
+
+    return other is DecorateData &&
+        this.color == other.color &&
+        this.colors == other.colors &&
+        this.indicator == other.indicator;
   }
 
   @override
