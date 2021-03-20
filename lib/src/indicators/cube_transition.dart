@@ -81,8 +81,8 @@ class _CubeTransitionState extends State<CubeTransition>
               child: Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..translate(_translateAnimation.value!.width * deltaX,
-                      _translateAnimation.value!.height * deltaY)
+                  ..translate(_translateAnimation.value.width * deltaX,
+                      _translateAnimation.value.height * deltaY)
                   ..rotateZ(_rotateAnimation.value)
                   ..scale(_scaleAnimation.value),
                 child: child,
@@ -94,8 +94,8 @@ class _CubeTransitionState extends State<CubeTransition>
               child: Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..translate(-_translateAnimation.value!.width * deltaX,
-                      -_translateAnimation.value!.height * deltaY)
+                  ..translate(-_translateAnimation.value.width * deltaX,
+                      -_translateAnimation.value.height * deltaY)
                   ..rotateZ(_rotateAnimation.value)
                   ..scale(_scaleAnimation.value),
                 child: child,
