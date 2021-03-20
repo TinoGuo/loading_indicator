@@ -12,7 +12,7 @@ class CubeTransition extends StatefulWidget {
 class _CubeTransitionState extends State<CubeTransition>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation<Size?> _translateAnimation;
+  late Animation<Size> _translateAnimation;
   late Animation<double> _rotateAnimation;
   late Animation<double> _scaleAnimation;
 
