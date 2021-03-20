@@ -91,7 +91,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
   }
 
   _buildAnimatedRing(
-      Size size, double circleSize, Animation<Offset>? animation) {
+      Size size, double circleSize, Animation<Offset> animation) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {
