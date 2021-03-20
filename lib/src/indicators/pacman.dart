@@ -14,14 +14,14 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [0, 500];
   static const _BALL_NUM = 2;
 
-  AnimationController _pacmanAnimationController;
-  List<AnimationController> _ballAnimationControllers = List(_BALL_NUM);
+  late AnimationController _pacmanAnimationController;
+  List<AnimationController> _ballAnimationControllers = [];
 
-  Animation<double> _rotateAnimation;
-  List<Animation<double>> _translateXAnimations = List(_BALL_NUM);
-  List<Animation<double>> _opacityAnimations = List(_BALL_NUM);
+  late Animation<double> _rotateAnimation;
+  List<Animation<double>> _translateXAnimations = [];
+  List<Animation<double>> _opacityAnimations = [];
 
-  List<CancelableOperation<int>> _delayFeatures = List(_BALL_NUM);
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
@@ -46,23 +46,23 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
 
   void initBallAnimation() {
     for (int i = 0; i < _BALL_NUM; i++) {
-      _ballAnimationControllers[i] = AnimationController(
-          vsync: this, duration: Duration(milliseconds: 1000));
+      _ballAnimationControllers.add(AnimationController(
+          vsync: this, duration: Duration(milliseconds: 1000)));
 
-      _translateXAnimations[i] = Tween(begin: 0.0, end: -1.0).animate(
+      _translateXAnimations.add(Tween(begin: 0.0, end: -1.0).animate(
           CurvedAnimation(
-              parent: _ballAnimationControllers[i], curve: Curves.linear));
-      _opacityAnimations[i] = TweenSequence([
+              parent: _ballAnimationControllers[i], curve: Curves.linear)));
+      _opacityAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.7), weight: 70),
         TweenSequenceItem(tween: Tween(begin: 0.7, end: 0.7), weight: 30),
       ]).animate(CurvedAnimation(
-          parent: _ballAnimationControllers[i], curve: Curves.linear));
+          parent: _ballAnimationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _ballAnimationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 
@@ -70,7 +70,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
     _pacmanAnimationController.dispose();
-    _ballAnimationControllers.forEach((f) => f?.dispose());
+    _ballAnimationControllers.forEach((f) => f.dispose());
     super.dispose();
   }
 
@@ -98,7 +98,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
       );
 
       final circleSize = constraint.maxWidth / 8;
-      final widgets = List<Widget>(_BALL_NUM + 1);
+      final widgets = List<Widget>.filled(_BALL_NUM + 1, Container());
       for (int i = 0; i < _BALL_NUM; i++) {
         widgets[i] = Positioned.fromRect(
           child: FadeTransition(

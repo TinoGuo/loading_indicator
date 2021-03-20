@@ -13,46 +13,46 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
     with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [0, 200, 400];
 
-  List<AnimationController> _animationControllers = List(3);
-  List<Animation<double>> _opacityAnimations = List(3);
-  List<Animation<double>> _scaleAnimations = List(3);
-  List<CancelableOperation<int>> _delayFeatures = List(3);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _opacityAnimations = [];
+  List<Animation<double>> _scaleAnimations = [];
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
     final cubic = Cubic(0.21, 0.53, 0.56, 0.8);
     for (int i = 0; i < 3; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 1250));
-      _opacityAnimations[i] = TweenSequence([
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: const Duration(milliseconds: 1250)));
+      _opacityAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.7), weight: 70),
         TweenSequenceItem(tween: Tween(begin: 0.7, end: 0.0), weight: 30),
       ]).animate(
-          CurvedAnimation(parent: _animationControllers[i], curve: cubic));
-      _scaleAnimations[i] = TweenSequence([
+          CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
+      _scaleAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 70),
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.0), weight: 70),
       ]).animate(
-          CurvedAnimation(parent: _animationControllers[i], curve: cubic));
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+          CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 
   @override
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f?.dispose());
+    _animationControllers.forEach((f) => f.dispose());
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = List(3);
+    List<Widget> widgets = List.filled(3, Container());
     for (int i = 0; i < widgets.length; i++) {
       widgets[i] = ScaleTransition(
         scale: _scaleAnimations[i],

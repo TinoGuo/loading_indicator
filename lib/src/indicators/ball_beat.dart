@@ -11,17 +11,17 @@ class BallBeat extends StatefulWidget {
 class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [350, 0, 350];
 
-  List<AnimationController> _animationControllers = List(3);
-  List<Animation<double>> _scaleAnimations = List(3);
-  List<Animation<double>> _opacityAnimations = List(3);
-  List<CancelableOperation<int>> _delayFeatures = List(3);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _scaleAnimations = [];
+  List<Animation<double>> _opacityAnimations = [];
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: Duration(milliseconds: 700));
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: Duration(milliseconds: 700)));
       _scaleAnimations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.75), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.75, end: 1.0), weight: 1),
@@ -51,7 +51,7 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (ctx, constraint) {
-      List<Widget> widgets = List(5);
+      List<Widget> widgets = List.filled(5, Container());
       for (int i = 0; i < 5; i++) {
         if (i.isEven) {
           widgets[i] = Expanded(

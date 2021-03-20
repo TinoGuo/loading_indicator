@@ -1,3 +1,7 @@
+## [2.0.0] 2021/03/11
+* Added support for null safety (Flutter 2.0)
+* Updated depricated items.
+
 ## [1.2.0] - 2020/07/18
 * add `ball_triangle_path_colored`, thanks [Kok Wai Gie](https://github.com/woshikie)
 

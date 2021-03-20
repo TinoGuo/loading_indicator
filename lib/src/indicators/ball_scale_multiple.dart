@@ -12,31 +12,31 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
     with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [0, 200, 400];
 
-  List<AnimationController> _animationControllers = List(3);
-  List<Animation<double>> _scaleAnimations = List(3);
-  List<Animation<double>> _opacityAnimations = List(3);
-  List<CancelableOperation<int>> _delayFeatures = List(3);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _scaleAnimations = [];
+  List<Animation<double>> _opacityAnimations = [];
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(seconds: 1));
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: const Duration(seconds: 1)));
 
-      _scaleAnimations[i] = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
-      _opacityAnimations[i] = TweenSequence([
+      _scaleAnimations.add(Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+          parent: _animationControllers[i], curve: Curves.linear)));
+      _opacityAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 5),
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.0), weight: 95),
       ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
+          parent: _animationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 
@@ -49,7 +49,7 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = List(3);
+    List<Widget> widgets = List.filled(3, Container());
     for (int i = 0; i < 3; i++) {
       widgets[i] = ScaleTransition(
         scale: _scaleAnimations[i],

@@ -14,36 +14,36 @@ class _LineScalePartyState extends State<LineScaleParty>
   static const _BEGIN_TIMES = [770, 290, 280, 740];
   static const _DURATION = [1260, 430, 1010, 730];
 
-  List<AnimationController> _animationControllers = List(4);
-  List<Animation<double>> _animations = List(4);
-  List<CancelableOperation<int>> _delayFeatures = List(4);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _animations = [];
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
 
     for (int i = 0; i < 4; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: Duration(milliseconds: _DURATION[i]));
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: Duration(milliseconds: _DURATION[i])));
 
-      _animations[i] = TweenSequence([
+      _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.5), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.5, end: 1.0), weight: 1),
       ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
+          parent: _animationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 
   @override
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f?.dispose());
+    _animationControllers.forEach((f) => f.dispose());
     super.dispose();
   }
 

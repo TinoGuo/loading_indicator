@@ -26,9 +26,9 @@ class _BallGridBeatState extends State<BallGridBeat>
 //    1060,
 //  ];
 //  static const _BEGIN_TIMES = [-60, 250, 170, 480, 310, 30, 460, 780, 450];
-  List<AnimationController> _animationControllers = List(_BALL_NUM);
-  List<Animation<double>> _animations = List(_BALL_NUM);
-  List<CancelableOperation> _delayFeatures = List(_BALL_NUM);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _animations = [];
+  List<CancelableOperation> _delayFeatures = [];
 
   @override
   void initState() {
@@ -37,8 +37,8 @@ class _BallGridBeatState extends State<BallGridBeat>
     for (int i = 0; i < _BALL_NUM; i++) {
       final duration = random.nextInt(1000) + 600;
       final delay = random.nextInt(1000) - 200;
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: Duration(milliseconds: duration));
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: Duration(milliseconds: duration)));
       _animations[i] = TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.7), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.7, end: 1.0), weight: 1),
@@ -60,7 +60,7 @@ class _BallGridBeatState extends State<BallGridBeat>
 
   @override
   Widget build(BuildContext context) {
-    final widgets = List<Widget>(_BALL_NUM);
+    final widgets = List<Widget>.filled(_BALL_NUM, Container());
     for (int i = 0; i < _BALL_NUM; i++) {
       widgets[i] = ScaleTransition(
         alignment: Alignment.center,

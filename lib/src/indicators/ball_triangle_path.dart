@@ -9,10 +9,10 @@ class BallTrianglePath extends StatefulWidget {
 
 class _BallTrianglePathState extends State<BallTrianglePath>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<Offset> _topCenterAnimation;
-  Animation<Offset> _leftBottomAnimation;
-  Animation<Offset> _rightBottomAnimation;
+  late AnimationController _animationController;
+  late Animation<Offset> _topCenterAnimation;
+  late Animation<Offset> _leftBottomAnimation;
+  late Animation<Offset> _rightBottomAnimation;
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
         final circleSize = constraint.maxWidth / 5;
         final container = Size(constraint.maxWidth, constraint.maxHeight);
 
-        List<Widget> widgets = List(3);
+        List<Widget> widgets = List.filled(3, Container());
         widgets[0] = Positioned.fromRect(
           rect: Rect.fromLTWH(constraint.maxWidth / 2 - circleSize / 2, 0,
               circleSize, circleSize),

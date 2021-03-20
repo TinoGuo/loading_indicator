@@ -13,9 +13,9 @@ class _BallRotateChaseState extends State<BallRotateChase>
     with SingleTickerProviderStateMixin {
   static const _BALL_NUM = 5;
 
-  AnimationController _animationController;
-  List<Animation<double>> _scaleAnimations = List(_BALL_NUM);
-  List<Animation<double>> _translateAnimations = List(_BALL_NUM);
+  late AnimationController _animationController;
+  List<Animation<double>> _scaleAnimations = [];
+  List<Animation<double>> _translateAnimations = [];
 
   @override
   void initState() {
@@ -25,10 +25,10 @@ class _BallRotateChaseState extends State<BallRotateChase>
     for (int i = 0; i < _BALL_NUM; i++) {
       final rate = i / 5;
       final cubic = Cubic(0.5, 0.15 + rate, 0.25, 1.0);
-      _scaleAnimations[i] = Tween(begin: 1 - rate, end: 0.2 + rate)
-          .animate(CurvedAnimation(parent: _animationController, curve: cubic));
-      _translateAnimations[i] = Tween(begin: 0.0, end: 2 * pi)
-          .animate(CurvedAnimation(parent: _animationController, curve: cubic));
+      _scaleAnimations.add(Tween(begin: 1 - rate, end: 0.2 + rate).animate(
+          CurvedAnimation(parent: _animationController, curve: cubic)));
+      _translateAnimations.add(Tween(begin: 0.0, end: 2 * pi).animate(
+          CurvedAnimation(parent: _animationController, curve: cubic)));
 
       _animationController.repeat();
     }
@@ -48,7 +48,7 @@ class _BallRotateChaseState extends State<BallRotateChase>
       final deltaX = (constraint.maxWidth - circleSize) / 2;
       final deltaY = (constraint.maxHeight - circleSize) / 2;
 
-      final widgets = List<Widget>(_BALL_NUM);
+      final widgets = List<Widget>.filled(_BALL_NUM, Container());
       for (int i = 0; i < _BALL_NUM; i++) {
         widgets[i] = Positioned.fromRect(
           rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),

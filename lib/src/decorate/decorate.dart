@@ -6,18 +6,19 @@ import 'package:loading_indicator/loading_indicator.dart';
 class DecorateData {
   final Color color;
   final Indicator indicator;
-  final List<Color> colors;
+  final List<Color>? colors;
 
   const DecorateData(
-      {@required this.indicator, this.color = Colors.white, this.colors});
+      {required this.indicator, this.color = Colors.white, this.colors});
 
   @override
   bool operator ==(other) {
-    if (other.runtimeType != runtimeType) return false;
-    final DecorateData typedOther = other;
-    return this.color == typedOther.color &&
-        this.colors == typedOther.colors &&
-        this.indicator == typedOther.indicator;
+    if (other.runtimeType != this.runtimeType) return false;
+
+    return other is DecorateData &&
+        this.color == other.color &&
+        this.colors == other.colors &&
+        this.indicator == other.indicator;
   }
 
   @override
@@ -34,16 +35,16 @@ class DecorateContext extends InheritedWidget {
   final DecorateData decorateData;
 
   DecorateContext({
-    Key key,
-    @required this.decorateData,
-    @required Widget child,
+    Key? key,
+    required this.decorateData,
+    required Widget child,
   }) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(DecorateContext oldWidget) =>
       oldWidget.decorateData == this.decorateData;
 
-  static DecorateContext of(BuildContext context) {
+  static DecorateContext? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();
   }
 }

@@ -9,9 +9,9 @@ class BallScaleRipple extends StatefulWidget {
 
 class _BallScaleRippleState extends State<BallScaleRipple>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _opacityAnimation;
-  Animation<double> _scaleAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _opacityAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {

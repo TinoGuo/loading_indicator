@@ -9,8 +9,8 @@ class SemiCircleSpin extends StatefulWidget {
 
 class _SemiCircleSpinState extends State<SemiCircleSpin>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _animation;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {

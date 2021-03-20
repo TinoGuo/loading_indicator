@@ -10,13 +10,13 @@ class Orbit extends StatefulWidget {
 }
 
 class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _ring1ScaleAnimation;
-  Animation<double> _ring1OpacityAnimation;
-  Animation<double> _ring2ScaleAnimation;
-  Animation<double> _ring2OpacityAnimation;
-  Animation<double> _coreAnimation;
-  Animation<double> _satelliteAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _ring1ScaleAnimation;
+  late Animation<double> _ring1OpacityAnimation;
+  late Animation<double> _ring2ScaleAnimation;
+  late Animation<double> _ring2OpacityAnimation;
+  late Animation<double> _coreAnimation;
+  late Animation<double> _satelliteAnimation;
 
   @override
   void initState() {

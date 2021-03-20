@@ -12,36 +12,36 @@ class _BallPulseSyncState extends State<BallPulseSync>
     with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [70, 140, 210];
 
-  List<AnimationController> _animationControllers = List(3);
-  List<Animation<double>> _animations = List(3);
-  List<CancelableOperation<int>> _delayFeatures = List(3);
+  List<AnimationController> _animationControllers = [];
+  List<Animation<double>> _animations = [];
+  List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
-      _animationControllers[i] = AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 600));
+      _animationControllers.add(AnimationController(
+          vsync: this, duration: const Duration(milliseconds: 600)));
 
-      _animations[i] = TweenSequence([
+      _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 1.0, end: -1.0), weight: 1),
         TweenSequenceItem(tween: Tween(begin: -1.0, end: 0.0), weight: 1),
       ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.easeInOut));
+          parent: _animationControllers[i], curve: Curves.easeInOut)));
 
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 
   @override
   void dispose() {
     _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f?.dispose());
+    _animationControllers.forEach((f) => f.dispose());
     super.dispose();
   }
 
@@ -51,7 +51,7 @@ class _BallPulseSyncState extends State<BallPulseSync>
       final circleSize = (constraint.maxWidth - 4) / 3;
       final deltaY = (constraint.maxHeight / 2 - circleSize) / 2;
 
-      List<Widget> widgets = List(5);
+      List<Widget> widgets = List.filled(5, Container());
       for (int i = 0; i < 5; i++) {
         if (i.isEven) {
           widgets[i] = Expanded(

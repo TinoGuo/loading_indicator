@@ -5,7 +5,7 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 class BallTrianglePathColored extends StatefulWidget {
   final bool isFilled;
 
-  const BallTrianglePathColored({Key key, this.isFilled = false})
+  const BallTrianglePathColored({Key? key, this.isFilled = false})
       : super(key: key);
 
   @override
@@ -15,10 +15,10 @@ class BallTrianglePathColored extends StatefulWidget {
 
 class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<Offset> _topCenterAnimation;
-  Animation<Offset> _leftBottomAnimation;
-  Animation<Offset> _rightBottomAnimation;
+  late AnimationController _animationController;
+  Animation<Offset>? _topCenterAnimation;
+  Animation<Offset>? _leftBottomAnimation;
+  Animation<Offset>? _rightBottomAnimation;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
         final circleSize = constraint.maxWidth / 5;
         final container = Size(constraint.maxWidth, constraint.maxHeight);
 
-        List<Widget> widgets = List(3);
+        List<Widget> widgets = List.filled(3, Container());
         widgets[0] = Positioned.fromRect(
           rect: Rect.fromLTWH(constraint.maxWidth / 2 - circleSize / 2, 0,
               circleSize, circleSize),
@@ -98,14 +98,14 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
   }
 
   _buildAnimatedRing(
-      Size size, double circleSize, Animation<Offset> animation, int index) {
+      Size size, double circleSize, Animation<Offset>? animation, int index) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {
         return Transform(
           transform: Matrix4.identity()
             ..translate(
-              animation.value.dx * (size.width - circleSize),
+              animation!.value.dx * (size.width - circleSize),
               animation.value.dy * (size.height - circleSize),
             ),
           child: child,
