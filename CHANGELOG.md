@@ -1,6 +1,9 @@
+## [2.0.1] 2021/03/28
+* Fix not some animations not working
+
 ## [2.0.0] 2021/03/11
 * Added support for null safety (Flutter 2.0)
-* Updated depricated items.
+* Updated deprecated items.
 
 ## [1.2.0] - 2020/07/18
 * add `ball_triangle_path_colored`, thanks [Kok Wai Gie](https://github.com/woshikie)
