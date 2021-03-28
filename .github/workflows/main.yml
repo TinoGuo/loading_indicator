@@ -60,6 +60,9 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
+      - name: enabled exp platform
+        run: |
+          flutter config --enable-macos-desktop
       - name: flutter hotbake
         run: |
           flutter pub get
