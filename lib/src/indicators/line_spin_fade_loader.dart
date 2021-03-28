@@ -10,6 +10,8 @@ class LineSpinFadeLoader extends StatefulWidget {
   _LineSpinFadeLoaderState createState() => _LineSpinFadeLoaderState();
 }
 
+const int _kLineSize = 8;
+
 class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
     with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [0, 120, 240, 360, 480, 600, 720, 840];
@@ -21,7 +23,7 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < _animationControllers.length; i++) {
+    for (int i = 0; i < _kLineSize; i++) {
       _animationControllers.add(AnimationController(
           vsync: this, duration: const Duration(seconds: 1)));
       _opacityAnimations.add(TweenSequence([

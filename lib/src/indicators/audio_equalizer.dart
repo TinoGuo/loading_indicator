@@ -41,8 +41,8 @@ class _AudioEqualizerState extends State<AudioEqualizer>
           vsync: this, duration: Duration(milliseconds: _DURATIONS[i])));
       final sequences = <TweenSequenceItem<double>>[];
       for (int j = 0; j < _VALUES.length - 1; j++) {
-        sequences[j] = TweenSequenceItem(
-            tween: Tween(begin: _VALUES[j], end: _VALUES[j + 1]), weight: 1);
+        sequences.add(TweenSequenceItem(
+            tween: Tween(begin: _VALUES[j], end: _VALUES[j + 1]), weight: 1));
       }
       _animations
           .add(TweenSequence(sequences).animate(_animationControllers[i]));

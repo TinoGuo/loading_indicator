@@ -10,6 +10,8 @@ class BallSpinFadeLoader extends StatefulWidget {
   _BallSpinFadeLoaderState createState() => _BallSpinFadeLoaderState();
 }
 
+const int _kBallSize = 8;
+
 class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
     with TickerProviderStateMixin {
   static const _BEGIN_TIMES = [0, 120, 240, 360, 480, 600, 720, 840];
@@ -22,7 +24,7 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < _animationControllers.length; i++) {
+    for (int i = 0; i < _kBallSize; i++) {
       _animationControllers.add(AnimationController(
           vsync: this, duration: const Duration(seconds: 1)));
       _opacityAnimations.add(TweenSequence([

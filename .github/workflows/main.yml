@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-flutter
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          channel: 'stable'
 
   build-and-test:
     runs-on: ${{ matrix.os }}
@@ -59,7 +59,10 @@ jobs:
           key: ${{ runner.os }}-flutter
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          channel: 'stable'
+      - name: enabled exp platform
+        run: |
+          flutter config --enable-macos-desktop
       - name: flutter hotbake
         run: |
           flutter pub get
@@ -76,3 +79,10 @@ jobs:
         name: build ios example
         working-directory: ./example
         run: flutter build ios --release --no-codesign
+      - if: matrix.os == 'macos-latest'
+        name: build macos example
+        working-directory: ./example
+        run: flutter build macos
+      - name: build web example
+        working-directory: ./example
+        run: flutter build web

@@ -22,22 +22,22 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
     for (int i = 0; i < 3; i++) {
       _animationControllers.add(AnimationController(
           vsync: this, duration: Duration(milliseconds: 700)));
-      _scaleAnimations[i] = TweenSequence([
+      _scaleAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.75), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.75, end: 1.0), weight: 1),
       ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
-      _opacityAnimations[i] = TweenSequence([
+          parent: _animationControllers[i], curve: Curves.linear)));
+      _opacityAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.2), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.2, end: 1.0), weight: 1),
       ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
+          parent: _animationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
-      }));
+      })));
     }
   }
 
