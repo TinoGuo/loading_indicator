@@ -39,15 +39,15 @@ class _BallGridBeatState extends State<BallGridBeat>
       final delay = random.nextInt(1000) - 200;
       _animationControllers.add(AnimationController(
           vsync: this, duration: Duration(milliseconds: duration)));
-      _animations[i] = TweenSequence([
+      _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.7), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.7, end: 1.0), weight: 1),
       ]).animate(CurvedAnimation(
-          parent: _animationControllers[i], curve: Curves.linear));
-      _delayFeatures[i] = CancelableOperation.fromFuture(
+          parent: _animationControllers[i], curve: Curves.linear)));
+      _delayFeatures.add(CancelableOperation.fromFuture(
           Future.delayed(Duration(milliseconds: delay)).then((t) {
         _animationControllers[i].repeat();
-      }));
+      })));
     }
   }
 
