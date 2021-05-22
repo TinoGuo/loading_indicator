@@ -1,3 +1,6 @@
+## [2.1.1] 2021/05/22
+* Bump Dart to 2.13
+
 ## [2.0.1] 2021/03/28
 * Fix not some animations not working
 

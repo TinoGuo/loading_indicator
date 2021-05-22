@@ -1,15 +1,15 @@
 name: loading_indicator
 description: A collection loading animations written in pure dart. Out of the box, no extra dependency.
-version: 2.0.1
+version: 2.1.1
 homepage: https://github.com/TinoGuo/loading_indicator
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.13.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  async: ^2.5.0
+  async: ^2.7.0
 
 
 dev_dependencies:
