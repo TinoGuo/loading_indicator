@@ -67,7 +67,9 @@ class _BallPulseSyncState extends State<BallPulseSync>
             ),
           );
         } else {
-          widgets[i] = SizedBox(width: 2);
+          widgets[i] = Expanded(
+            child: SizedBox(),
+          );
         }
       }
 
