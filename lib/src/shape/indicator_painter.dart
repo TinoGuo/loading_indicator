@@ -34,39 +34,11 @@ class IndicatorShapeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DecorateData decorateData = DecorateContext.of(context)!.decorateData;
-    final bool shouldUseColors = decorateData.colors != null &&
-        colorIndex != null &&
-        colorIndex! < decorateData.colors!.length;
+    final bool shouldUseColors =
+        colorIndex != null && colorIndex! < decorateData.colors.length;
     final color = shouldUseColors
-        ? decorateData.colors![colorIndex!]
-        : DecorateContext.of(context)!.decorateData.color;
-
-//    if (shape == Shape.circle) {
-//      return Container(
-//        decoration: BoxDecoration(
-//          color: color,
-//          shape: BoxShape.circle,
-//        ),
-//      );
-//    } else if (shape == Shape.line) {
-//      return LayoutBuilder(
-//        builder: (ctx, constraint) => Container(
-//              decoration: ShapeDecoration(
-//                color: color,
-//                shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.circular(constraint.maxWidth / 2),
-//                ),
-//              ),
-//            ),
-//      );
-//    } else if (shape == Shape.rectangle) {
-//      return Container(
-//        decoration: BoxDecoration(
-//          color: color,
-//          shape: BoxShape.rectangle,
-//        ),
-//      );
-//    }
+        ? decorateData.colors[colorIndex!]
+        : DecorateContext.of(context)!.decorateData.colors.first;
 
     return Container(
       constraints: const BoxConstraints(
