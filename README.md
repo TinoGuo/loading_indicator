@@ -31,7 +31,7 @@ Install the latest version from [pub](https://pub.dev/packages/loading_indicator
 ## Usage
 very simple to use
 
-`LoadingIndicator(indicatorType: Indicator.ballPulse, color: Colors.white,)`
+`LoadingIndicator(indicatorType: Indicator.ballPulse, color: Colors.white, backgroundColor: Colors.black)`
 
 ## License
 [Apache 2.0](LICENSE)

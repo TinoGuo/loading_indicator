@@ -5,6 +5,7 @@
 // [FloatingActionButtonLocation.centerDocked]. The [FloatingActionButton] is
 // connected to a callback that increments a counter.
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -43,7 +44,8 @@ class MainWidget extends StatelessWidget {
               padding: const EdgeInsets.all(64),
               child: LoadingIndicator(
                 indicatorType: indicator,
-                color: Colors.white,
+                colors: const [Colors.white],
+                backgroundColor: Colors.black38,
               ),
             ),
           );
@@ -93,35 +95,45 @@ class GridWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.pink,
-      body: GridView.builder(
-        itemCount: Indicator.values.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          childAspectRatio: 1,
-        ),
-        itemBuilder: (ctx, index) => Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: LoadingIndicator(
-                color: Colors.white,
-                indicatorType: Indicator.values[index],
-              ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text('Grid Demo'),
+            floating: true,
+          ),
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              childAspectRatio: 1,
             ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                '${index + 1}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
+            delegate: SliverChildBuilderDelegate(
+              (ctx, index) => Stack(
+                fit: StackFit.expand,
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: LoadingIndicator(
+                      colors: const [Colors.white],
+                      indicatorType: Indicator.values[index],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      '${index + 1}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
+              childCount: Indicator.values.length,
+            ),
+          ),
+        ],
       ),
     );
   }

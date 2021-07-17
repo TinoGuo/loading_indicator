@@ -4,29 +4,32 @@ import 'package:loading_indicator/loading_indicator.dart';
 /// Information about a piece of animation (e.g., color).
 @immutable
 class DecorateData {
-  final Color color;
+  final Color? backgroundColor;
   final Indicator indicator;
-  final List<Color>? colors;
+  final List<Color> colors;
 
-  const DecorateData(
-      {required this.indicator, this.color = Colors.white, this.colors});
-
-  @override
-  bool operator ==(other) {
-    if (other.runtimeType != this.runtimeType) return false;
-
-    return other is DecorateData &&
-        this.color == other.color &&
-        this.colors == other.colors &&
-        this.indicator == other.indicator;
-  }
+  const DecorateData({
+    required this.indicator,
+    this.backgroundColor,
+    required this.colors,
+  });
 
   @override
-  int get hashCode => hashValues(color, indicator);
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DecorateData &&
+          runtimeType == other.runtimeType &&
+          backgroundColor == other.backgroundColor &&
+          indicator == other.indicator &&
+          colors == other.colors;
+
+  @override
+  int get hashCode =>
+      backgroundColor.hashCode ^ indicator.hashCode ^ colors.hashCode;
 
   @override
   String toString() {
-    return 'DecorateData{color: $color, indicator: $indicator}';
+    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors}';
   }
 }
 
