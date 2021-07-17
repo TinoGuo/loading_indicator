@@ -50,12 +50,19 @@ class _LineScalePartyState extends State<LineScaleParty>
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = _animations
-        .map((Animation<double> anim) => Expanded(
-              child: ScaleYTransition(
-                scaleY: anim,
-                child: IndicatorShapeWidget(shape: Shape.line),
+        .asMap()
+        .entries
+        .map(
+          (entry) => Expanded(
+            child: ScaleYTransition(
+              scaleY: entry.value,
+              child: IndicatorShapeWidget(
+                shape: Shape.line,
+                index: entry.key,
               ),
-            ))
+            ),
+          ),
+        )
         .toList();
 
     for (int i = 0; i < widgets.length - 1; i++) {

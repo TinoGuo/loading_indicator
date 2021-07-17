@@ -85,7 +85,10 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
               rect: Rect.fromCircle(center: center, radius: coreSize / 2),
               child: ScaleTransition(
                 scale: _coreAnimation,
-                child: IndicatorShapeWidget(shape: Shape.circle),
+                child: IndicatorShapeWidget(
+                  shape: Shape.circle,
+                  index: 0,
+                ),
               ),
             ),
             Positioned.fromRect(
@@ -94,7 +97,10 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                 opacity: _ring1OpacityAnimation,
                 child: ScaleTransition(
                   scale: _ring1ScaleAnimation,
-                  child: IndicatorShapeWidget(shape: Shape.circle),
+                  child: IndicatorShapeWidget(
+                    shape: Shape.circle,
+                    index: 1,
+                  ),
                 ),
               ),
             ),
@@ -104,7 +110,10 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                 opacity: _ring2OpacityAnimation,
                 child: ScaleTransition(
                   scale: _ring2ScaleAnimation,
-                  child: IndicatorShapeWidget(shape: Shape.circle),
+                  child: IndicatorShapeWidget(
+                    shape: Shape.circle,
+                    index: 2,
+                  ),
                 ),
               ),
             ),
@@ -113,12 +122,14 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                   center.dy - satelliteSize / 2, satelliteSize, satelliteSize),
               child: AnimatedBuilder(
                 animation: _satelliteAnimation,
-                child: IndicatorShapeWidget(shape: Shape.circle),
                 builder: (_, child) {
                   return Transform.translate(
                     offset: Offset(sin(_satelliteAnimation.value) * deltaX,
                         -cos(_satelliteAnimation.value) * deltaY),
-                    child: child,
+                    child: IndicatorShapeWidget(
+                      shape: Shape.circle,
+                      index: 3,
+                    ),
                   );
                 },
               ),

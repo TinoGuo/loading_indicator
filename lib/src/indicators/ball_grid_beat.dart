@@ -67,7 +67,10 @@ class _BallGridBeatState extends State<BallGridBeat>
         scale: _animations[i],
         child: FadeTransition(
           opacity: _animations[i],
-          child: IndicatorShapeWidget(shape: Shape.circle),
+          child: IndicatorShapeWidget(
+            shape: Shape.circle,
+            index: i,
+          ),
         ),
       );
     }

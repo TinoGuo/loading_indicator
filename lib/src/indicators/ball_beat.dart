@@ -61,6 +61,7 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
                 scale: _scaleAnimations[i ~/ 2],
                 child: IndicatorShapeWidget(
                   shape: Shape.circle,
+                  index: i ~/ 2,
                 ),
               ),
             ),

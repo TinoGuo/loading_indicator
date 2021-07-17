@@ -9,6 +9,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
+const List<Color> _kDefaultRainbowColors = const [
+  Colors.red,
+  Colors.orange,
+  Colors.yellow,
+  Colors.green,
+  Colors.blue,
+  Colors.indigo,
+  Colors.purple,
+];
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -37,15 +47,14 @@ class MainWidget extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(indicator.toString().split('.').last),
-              backgroundColor: Colors.pink,
             ),
-            backgroundColor: Colors.teal,
             body: Padding(
               padding: const EdgeInsets.all(64),
-              child: LoadingIndicator(
-                indicatorType: indicator,
-                colors: const [Colors.white],
-                backgroundColor: Colors.black38,
+              child: Center(
+                child: LoadingIndicator(
+                  indicatorType: indicator,
+                  colors: _kDefaultRainbowColors,
+                ),
               ),
             ),
           );
@@ -58,7 +67,6 @@ class MainWidget extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text('Demo'),
-          backgroundColor: Colors.pink,
         ),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.grid_on),
@@ -94,7 +102,6 @@ class MainWidget extends StatelessWidget {
 class GridWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -103,7 +110,7 @@ class GridWidget extends StatelessWidget {
           ),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
+              crossAxisCount: 6,
               childAspectRatio: 1,
             ),
             delegate: SliverChildBuilderDelegate(
@@ -114,8 +121,9 @@ class GridWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: LoadingIndicator(
-                      colors: const [Colors.white],
+                      colors: _kDefaultRainbowColors,
                       indicatorType: Indicator.values[index],
+                      strokeWidth: 3,
                     ),
                   ),
                   Align(

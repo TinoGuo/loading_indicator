@@ -101,7 +101,10 @@ class _BallPulseRiseState extends State<BallPulseRise>
           child: child,
         );
       },
-      child: IndicatorShapeWidget(shape: Shape.circle),
+      child: IndicatorShapeWidget(
+        shape: Shape.circle,
+        index: index,
+      ),
     );
   }
 }

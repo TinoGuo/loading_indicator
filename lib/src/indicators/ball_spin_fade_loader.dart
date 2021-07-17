@@ -74,7 +74,10 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
             opacity: _opacityAnimations[i],
             child: ScaleTransition(
               scale: _scaleAnimations[i],
-              child: IndicatorShapeWidget(shape: Shape.circle),
+              child: IndicatorShapeWidget(
+                shape: Shape.circle,
+                index: i,
+              ),
             ),
           ),
         );

@@ -47,7 +47,6 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
 
       return AnimatedBuilder(
         animation: _animationController,
-        child: IndicatorShapeWidget(shape: Shape.circle),
         builder: (_, child) => Stack(
           children: <Widget>[
             Positioned.fromRect(
@@ -56,7 +55,10 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
                 transform: Matrix4.identity()
                   ..translate(deltaX * _animation.value.dx,
                       deltaY * _animation.value.dy),
-                child: child,
+                child: IndicatorShapeWidget(
+                  shape: Shape.circle,
+                  index: 0,
+                ),
               ),
             ),
             Positioned.fromRect(
@@ -65,7 +67,10 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
                 transform: Matrix4.identity()
                   ..translate(deltaX * -_animation.value.dx,
                       deltaY * -_animation.value.dy),
-                child: child,
+                child: IndicatorShapeWidget(
+                  shape: Shape.circle,
+                  index: 1,
+                ),
               ),
             )
           ],

@@ -46,21 +46,27 @@ class _BallRotateState extends State<BallRotate>
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Expanded(child: _buildSingleCircle(opacity: 0.8)),
+            Expanded(child: _buildSingleCircle(0.8, 0)),
             Expanded(child: SizedBox()),
-            Expanded(child: _buildSingleCircle(opacity: 1.0)),
+            Expanded(child: _buildSingleCircle(1.0, 1)),
             Expanded(child: SizedBox()),
-            Expanded(child: _buildSingleCircle(opacity: 0.8)),
+            Expanded(child: _buildSingleCircle(0.8, 2)),
           ],
         ),
       ),
     );
   }
 
-  _buildSingleCircle({double opacity: 1.0}) {
+  _buildSingleCircle(
+    double opacity,
+    int index,
+  ) {
     return Opacity(
       opacity: opacity,
-      child: IndicatorShapeWidget(shape: Shape.circle),
+      child: IndicatorShapeWidget(
+        shape: Shape.circle,
+        index: index,
+      ),
     );
   }
 }

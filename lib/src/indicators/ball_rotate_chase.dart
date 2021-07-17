@@ -70,7 +70,10 @@ class _BallRotateChaseState extends State<BallRotateChase>
                 ),
               );
             },
-            child: IndicatorShapeWidget(shape: Shape.circle),
+            child: IndicatorShapeWidget(
+              shape: Shape.circle,
+              index: i,
+            ),
           ),
         );
       }

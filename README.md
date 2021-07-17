@@ -1,7 +1,6 @@
 # LoadingIndicator
 ![](https://github.com/TinoGuo/loading_indicator/workflows/Flutter%20Build%20Test%20CI/badge.svg?branch=master)
 [![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
-[中文版](README_CN.md)
 
 A collection of out of the box loading animations written in pure dart, no extra dependency, inspired by [loaders.css](https://github.com/ConnorAtherton/loaders.css) and [NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView).
 
@@ -10,7 +9,7 @@ A collection of out of the box loading animations written in pure dart, no extra
 
 Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to preview.**3D effect will be invalid in web.**
 
-![](gif/demo_2019_05_24.gif)
+![](gif/demo_2021_07_18.gif)
 
 ## Animation types
 
@@ -29,9 +28,18 @@ Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to 
 Install the latest version from [pub](https://pub.dev/packages/loading_indicator)
 
 ## Usage
-very simple to use
+Simple but powerful parameters
 
-`LoadingIndicator(indicatorType: Indicator.ballPulse, color: Colors.white, backgroundColor: Colors.black)`
+```
+LoadingIndicator(
+    colors: const [Colors.white],       /// The color collections
+    indicatorType: Indicator.ballPulse, /// The loading type of the widget
+    strokeWidth: 2,                     /// The stroke of the line, only applicable to widget which contains line
+    backgroundColor: Colors.black,      /// Background of the widget
+)
+```
+
+[中文版](README_CN.md)
 
 ## License
 [Apache 2.0](LICENSE)

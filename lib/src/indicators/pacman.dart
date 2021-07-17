@@ -86,6 +86,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
             return IndicatorShapeWidget(
               shape: Shape.arc,
               data: _rotateAnimation.value,
+              index: 0,
             );
           },
         ),
@@ -111,7 +112,10 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
                   offset: Offset(
                       _translateXAnimations[i].value * constraint.maxWidth / 2,
                       0.0),
-                  child: child,
+                  child: IndicatorShapeWidget(
+                    shape: Shape.circle,
+                    index: i + 1,
+                  ),
                 );
               },
             ),
