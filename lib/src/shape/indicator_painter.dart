@@ -49,6 +49,7 @@ class IndicatorShapeWidget extends StatelessWidget {
           shape,
           data,
           decorateData.strokeWidth,
+          pathColor: decorateData.pathBackgroundColor,
         ),
       ),
     );
@@ -61,13 +62,15 @@ class _ShapePainter extends CustomPainter {
   final Paint _paint;
   final double? data;
   final double strokeWidth;
+  final Color? pathColor;
 
   _ShapePainter(
     this.color,
     this.shape,
     this.data,
-    this.strokeWidth,
-  )   : _paint = Paint()..isAntiAlias = true,
+    this.strokeWidth, {
+    this.pathColor,
+  })  : _paint = Paint()..isAntiAlias = true,
         super();
 
   @override
@@ -84,18 +87,31 @@ class _ShapePainter extends CustomPainter {
         );
         break;
       case Shape.ringThirdFour:
+        if (pathColor != null) {
+          _paint
+            ..color = pathColor!
+            ..strokeWidth = strokeWidth
+            ..style = PaintingStyle.stroke;
+          canvas.drawCircle(
+            Offset(size.width / 2, size.height / 2),
+            size.shortestSide / 2,
+            _paint,
+          );
+        }
         _paint
           ..color = color
           ..style = PaintingStyle.stroke
           ..strokeWidth = strokeWidth;
         canvas.drawArc(
-            Rect.fromCircle(
-                center: Offset(size.width / 2, size.height / 2),
-                radius: size.shortestSide / 2),
-            -3 * pi / 4,
-            3 * pi / 2,
-            false,
-            _paint);
+          Rect.fromCircle(
+            center: Offset(size.width / 2, size.height / 2),
+            radius: size.shortestSide / 2,
+          ),
+          -3 * pi / 4,
+          3 * pi / 2,
+          false,
+          _paint,
+        );
         break;
       case Shape.rectangle:
         _paint
@@ -164,5 +180,7 @@ class _ShapePainter extends CustomPainter {
   bool shouldRepaint(_ShapePainter oldDelegate) =>
       this.shape != oldDelegate.shape ||
       this.color != oldDelegate.color ||
-      this.data != oldDelegate.data;
+      this.data != oldDelegate.data ||
+      this.strokeWidth != oldDelegate.strokeWidth ||
+      this.pathColor != oldDelegate.pathColor;
 }

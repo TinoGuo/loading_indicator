@@ -1,3 +1,8 @@
+## [3.0.0] 2021/07/18
+* Support color collection #15
+* Support customize stroke width #15
+* Support customize stroke background #18
+
 ## [2.1.1] 2021/05/22
 * Bump Dart to 2.13
 

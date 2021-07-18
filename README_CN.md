@@ -9,7 +9,7 @@
 
 现在你可以点击这个[地址](https://tinoguo.github.io/loading_indicator/)来进行预览.**3D效果在web上会失效.**
 
-![](gif/demo_2021_07_18.gif)
+![](gif/demo_2021_07_18_02.gif)
 
 ## 动画类型
 
@@ -18,24 +18,26 @@
 |1. ballPulse | 2. ballGridPulse | 3. ballClipRotate | 4. squareSpin|
 |5. ballClipRotatePulse | 6. ballClipRotateMultiple | 7. ballPulseRise | 8. ballRotate|
 |9. cubeTransition | 10. ballZigZag | 11. ballZigZagDeflect | 12. ballTrianglePath|
-|13. ballScale | 14. lineScale | 15. lineScaleParty | 16. ballScaleMultiple|
-|17. ballPulseSync | 18. ballBeat | 19. lineScalePulseOut | 20. lineScalePulseOutRapid|
-|21. ballScaleRipple | 22. ballScaleRippleMultiple | 23. ballSpinFadeLoader | 24. lineSpinFadeLoader|
-|25. triangleSkewSpin | 26. pacman | 27. ballGridBeat | 28. semiCircleSpin|
-|29. ballRotateChase | 30. orbit | 31. audioEqualizer | 32. circleStrokeSpin|
+|13. ballTrianglePathColored | 14.ballTrianglePathColoredFilled | 15. ballScale | 16. lineScale|
+|17. lineScaleParty | 18. ballScaleMultiple | 19. ballPulseSync | 20. ballBeat|
+|21. lineScalePulseOut | 22. lineScalePulseOutRapid |23. ballScaleRipple | 24. ballScaleRippleMultiple|
+|25. ballSpinFadeLoader | 26. lineSpinFadeLoader | 27. triangleSkewSpin | 28. pacman|
+|29. ballGridBeat | 30. semiCircleSpin| 31. ballRotateChase | 32. orbit|
+|33. audioEqualizer | 34. circleStrokeSpin|
 
 ## 安装
 从[pub](https://pub.dev/packages/loading_indicator)安装最新版本。
 
 ## 使用
-使用很简单。
+简单且强大的API。
 
 ```
 LoadingIndicator(
-    colors: const [Colors.white],       /// 颜色集合
-    indicatorType: Indicator.ballPulse, /// loading的类型
-    strokeWidth: 2,                     /// 线条宽度，只对含有线条的组件有效
-    backgroundColor: Colors.black,      /// 组件背景色
+    colors: const [Colors.white],       /// 必须, 颜色集合
+    indicatorType: Indicator.ballPulse, /// 可选, loading的类型
+    strokeWidth: 2,                     /// 可选, 线条宽度，只对含有线条的组件有效
+    backgroundColor: Colors.black,      /// 可选, 组件背景色
+    pathBackgroundColor: Colors.black   /// 可选, 线条背景色
 )
 ```
 

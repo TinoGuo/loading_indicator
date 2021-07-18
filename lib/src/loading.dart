@@ -87,12 +87,16 @@ class LoadingIndicator extends StatelessWidget {
   /// The stroke width of line.
   final double? strokeWidth;
 
+  /// Applicable to which has cut edge of the shape
+  final Color? pathBackgroundColor;
+
   LoadingIndicator({
     Key? key,
     required this.indicatorType,
     this.colors,
     this.backgroundColor,
     this.strokeWidth,
+    this.pathBackgroundColor,
   }) : super(key: key);
 
   @override
@@ -105,6 +109,7 @@ class LoadingIndicator extends StatelessWidget {
         indicator: indicatorType,
         colors: safeColors,
         strokeWidth: strokeWidth,
+        pathBackgroundColor: pathBackgroundColor,
       ),
       child: AspectRatio(
         aspectRatio: 1,
