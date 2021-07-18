@@ -9,7 +9,7 @@ A collection of out of the box loading animations written in pure dart, no extra
 
 Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to preview.**3D effect will be invalid in web.**
 
-![](gif/demo_2021_07_18.gif)
+![](gif/demo_2021_07_18_02.gif)
 
 ## Animation types
 
@@ -18,11 +18,12 @@ Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to 
 |1. ballPulse | 2. ballGridPulse | 3. ballClipRotate | 4. squareSpin|
 |5. ballClipRotatePulse | 6. ballClipRotateMultiple | 7. ballPulseRise | 8. ballRotate|
 |9. cubeTransition | 10. ballZigZag | 11. ballZigZagDeflect | 12. ballTrianglePath|
-|13. ballScale | 14. lineScale | 15. lineScaleParty | 16. ballScaleMultiple|
-|17. ballPulseSync | 18. ballBeat | 19. lineScalePulseOut | 20. lineScalePulseOutRapid|
-|21. ballScaleRipple | 22. ballScaleRippleMultiple | 23. ballSpinFadeLoader | 24. lineSpinFadeLoader|
-|25. triangleSkewSpin | 26. pacman | 27. ballGridBeat | 28. semiCircleSpin|
-|29. ballRotateChase | 30. orbit | 31. audioEqualizer | 32. circleStrokeSpin|
+|13. ballTrianglePathColored | 14.ballTrianglePathColoredFilled | 15. ballScale | 16. lineScale|
+|17. lineScaleParty | 18. ballScaleMultiple | 19. ballPulseSync | 20. ballBeat|
+|21. lineScalePulseOut | 22. lineScalePulseOutRapid |23. ballScaleRipple | 24. ballScaleRippleMultiple|
+|25. ballSpinFadeLoader | 26. lineSpinFadeLoader | 27. triangleSkewSpin | 28. pacman|
+|29. ballGridBeat | 30. semiCircleSpin| 31. ballRotateChase | 32. orbit|
+|33. audioEqualizer | 34. circleStrokeSpin|
 
 ## Installing
 Install the latest version from [pub](https://pub.dev/packages/loading_indicator)
@@ -32,10 +33,11 @@ Simple but powerful parameters
 
 ```
 LoadingIndicator(
-    colors: const [Colors.white],       /// The color collections
-    indicatorType: Indicator.ballPulse, /// The loading type of the widget
-    strokeWidth: 2,                     /// The stroke of the line, only applicable to widget which contains line
-    backgroundColor: Colors.black,      /// Background of the widget
+    indicatorType: Indicator.ballPulse, /// Required, The loading type of the widget
+    colors: const [Colors.white],       /// Optional, The color collections
+    strokeWidth: 2,                     /// Optional, The stroke of the line, only applicable to widget which contains line
+    backgroundColor: Colors.black,      /// Optional, Background of the widget
+    pathBackgroundColor: Colors.black   /// Optional, the stroke backgroundColor
 )
 ```
 

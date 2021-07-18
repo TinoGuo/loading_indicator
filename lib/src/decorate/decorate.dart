@@ -8,15 +8,22 @@ const double _kDefaultStrokeWidth = 2;
 class DecorateData {
   final Color? backgroundColor;
   final Indicator indicator;
+
+  /// It will promise at least one value in the collection.
   final List<Color> colors;
   final double? _strokeWidth;
+
+  /// Applicable to which has cut edge of the shape
+  final Color? pathBackgroundColor;
 
   const DecorateData({
     required this.indicator,
     required this.colors,
     this.backgroundColor,
     double? strokeWidth,
-  }) : _strokeWidth = strokeWidth;
+    this.pathBackgroundColor,
+  })  : _strokeWidth = strokeWidth,
+        assert(colors.length > 0);
 
   double get strokeWidth =>
       _strokeWidth == null ? _kDefaultStrokeWidth : _strokeWidth!;

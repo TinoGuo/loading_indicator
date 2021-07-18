@@ -28,17 +28,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'LoadingIndicator example',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-        primaryColor: Colors.white,
-      ),
       home: MainWidget(),
     );
   }
 }
 
 class MainWidget extends StatelessWidget {
-  _showSingleAnimationDialog(BuildContext context, Indicator indicator) {
+  _showSingleAnimationDialog(
+      BuildContext context, Indicator indicator, bool showPathBackground) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -54,6 +51,9 @@ class MainWidget extends StatelessWidget {
                 child: LoadingIndicator(
                   indicatorType: indicator,
                   colors: _kDefaultRainbowColors,
+                  strokeWidth: 4.0,
+                  pathBackgroundColor:
+                      showPathBackground ? Colors.black45 : null,
                 ),
               ),
             ),
@@ -80,9 +80,16 @@ class MainWidget extends StatelessWidget {
         body: ListView.builder(
           itemBuilder: (ctx, index) {
             return InkWell(
-              onTap: () {
-                _showSingleAnimationDialog(ctx, Indicator.values[index]);
-              },
+              onTap: () => _showSingleAnimationDialog(
+                ctx,
+                Indicator.values[index],
+                false,
+              ),
+              onLongPress: () => _showSingleAnimationDialog(
+                ctx,
+                Indicator.values[index],
+                true,
+              ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16),
                 child: Text(
@@ -124,6 +131,7 @@ class GridWidget extends StatelessWidget {
                       colors: _kDefaultRainbowColors,
                       indicatorType: Indicator.values[index],
                       strokeWidth: 3,
+                      // pathBackgroundColor: Colors.black45,
                     ),
                   ),
                   Align(
@@ -131,7 +139,7 @@ class GridWidget extends StatelessWidget {
                     child: Text(
                       '${index + 1}',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 14,
                       ),
                     ),
