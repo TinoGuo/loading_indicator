@@ -72,7 +72,10 @@ class _AudioEqualizerState extends State<AudioEqualizer>
                 alignment: Alignment.bottomCenter,
               );
             },
-            child: IndicatorShapeWidget(shape: Shape.rectangle),
+            child: IndicatorShapeWidget(
+              shape: Shape.rectangle,
+              index: i ~/ 2,
+            ),
           ),
         );
       } else {

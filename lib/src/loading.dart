@@ -84,11 +84,15 @@ class LoadingIndicator extends StatelessWidget {
   final List<Color>? colors;
   final Color? backgroundColor;
 
+  /// The stroke width of line.
+  final double? strokeWidth;
+
   LoadingIndicator({
     Key? key,
     required this.indicatorType,
     this.colors,
     this.backgroundColor,
+    this.strokeWidth,
   }) : super(key: key);
 
   @override
@@ -100,6 +104,7 @@ class LoadingIndicator extends StatelessWidget {
       decorateData: DecorateData(
         indicator: indicatorType,
         colors: safeColors,
+        strokeWidth: strokeWidth,
       ),
       child: AspectRatio(
         aspectRatio: 1,

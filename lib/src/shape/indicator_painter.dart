@@ -22,23 +22,21 @@ enum Shape {
 class IndicatorShapeWidget extends StatelessWidget {
   final Shape shape;
   final double? data;
-  final int? colorIndex;
+
+  /// The index of shape in the widget.
+  final int index;
 
   IndicatorShapeWidget({
     Key? key,
     required this.shape,
     this.data,
-    this.colorIndex,
+    this.index = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final DecorateData decorateData = DecorateContext.of(context)!.decorateData;
-    final bool shouldUseColors =
-        colorIndex != null && colorIndex! < decorateData.colors.length;
-    final color = shouldUseColors
-        ? decorateData.colors[colorIndex!]
-        : DecorateContext.of(context)!.decorateData.colors.first;
+    final color = decorateData.colors[index % decorateData.colors.length];
 
     return Container(
       constraints: const BoxConstraints(
@@ -46,7 +44,12 @@ class IndicatorShapeWidget extends StatelessWidget {
         minHeight: _kMinIndicatorSize,
       ),
       child: CustomPaint(
-        painter: _ShapePainter(color, shape, data: data),
+        painter: _ShapePainter(
+          color,
+          shape,
+          data,
+          decorateData.strokeWidth,
+        ),
       ),
     );
   }
@@ -57,11 +60,14 @@ class _ShapePainter extends CustomPainter {
   final Shape shape;
   final Paint _paint;
   final double? data;
+  final double strokeWidth;
 
-  static const double _strokeWidth = 2.0;
-
-  _ShapePainter(this.color, this.shape, {this.data})
-      : _paint = Paint()..isAntiAlias = true,
+  _ShapePainter(
+    this.color,
+    this.shape,
+    this.data,
+    this.strokeWidth,
+  )   : _paint = Paint()..isAntiAlias = true,
         super();
 
   @override
@@ -81,7 +87,7 @@ class _ShapePainter extends CustomPainter {
         _paint
           ..color = color
           ..style = PaintingStyle.stroke
-          ..strokeWidth = _strokeWidth;
+          ..strokeWidth = strokeWidth;
         canvas.drawArc(
             Rect.fromCircle(
                 center: Offset(size.width / 2, size.height / 2),
@@ -100,7 +106,7 @@ class _ShapePainter extends CustomPainter {
       case Shape.ringTwoHalfVertical:
         _paint
           ..color = color
-          ..strokeWidth = _strokeWidth
+          ..strokeWidth = strokeWidth
           ..style = PaintingStyle.stroke;
         final rect = Rect.fromLTWH(
             size.width / 4, size.height / 4, size.width / 2, size.height / 2);
@@ -110,7 +116,7 @@ class _ShapePainter extends CustomPainter {
       case Shape.ring:
         _paint
           ..color = color
-          ..strokeWidth = _strokeWidth
+          ..strokeWidth = strokeWidth
           ..style = PaintingStyle.stroke;
         canvas.drawCircle(Offset(size.width / 2, size.height / 2),
             size.shortestSide / 2, _paint);

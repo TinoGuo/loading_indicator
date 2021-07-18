@@ -57,11 +57,17 @@ class _BallClipRotatePulseState extends State<BallClipRotatePulse>
             transform: Matrix4.identity()
               ..scale(_outCircleScale.value)
               ..rotateZ(_outCircleRotate.value),
-            child: IndicatorShapeWidget(shape: Shape.ringTwoHalfVertical),
+            child: IndicatorShapeWidget(
+              shape: Shape.ringTwoHalfVertical,
+              index: 0,
+            ),
           ),
           Transform.scale(
             scale: _innerCircle.value * 0.3,
-            child: IndicatorShapeWidget(shape: Shape.circle),
+            child: IndicatorShapeWidget(
+              shape: Shape.circle,
+              index: 1,
+            ),
           ),
         ],
       ),

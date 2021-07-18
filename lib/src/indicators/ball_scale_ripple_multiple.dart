@@ -58,7 +58,10 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
         scale: _scaleAnimations[i],
         child: FadeTransition(
           opacity: _opacityAnimations[i],
-          child: IndicatorShapeWidget(shape: Shape.ring),
+          child: IndicatorShapeWidget(
+            shape: Shape.ring,
+            index: i,
+          ),
         ),
       );
     }

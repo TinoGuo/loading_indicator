@@ -113,7 +113,7 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
       },
       child: IndicatorShapeWidget(
         shape: widget.isFilled ? Shape.circle : Shape.ring,
-        colorIndex: index,
+        index: index,
       ),
     );
   }

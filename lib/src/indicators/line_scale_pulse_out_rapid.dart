@@ -54,7 +54,10 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
         widgets[i] = Expanded(
           child: ScaleYTransition(
             scaleY: _animations[i ~/ 2],
-            child: IndicatorShapeWidget(shape: Shape.line),
+            child: IndicatorShapeWidget(
+              shape: Shape.line,
+              index: i ~/ 2,
+            ),
           ),
         );
       } else {

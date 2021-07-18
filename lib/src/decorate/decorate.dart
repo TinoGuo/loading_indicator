@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
+const double _kDefaultStrokeWidth = 2;
+
 /// Information about a piece of animation (e.g., color).
 @immutable
 class DecorateData {
   final Color? backgroundColor;
   final Indicator indicator;
   final List<Color> colors;
+  final double? _strokeWidth;
 
   const DecorateData({
     required this.indicator,
-    this.backgroundColor,
     required this.colors,
-  });
+    this.backgroundColor,
+    double? strokeWidth,
+  }) : _strokeWidth = strokeWidth;
+
+  double get strokeWidth =>
+      _strokeWidth == null ? _kDefaultStrokeWidth : _strokeWidth!;
 
   @override
   bool operator ==(Object other) =>
@@ -21,15 +28,19 @@ class DecorateData {
           runtimeType == other.runtimeType &&
           backgroundColor == other.backgroundColor &&
           indicator == other.indicator &&
-          colors == other.colors;
+          colors == other.colors &&
+          strokeWidth == other.strokeWidth;
 
   @override
   int get hashCode =>
-      backgroundColor.hashCode ^ indicator.hashCode ^ colors.hashCode;
+      backgroundColor.hashCode ^
+      indicator.hashCode ^
+      colors.hashCode ^
+      strokeWidth.hashCode;
 
   @override
   String toString() {
-    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors}';
+    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors, strokeWidth: $strokeWidth}';
   }
 }
 

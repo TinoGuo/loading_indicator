@@ -70,7 +70,10 @@ class _BallGridPulseState extends State<BallGridPulse>
         scale: _scaleAnimations[i],
         child: FadeTransition(
           opacity: _opacityAnimations[i],
-          child: IndicatorShapeWidget(shape: Shape.circle),
+          child: IndicatorShapeWidget(
+            shape: Shape.circle,
+            index: i,
+          ),
         ),
       );
     }

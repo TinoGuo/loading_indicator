@@ -63,7 +63,10 @@ class _BallPulseSyncState extends State<BallPulseSync>
                   child: child,
                 );
               },
-              child: IndicatorShapeWidget(shape: Shape.circle),
+              child: IndicatorShapeWidget(
+                shape: Shape.circle,
+                index: i,
+              ),
             ),
           );
         } else {
