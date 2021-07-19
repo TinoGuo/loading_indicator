@@ -1,7 +1,6 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
-import 'package:loading_indicator/src/transition/ScaleYTransition.dart';
 
 /// LineScale.
 class LineScale extends StatefulWidget {
@@ -53,13 +52,17 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
         .entries
         .map(
           (entry) => Expanded(
-            child: ScaleYTransition(
-              alignment: Alignment.center,
-              scaleY: entry.value,
-              child: IndicatorShapeWidget(
-                shape: Shape.line,
-                index: entry.key,
-              ),
+            child: AnimatedBuilder(
+              animation: entry.value,
+              builder: (BuildContext context, Widget? child) {
+                return FractionallySizedBox(
+                  heightFactor: entry.value.value,
+                  child: IndicatorShapeWidget(
+                    shape: Shape.line,
+                    index: entry.key,
+                  ),
+                );
+              },
             ),
           ),
         )

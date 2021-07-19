@@ -25,8 +25,7 @@ class DecorateData {
   })  : _strokeWidth = strokeWidth,
         assert(colors.length > 0);
 
-  double get strokeWidth =>
-      _strokeWidth == null ? _kDefaultStrokeWidth : _strokeWidth!;
+  double get strokeWidth => _strokeWidth ?? _kDefaultStrokeWidth;
 
   @override
   bool operator ==(Object other) =>
