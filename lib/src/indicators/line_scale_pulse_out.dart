@@ -1,7 +1,6 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
-import 'package:loading_indicator/src/transition/ScaleYTransition.dart';
 
 /// LineScalePulseOut.
 class LineScalePulseOut extends StatefulWidget {
@@ -51,12 +50,17 @@ class _LineScalePulseOutState extends State<LineScalePulseOut>
     for (int i = 0; i < widgets.length; i++) {
       if (i.isEven) {
         widgets[i] = Expanded(
-          child: ScaleYTransition(
-            scaleY: _animations[i ~/ 2],
-            child: IndicatorShapeWidget(
-              shape: Shape.line,
-              index: i ~/ 2,
-            ),
+          child: AnimatedBuilder(
+            animation: _animations[i ~/ 2],
+            builder: (BuildContext context, Widget? child) {
+              return FractionallySizedBox(
+                heightFactor: _animations[i ~/ 2].value,
+                child: IndicatorShapeWidget(
+                  shape: Shape.line,
+                  index: i ~/ 2,
+                ),
+              );
+            },
           ),
         );
       } else {
