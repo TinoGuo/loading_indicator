@@ -1,3 +1,6 @@
+### [3.0.1] 2021/07/19
+* Fix the line corner be sharp after scale [#16](https://github.com/TinoGuo/loading_indicator/issues/16)
+
 ### [3.0.0] 2021/07/18
 * Support color collection [#17](https://github.com/TinoGuo/loading_indicator/pull/17)
 * Support customize stroke width [#17](https://github.com/TinoGuo/loading_indicator/pull/17)
