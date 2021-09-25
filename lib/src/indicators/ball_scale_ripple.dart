@@ -3,6 +3,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallScaleRipple.
 class BallScaleRipple extends StatefulWidget {
+  const BallScaleRipple({Key? key}) : super(key: key);
+
   @override
   _BallScaleRippleState createState() => _BallScaleRippleState();
 }
@@ -16,7 +18,7 @@ class _BallScaleRippleState extends State<BallScaleRipple>
   @override
   void initState() {
     super.initState();
-    final cubic = Cubic(0.21, 0.53, 0.56, 0.8);
+    const cubic = Cubic(0.21, 0.53, 0.56, 0.8);
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _opacityAnimation = TweenSequence([
@@ -42,7 +44,7 @@ class _BallScaleRippleState extends State<BallScaleRipple>
       opacity: _opacityAnimation,
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: IndicatorShapeWidget(shape: Shape.ring),
+        child: const IndicatorShapeWidget(shape: Shape.ring),
       ),
     );
   }

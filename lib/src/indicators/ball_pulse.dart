@@ -4,6 +4,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallPulse.
 class BallPulse extends StatefulWidget {
+  const BallPulse({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _BallPulseState();
@@ -17,15 +19,15 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
     360,
   ];
 
-  List<AnimationController> _animationController = [];
-  List<Animation<double>> _scaleAnimations = [];
-  List<Animation<double>> _opacityAnimations = [];
-  List<CancelableOperation<int>> _delayFeature = [];
+  final List<AnimationController> _animationController = [];
+  final List<Animation<double>> _scaleAnimations = [];
+  final List<Animation<double>> _opacityAnimations = [];
+  final List<CancelableOperation<int>> _delayFeature = [];
 
   @override
   void initState() {
     super.initState();
-    final cubic = Cubic(0.2, 0.68, 0.18, 0.08);
+    const cubic = Cubic(0.2, 0.68, 0.18, 0.08);
     for (int i = 0; i < 3; i++) {
       _animationController.add(AnimationController(
         vsync: this,
@@ -55,8 +57,12 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _delayFeature.forEach((f) => f.cancel());
-    _animationController.forEach((f) => f.dispose());
+    for (var f in _delayFeature) {
+      f.cancel();
+    }
+    for (var f in _animationController) {
+      f.dispose();
+    }
     super.dispose();
   }
 
@@ -80,9 +86,9 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(child: widgets[0]),
-        SizedBox(width: 2),
+        const SizedBox(width: 2),
         Expanded(child: widgets[1]),
-        SizedBox(width: 2),
+        const SizedBox(width: 2),
         Expanded(child: widgets[2]),
       ],
     );

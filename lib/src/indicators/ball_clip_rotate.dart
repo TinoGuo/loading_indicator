@@ -5,6 +5,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallClipRotate.
 class BallClipRotate extends StatefulWidget {
+  const BallClipRotate({Key? key}) : super(key: key);
+
   @override
   _BallClipRotateState createState() => _BallClipRotateState();
 }
@@ -54,7 +56,7 @@ class _BallClipRotateState extends State<BallClipRotate>
           child: child,
         );
       },
-      child: IndicatorShapeWidget(shape: Shape.ringThirdFour),
+      child: const IndicatorShapeWidget(shape: Shape.ringThirdFour),
     );
   }
 }

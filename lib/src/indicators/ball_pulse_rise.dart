@@ -3,6 +3,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallPulseRise.
 class BallPulseRise extends StatefulWidget {
+  const BallPulseRise({Key? key}) : super(key: key);
+
   @override
   _BallPulseRiseState createState() => _BallPulseRiseState();
 }
@@ -21,7 +23,7 @@ class _BallPulseRiseState extends State<BallPulseRise>
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    final cubic = Cubic(0.15, 0.46, 0.9, 0.6);
+    const cubic = Cubic(0.15, 0.46, 0.9, 0.6);
 
     _oddScaleAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 0.4, end: 1.1), weight: 50),
@@ -56,9 +58,9 @@ class _BallPulseRiseState extends State<BallPulseRise>
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (ctx, constraint) {
-        final circleSpacing = 2;
+        const circleSpacing = 2;
         final circleSize = (constraint.maxWidth - 4 * circleSpacing) / 5;
-        final x = 0;
+        const x = 0;
         final y = (constraint.maxHeight - circleSize) / 2;
         final widgets = List<Widget>.filled(5, Container());
         final deltaY = constraint.maxHeight / 3;

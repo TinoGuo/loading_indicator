@@ -4,6 +4,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallScaleRippleMultiple.
 class BallScaleRippleMultiple extends StatefulWidget {
+  const BallScaleRippleMultiple({Key? key}) : super(key: key);
+
   @override
   _BallScaleRippleMultipleState createState() =>
       _BallScaleRippleMultipleState();
@@ -11,17 +13,17 @@ class BallScaleRippleMultiple extends StatefulWidget {
 
 class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
     with TickerProviderStateMixin {
-  static const _BEGIN_TIMES = [0, 200, 400];
+  static const _beginTimes = [0, 200, 400];
 
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _opacityAnimations = [];
-  List<Animation<double>> _scaleAnimations = [];
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _opacityAnimations = [];
+  final List<Animation<double>> _scaleAnimations = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
-    final cubic = Cubic(0.21, 0.53, 0.56, 0.8);
+    const cubic = Cubic(0.21, 0.53, 0.56, 0.8);
     for (int i = 0; i < 3; i++) {
       _animationControllers.add(AnimationController(
           vsync: this, duration: const Duration(milliseconds: 1250)));
@@ -36,7 +38,7 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
       ]).animate(
           CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
       _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
+          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
       })));
@@ -45,8 +47,12 @@ class _BallScaleRippleMultipleState extends State<BallScaleRippleMultiple>
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 

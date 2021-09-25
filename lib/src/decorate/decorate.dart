@@ -54,7 +54,7 @@ class DecorateData {
 class DecorateContext extends InheritedWidget {
   final DecorateData decorateData;
 
-  DecorateContext({
+  const DecorateContext({
     Key? key,
     required this.decorateData,
     required Widget child,
@@ -62,7 +62,7 @@ class DecorateContext extends InheritedWidget {
 
   @override
   bool updateShouldNotify(DecorateContext oldWidget) =>
-      oldWidget.decorateData == this.decorateData;
+      oldWidget.decorateData == decorateData;
 
   static DecorateContext? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();

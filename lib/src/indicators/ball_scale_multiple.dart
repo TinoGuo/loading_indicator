@@ -4,18 +4,20 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallScaleMultiple.
 class BallScaleMultiple extends StatefulWidget {
+  const BallScaleMultiple({Key? key}) : super(key: key);
+
   @override
   _BallScaleMultipleState createState() => _BallScaleMultipleState();
 }
 
 class _BallScaleMultipleState extends State<BallScaleMultiple>
     with TickerProviderStateMixin {
-  static const _BEGIN_TIMES = [0, 200, 400];
+  static const _beginTimes = [0, 200, 400];
 
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _scaleAnimations = [];
-  List<Animation<double>> _opacityAnimations = [];
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _scaleAnimations = [];
+  final List<Animation<double>> _opacityAnimations = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
@@ -33,7 +35,7 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
           parent: _animationControllers[i], curve: Curves.linear)));
 
       _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
+          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
       })));
@@ -42,8 +44,12 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 

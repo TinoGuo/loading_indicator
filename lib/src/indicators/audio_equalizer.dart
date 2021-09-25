@@ -3,20 +3,22 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// AudioEqualizer
 class AudioEqualizer extends StatefulWidget {
+  const AudioEqualizer({Key? key}) : super(key: key);
+
   @override
   _AudioEqualizerState createState() => _AudioEqualizerState();
 }
 
 class _AudioEqualizerState extends State<AudioEqualizer>
     with TickerProviderStateMixin {
-  static const _LINE_NUM = 4;
-  static const _DURATIONS = [
+  static const _lineNum = 4;
+  static const _durations = [
     4300,
     2500,
     1700,
     3100,
   ];
-  static const _VALUES = [
+  static const _values = [
     0.0,
     0.7,
     0.4,
@@ -30,19 +32,19 @@ class _AudioEqualizerState extends State<AudioEqualizer>
     0.75,
     0.01,
   ];
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _animations = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _animations = [];
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < _LINE_NUM; i++) {
+    for (int i = 0; i < _lineNum; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: Duration(milliseconds: _DURATIONS[i])));
+          vsync: this, duration: Duration(milliseconds: _durations[i])));
       final sequences = <TweenSequenceItem<double>>[];
-      for (int j = 0; j < _VALUES.length - 1; j++) {
+      for (int j = 0; j < _values.length - 1; j++) {
         sequences.add(TweenSequenceItem(
-            tween: Tween(begin: _VALUES[j], end: _VALUES[j + 1]), weight: 1));
+            tween: Tween(begin: _values[j], end: _values[j + 1]), weight: 1));
       }
       _animations
           .add(TweenSequence(sequences).animate(_animationControllers[i]));
@@ -52,7 +54,9 @@ class _AudioEqualizerState extends State<AudioEqualizer>
 
   @override
   void dispose() {
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 
@@ -79,7 +83,7 @@ class _AudioEqualizerState extends State<AudioEqualizer>
           ),
         );
       } else {
-        widgets[i] = Expanded(child: SizedBox());
+        widgets[i] = const Expanded(child: SizedBox());
       }
     }
 

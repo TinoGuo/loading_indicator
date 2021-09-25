@@ -3,6 +3,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// SemiCircleSpin.
 class SemiCircleSpin extends StatefulWidget {
+  const SemiCircleSpin({Key? key}) : super(key: key);
+
   @override
   _SemiCircleSpinState createState() => _SemiCircleSpinState();
 }
@@ -35,7 +37,7 @@ class _SemiCircleSpinState extends State<SemiCircleSpin>
   Widget build(BuildContext context) {
     return RotationTransition(
       turns: _animation,
-      child: IndicatorShapeWidget(shape: Shape.circleSemi),
+      child: const IndicatorShapeWidget(shape: Shape.circleSemi),
     );
   }
 }

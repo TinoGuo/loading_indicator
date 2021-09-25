@@ -5,6 +5,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// CubeTransition.
 class CubeTransition extends StatefulWidget {
+  const CubeTransition({Key? key}) : super(key: key);
+
   @override
   _CubeTransitionState createState() => _CubeTransitionState();
 }
@@ -23,16 +25,20 @@ class _CubeTransitionState extends State<CubeTransition>
         vsync: this, duration: const Duration(milliseconds: 1600));
     _translateAnimation = TweenSequence([
       TweenSequenceItem(
-          tween: SizeTween(begin: Size(0.0, 0.0), end: Size(1.0, 0.0)),
+          tween:
+              SizeTween(begin: const Size(0.0, 0.0), end: const Size(1.0, 0.0)),
           weight: 1),
       TweenSequenceItem(
-          tween: SizeTween(begin: Size(1.0, 0.0), end: Size(1.0, 1.0)),
+          tween:
+              SizeTween(begin: const Size(1.0, 0.0), end: const Size(1.0, 1.0)),
           weight: 1),
       TweenSequenceItem(
-          tween: SizeTween(begin: Size(1.0, 1.0), end: Size(0.0, 1.0)),
+          tween:
+              SizeTween(begin: const Size(1.0, 1.0), end: const Size(0.0, 1.0)),
           weight: 1),
       TweenSequenceItem(
-          tween: SizeTween(begin: Size(0.0, 1.0), end: Size(0.0, 0.0)),
+          tween:
+              SizeTween(begin: const Size(0.0, 1.0), end: const Size(0.0, 0.0)),
           weight: 1),
     ]).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.linear));
@@ -84,7 +90,7 @@ class _CubeTransitionState extends State<CubeTransition>
                       _translateAnimation.value!.height * deltaY)
                   ..rotateZ(_rotateAnimation.value)
                   ..scale(_scaleAnimation.value),
-                child: IndicatorShapeWidget(
+                child: const IndicatorShapeWidget(
                   shape: Shape.rectangle,
                   index: 0,
                 ),
@@ -100,7 +106,7 @@ class _CubeTransitionState extends State<CubeTransition>
                       -_translateAnimation.value!.height * deltaY)
                   ..rotateZ(_rotateAnimation.value)
                   ..scale(_scaleAnimation.value),
-                child: IndicatorShapeWidget(
+                child: const IndicatorShapeWidget(
                   shape: Shape.rectangle,
                   index: 1,
                 ),

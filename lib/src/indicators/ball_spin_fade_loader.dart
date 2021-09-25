@@ -6,6 +6,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallSpinFadeLoader.
 class BallSpinFadeLoader extends StatefulWidget {
+  const BallSpinFadeLoader({Key? key}) : super(key: key);
+
   @override
   _BallSpinFadeLoaderState createState() => _BallSpinFadeLoaderState();
 }
@@ -14,12 +16,12 @@ const int _kBallSize = 8;
 
 class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
     with TickerProviderStateMixin {
-  static const _BEGIN_TIMES = [0, 120, 240, 360, 480, 600, 720, 840];
+  static const _beginTimes = [0, 120, 240, 360, 480, 600, 720, 840];
 
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _scaleAnimations = [];
-  List<Animation<double>> _opacityAnimations = [];
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _scaleAnimations = [];
+  final List<Animation<double>> _opacityAnimations = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
@@ -39,7 +41,7 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
           parent: _animationControllers[i], curve: Curves.linear)));
 
       _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
+          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
       })));
@@ -48,8 +50,12 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 

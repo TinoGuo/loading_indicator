@@ -5,6 +5,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallClipRotatePulse.
 class BallClipRotatePulse extends StatefulWidget {
+  const BallClipRotatePulse({Key? key}) : super(key: key);
+
   @override
   _BallClipRotatePulseState createState() => _BallClipRotatePulseState();
 }
@@ -19,7 +21,7 @@ class _BallClipRotatePulseState extends State<BallClipRotatePulse>
   @override
   void initState() {
     super.initState();
-    final cubic = Cubic(0.09, 0.57, 0.49, 0.9);
+    const cubic = Cubic(0.09, 0.57, 0.49, 0.9);
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
@@ -57,14 +59,14 @@ class _BallClipRotatePulseState extends State<BallClipRotatePulse>
             transform: Matrix4.identity()
               ..scale(_outCircleScale.value)
               ..rotateZ(_outCircleRotate.value),
-            child: IndicatorShapeWidget(
+            child: const IndicatorShapeWidget(
               shape: Shape.ringTwoHalfVertical,
               index: 0,
             ),
           ),
           Transform.scale(
             scale: _innerCircle.value * 0.3,
-            child: IndicatorShapeWidget(
+            child: const IndicatorShapeWidget(
               shape: Shape.circle,
               index: 1,
             ),

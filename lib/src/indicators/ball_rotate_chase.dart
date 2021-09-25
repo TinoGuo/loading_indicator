@@ -5,24 +5,26 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallRotateChase.
 class BallRotateChase extends StatefulWidget {
+  const BallRotateChase({Key? key}) : super(key: key);
+
   @override
   _BallRotateChaseState createState() => _BallRotateChaseState();
 }
 
 class _BallRotateChaseState extends State<BallRotateChase>
     with SingleTickerProviderStateMixin {
-  static const _BALL_NUM = 5;
+  static const _ballNum = 5;
 
   late AnimationController _animationController;
-  List<Animation<double>> _scaleAnimations = [];
-  List<Animation<double>> _translateAnimations = [];
+  final List<Animation<double>> _scaleAnimations = [];
+  final List<Animation<double>> _translateAnimations = [];
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1500));
-    for (int i = 0; i < _BALL_NUM; i++) {
+        vsync: this, duration: const Duration(milliseconds: 1500));
+    for (int i = 0; i < _ballNum; i++) {
       final rate = i / 5;
       final cubic = Cubic(0.5, 0.15 + rate, 0.25, 1.0);
       _scaleAnimations.add(Tween(begin: 1 - rate, end: 0.2 + rate).animate(
@@ -48,8 +50,8 @@ class _BallRotateChaseState extends State<BallRotateChase>
       final deltaX = (constraint.maxWidth - circleSize) / 2;
       final deltaY = (constraint.maxHeight - circleSize) / 2;
 
-      final widgets = List<Widget>.filled(_BALL_NUM, Container());
-      for (int i = 0; i < _BALL_NUM; i++) {
+      final widgets = List<Widget>.filled(_ballNum, Container());
+      for (int i = 0; i < _ballNum; i++) {
         widgets[i] = Positioned.fromRect(
           rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
           child: AnimatedBuilder(

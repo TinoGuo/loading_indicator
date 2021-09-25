@@ -5,6 +5,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// Orbit.
 class Orbit extends StatefulWidget {
+  const Orbit({Key? key}) : super(key: key);
+
   @override
   _OrbitState createState() => _OrbitState();
 }
@@ -24,28 +26,28 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
 //    final cubic = Cubic(0.19, 1.0, 0.22, 1.0);
 
     _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1900));
+        vsync: this, duration: const Duration(milliseconds: 1900));
 
     _ring1ScaleAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.3), weight: 0.01),
       TweenSequenceItem(tween: Tween(begin: 1.3, end: 2.0), weight: 100),
     ]).animate(CurvedAnimation(
         parent: _animationController,
-        curve: Interval(0.45, 1.0, curve: Curves.linear)));
+        curve: const Interval(0.45, 1.0, curve: Curves.linear)));
     _ring1OpacityAnimation = Tween(begin: 0.8, end: 0.0).animate(
         CurvedAnimation(
             parent: _animationController,
-            curve: Interval(0.45, 1.0, curve: Curves.linear)));
+            curve: const Interval(0.45, 1.0, curve: Curves.linear)));
     _ring2ScaleAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.3), weight: 0.01),
       TweenSequenceItem(tween: Tween(begin: 1.3, end: 2.1), weight: 100),
     ]).animate(CurvedAnimation(
         parent: _animationController,
-        curve: Interval(0.55, 1.0, curve: Curves.linear)));
+        curve: const Interval(0.55, 1.0, curve: Curves.linear)));
     _ring2OpacityAnimation = Tween(begin: 0.70, end: 0.0).animate(
         CurvedAnimation(
             parent: _animationController,
-            curve: Interval(0.55, 0.65, curve: Curves.linear)));
+            curve: const Interval(0.55, 0.65, curve: Curves.linear)));
     _coreAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.3), weight: 45),
       TweenSequenceItem(tween: Tween(begin: 1.3, end: 1.3), weight: 10),
@@ -69,8 +71,8 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraint) {
-        final satelliteRatio = 0.25;
-        final distanceRatio = 1.5;
+        const satelliteRatio = 0.25;
+        const distanceRatio = 1.5;
         final coreSize =
             constraint.maxWidth / (1 + satelliteRatio + distanceRatio);
         final satelliteSize = constraint.maxWidth * satelliteRatio / 2;
@@ -85,7 +87,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
               rect: Rect.fromCircle(center: center, radius: coreSize / 2),
               child: ScaleTransition(
                 scale: _coreAnimation,
-                child: IndicatorShapeWidget(
+                child: const IndicatorShapeWidget(
                   shape: Shape.circle,
                   index: 0,
                 ),
@@ -97,7 +99,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                 opacity: _ring1OpacityAnimation,
                 child: ScaleTransition(
                   scale: _ring1ScaleAnimation,
-                  child: IndicatorShapeWidget(
+                  child: const IndicatorShapeWidget(
                     shape: Shape.circle,
                     index: 1,
                   ),
@@ -110,7 +112,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                 opacity: _ring2OpacityAnimation,
                 child: ScaleTransition(
                   scale: _ring2ScaleAnimation,
-                  child: IndicatorShapeWidget(
+                  child: const IndicatorShapeWidget(
                     shape: Shape.circle,
                     index: 2,
                   ),
@@ -126,7 +128,7 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
                   return Transform.translate(
                     offset: Offset(sin(_satelliteAnimation.value) * deltaX,
                         -cos(_satelliteAnimation.value) * deltaY),
-                    child: IndicatorShapeWidget(
+                    child: const IndicatorShapeWidget(
                       shape: Shape.circle,
                       index: 3,
                     ),

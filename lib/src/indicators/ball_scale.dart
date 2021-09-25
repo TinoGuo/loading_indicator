@@ -3,6 +3,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallScale.
 class BallScale extends StatefulWidget {
+  const BallScale({Key? key}) : super(key: key);
+
   @override
   _BallScaleState createState() => _BallScaleState();
 }
@@ -36,7 +38,7 @@ class _BallScaleState extends State<BallScale>
       opacity: _opacityAnimation,
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: IndicatorShapeWidget(shape: Shape.circle),
+        child: const IndicatorShapeWidget(shape: Shape.circle),
       ),
     );
   }

@@ -26,7 +26,7 @@ class IndicatorShapeWidget extends StatelessWidget {
   /// The index of shape in the widget.
   final int index;
 
-  IndicatorShapeWidget({
+  const IndicatorShapeWidget({
     Key? key,
     required this.shape,
     this.data,
@@ -178,9 +178,9 @@ class _ShapePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ShapePainter oldDelegate) =>
-      this.shape != oldDelegate.shape ||
-      this.color != oldDelegate.color ||
-      this.data != oldDelegate.data ||
-      this.strokeWidth != oldDelegate.strokeWidth ||
-      this.pathColor != oldDelegate.pathColor;
+      shape != oldDelegate.shape ||
+      color != oldDelegate.color ||
+      data != oldDelegate.data ||
+      strokeWidth != oldDelegate.strokeWidth ||
+      pathColor != oldDelegate.pathColor;
 }

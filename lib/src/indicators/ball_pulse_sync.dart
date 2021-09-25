@@ -4,17 +4,19 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallPulseSync.
 class BallPulseSync extends StatefulWidget {
+  const BallPulseSync({Key? key}) : super(key: key);
+
   @override
   _BallPulseSyncState createState() => _BallPulseSyncState();
 }
 
 class _BallPulseSyncState extends State<BallPulseSync>
     with TickerProviderStateMixin {
-  static const _BEGIN_TIMES = [70, 140, 210];
+  static const _beginTimes = [70, 140, 210];
 
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _animations = [];
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _animations = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
@@ -31,7 +33,7 @@ class _BallPulseSyncState extends State<BallPulseSync>
           parent: _animationControllers[i], curve: Curves.easeInOut)));
 
       _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
+          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
       })));
@@ -40,8 +42,12 @@ class _BallPulseSyncState extends State<BallPulseSync>
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 
@@ -70,7 +76,7 @@ class _BallPulseSyncState extends State<BallPulseSync>
             ),
           );
         } else {
-          widgets[i] = Expanded(
+          widgets[i] = const Expanded(
             child: SizedBox(),
           );
         }

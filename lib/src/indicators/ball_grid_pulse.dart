@@ -6,7 +6,7 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallGridPulse.
 class BallGridPulse extends StatefulWidget {
-  const BallGridPulse();
+  const BallGridPulse({Key? key}) : super(key: key);
 
   @override
   _BallGridPulseState createState() => _BallGridPulseState();
@@ -14,18 +14,18 @@ class BallGridPulse extends StatefulWidget {
 
 class _BallGridPulseState extends State<BallGridPulse>
     with TickerProviderStateMixin {
-  static const _BALL_NUM = 9;
+  static const _ballNum = 9;
 
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _scaleAnimations = [];
-  List<Animation<double>> _opacityAnimations = [];
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _scaleAnimations = [];
+  final List<Animation<double>> _opacityAnimations = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
     final random = Random();
-    for (int i = 0; i < _BALL_NUM; i++) {
+    for (int i = 0; i < _ballNum; i++) {
       final duration = random.nextInt(1000) + 600;
       final delay = random.nextInt(1000) - 200;
       _animationControllers.add(AnimationController(
@@ -56,15 +56,19 @@ class _BallGridPulseState extends State<BallGridPulse>
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final widgets = List<Widget>.filled(_BALL_NUM, Container());
-    for (int i = 0; i < _BALL_NUM; i++) {
+    final widgets = List<Widget>.filled(_ballNum, Container());
+    for (int i = 0; i < _ballNum; i++) {
       widgets[i] = ScaleTransition(
         alignment: Alignment.center,
         scale: _scaleAnimations[i],
