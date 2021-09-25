@@ -1,3 +1,6 @@
+### [3.0.2] 2021/09/25
+* Apply Lint and analyzer
+
 ### [3.0.1] 2021/07/19
 * Fix the line corner be sharp after scale [#16](https://github.com/TinoGuo/loading_indicator/issues/16)
 

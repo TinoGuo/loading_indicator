@@ -4,6 +4,8 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallRotate.
 class BallRotate extends StatefulWidget {
+  const BallRotate({Key? key}) : super(key: key);
+
   @override
   _BallRotateState createState() => _BallRotateState();
 }
@@ -19,7 +21,7 @@ class _BallRotateState extends State<BallRotate>
     super.initState();
 
     /// If set b to -0.13, value is negative, [TweenSequence]'s transform will throw error.
-    final cubic = Cubic(0.7, 0.87, 0.22, 0.86);
+    const cubic = Cubic(0.7, 0.87, 0.22, 0.86);
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _scaleAnimation = TweenSequence([
@@ -47,9 +49,9 @@ class _BallRotateState extends State<BallRotate>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(child: _buildSingleCircle(0.8, 0)),
-            Expanded(child: SizedBox()),
+            const Expanded(child: SizedBox()),
             Expanded(child: _buildSingleCircle(1.0, 1)),
-            Expanded(child: SizedBox()),
+            const Expanded(child: SizedBox()),
             Expanded(child: _buildSingleCircle(0.8, 2)),
           ],
         ),

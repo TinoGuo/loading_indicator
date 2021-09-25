@@ -90,7 +90,7 @@ class LoadingIndicator extends StatelessWidget {
   /// Applicable to which has cut edge of the shape
   final Color? pathBackgroundColor;
 
-  LoadingIndicator({
+  const LoadingIndicator({
     Key? key,
     required this.indicatorType,
     this.colors,
@@ -125,73 +125,73 @@ class LoadingIndicator extends StatelessWidget {
   _buildIndicator() {
     switch (indicatorType) {
       case Indicator.ballPulse:
-        return BallPulse();
+        return const BallPulse();
       case Indicator.ballGridPulse:
-        return BallGridPulse();
+        return const BallGridPulse();
       case Indicator.ballClipRotate:
-        return BallClipRotate();
+        return const BallClipRotate();
       case Indicator.squareSpin:
-        return SquareSpin();
+        return const SquareSpin();
       case Indicator.ballClipRotatePulse:
-        return BallClipRotatePulse();
+        return const BallClipRotatePulse();
       case Indicator.ballClipRotateMultiple:
-        return BallClipRotateMultiple();
+        return const BallClipRotateMultiple();
       case Indicator.ballPulseRise:
-        return BallPulseRise();
+        return const BallPulseRise();
       case Indicator.ballRotate:
-        return BallRotate();
+        return const BallRotate();
       case Indicator.cubeTransition:
-        return CubeTransition();
+        return const CubeTransition();
       case Indicator.ballZigZag:
-        return BallZigZag();
+        return const BallZigZag();
       case Indicator.ballZigZagDeflect:
-        return BallZigZagDeflect();
+        return const BallZigZagDeflect();
       case Indicator.ballTrianglePath:
-        return BallTrianglePath();
+        return const BallTrianglePath();
       case Indicator.ballTrianglePathColored:
-        return BallTrianglePathColored();
+        return const BallTrianglePathColored();
       case Indicator.ballTrianglePathColoredFilled:
-        return BallTrianglePathColored(isFilled: true);
+        return const BallTrianglePathColored(isFilled: true);
       case Indicator.ballScale:
-        return BallScale();
+        return const BallScale();
       case Indicator.lineScale:
-        return LineScale();
+        return const LineScale();
       case Indicator.lineScaleParty:
-        return LineScaleParty();
+        return const LineScaleParty();
       case Indicator.ballScaleMultiple:
-        return BallScaleMultiple();
+        return const BallScaleMultiple();
       case Indicator.ballPulseSync:
-        return BallPulseSync();
+        return const BallPulseSync();
       case Indicator.ballBeat:
-        return BallBeat();
+        return const BallBeat();
       case Indicator.lineScalePulseOut:
-        return LineScalePulseOut();
+        return const LineScalePulseOut();
       case Indicator.lineScalePulseOutRapid:
-        return LineScalePulseOutRapid();
+        return const LineScalePulseOutRapid();
       case Indicator.ballScaleRipple:
-        return BallScaleRipple();
+        return const BallScaleRipple();
       case Indicator.ballScaleRippleMultiple:
-        return BallScaleRippleMultiple();
+        return const BallScaleRippleMultiple();
       case Indicator.ballSpinFadeLoader:
-        return BallSpinFadeLoader();
+        return const BallSpinFadeLoader();
       case Indicator.lineSpinFadeLoader:
-        return LineSpinFadeLoader();
+        return const LineSpinFadeLoader();
       case Indicator.triangleSkewSpin:
-        return TriangleSkewSpin();
+        return const TriangleSkewSpin();
       case Indicator.pacman:
-        return Pacman();
+        return const Pacman();
       case Indicator.ballGridBeat:
-        return BallGridBeat();
+        return const BallGridBeat();
       case Indicator.semiCircleSpin:
-        return SemiCircleSpin();
+        return const SemiCircleSpin();
       case Indicator.ballRotateChase:
-        return BallRotateChase();
+        return const BallRotateChase();
       case Indicator.orbit:
-        return Orbit();
+        return const Orbit();
       case Indicator.audioEqualizer:
-        return AudioEqualizer();
+        return const AudioEqualizer();
       case Indicator.circleStrokeSpin:
-        return CircleStrokeSpin();
+        return const CircleStrokeSpin();
       default:
         throw Exception("no related indicator type:$indicatorType");
     }

@@ -6,22 +6,24 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// Pacman.
 class Pacman extends StatefulWidget {
+  const Pacman({Key? key}) : super(key: key);
+
   @override
   _PacmanState createState() => _PacmanState();
 }
 
 class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
-  static const _BEGIN_TIMES = [0, 500];
-  static const _BALL_NUM = 2;
+  static const _beginTimes = [0, 500];
+  static const _ballNum = 2;
 
   late AnimationController _pacmanAnimationController;
-  List<AnimationController> _ballAnimationControllers = [];
+  final List<AnimationController> _ballAnimationControllers = [];
 
   late Animation<double> _rotateAnimation;
-  List<Animation<double>> _translateXAnimations = [];
-  List<Animation<double>> _opacityAnimations = [];
+  final List<Animation<double>> _translateXAnimations = [];
+  final List<Animation<double>> _opacityAnimations = [];
 
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
@@ -31,23 +33,23 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   }
 
   void initPacmanAnimation() {
-    _pacmanAnimationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _pacmanAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     _rotateAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: pi / 4, end: 0.0), weight: 1),
       TweenSequenceItem(tween: Tween(begin: 0.0, end: pi / 4), weight: 1),
     ]).animate(CurvedAnimation(
       parent: _pacmanAnimationController,
-      curve: Cubic(0.25, 0.1, 0.25, 1.0),
+      curve: const Cubic(0.25, 0.1, 0.25, 1.0),
     ));
 
     _pacmanAnimationController.repeat();
   }
 
   void initBallAnimation() {
-    for (int i = 0; i < _BALL_NUM; i++) {
+    for (int i = 0; i < _ballNum; i++) {
       _ballAnimationControllers.add(AnimationController(
-          vsync: this, duration: Duration(milliseconds: 1000)));
+          vsync: this, duration: const Duration(milliseconds: 1000)));
 
       _translateXAnimations.add(Tween(begin: 0.0, end: -1.0).animate(
           CurvedAnimation(
@@ -59,7 +61,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
           parent: _ballAnimationControllers[i], curve: Curves.linear)));
 
       _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
+          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
         _ballAnimationControllers[i].repeat();
         return 0;
       })));
@@ -68,9 +70,13 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
     _pacmanAnimationController.dispose();
-    _ballAnimationControllers.forEach((f) => f.dispose());
+    for (var f in _ballAnimationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 
@@ -99,14 +105,14 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
       );
 
       final circleSize = constraint.maxWidth / 8;
-      final widgets = List<Widget>.filled(_BALL_NUM + 1, Container());
-      for (int i = 0; i < _BALL_NUM; i++) {
+      final widgets = List<Widget>.filled(_ballNum + 1, Container());
+      for (int i = 0; i < _ballNum; i++) {
         widgets[i] = Positioned.fromRect(
           child: FadeTransition(
             opacity: _opacityAnimations[i],
             child: AnimatedBuilder(
               animation: _translateXAnimations[i],
-              child: IndicatorShapeWidget(shape: Shape.circle),
+              child: const IndicatorShapeWidget(shape: Shape.circle),
               builder: (_, child) {
                 return Transform.translate(
                   offset: Offset(
@@ -127,7 +133,7 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
               circleSize),
         );
       }
-      widgets[_BALL_NUM] = pacman;
+      widgets[_ballNum] = pacman;
 
       return Stack(
         children: widgets,

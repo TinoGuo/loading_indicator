@@ -4,22 +4,24 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// LineScalePulseOut.
 class LineScalePulseOut extends StatefulWidget {
+  const LineScalePulseOut({Key? key}) : super(key: key);
+
   @override
   _LineScalePulseOutState createState() => _LineScalePulseOutState();
 }
 
 class _LineScalePulseOutState extends State<LineScalePulseOut>
     with TickerProviderStateMixin {
-  static const _BEGIN_TIMES = [400, 200, 0, 200, 400];
+  static const _beginTimes = [400, 200, 0, 200, 400];
 
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _animations = [];
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _animations = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
-    final cubic = Cubic(0.85, 0.25, 0.37, 0.85);
+    const cubic = Cubic(0.85, 0.25, 0.37, 0.85);
     for (int i = 0; i < 5; i++) {
       _animationControllers.add(AnimationController(
           vsync: this, duration: const Duration(seconds: 1)));
@@ -30,7 +32,7 @@ class _LineScalePulseOutState extends State<LineScalePulseOut>
           CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
 
       _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
+          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
       })));
@@ -39,8 +41,12 @@ class _LineScalePulseOutState extends State<LineScalePulseOut>
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 

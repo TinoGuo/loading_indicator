@@ -4,21 +4,23 @@ import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// LineScale.
 class LineScale extends StatefulWidget {
+  const LineScale({Key? key}) : super(key: key);
+
   @override
   _LineScaleState createState() => _LineScaleState();
 }
 
 class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
-  static const _BEGIN_TIMES = [100, 200, 300, 400, 500];
+  static const _beginTimes = [100, 200, 300, 400, 500];
 
-  List<AnimationController> _animationControllers = [];
-  List<Animation<double>> _animations = [];
-  List<CancelableOperation<int>> _delayFeatures = [];
+  final List<AnimationController> _animationControllers = [];
+  final List<Animation<double>> _animations = [];
+  final List<CancelableOperation<int>> _delayFeatures = [];
 
   @override
   void initState() {
     super.initState();
-    final cubic = Cubic(0.2, 0.68, 0.18, 0.08);
+    const cubic = Cubic(0.2, 0.68, 0.18, 0.08);
 
     for (int i = 0; i < 5; i++) {
       _animationControllers.add(AnimationController(
@@ -31,7 +33,7 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
           CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
 
       _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _BEGIN_TIMES[i])).then((t) {
+          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
         _animationControllers[i].repeat();
         return 0;
       })));
@@ -40,8 +42,12 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _delayFeatures.forEach((f) => f.cancel());
-    _animationControllers.forEach((f) => f.dispose());
+    for (var f in _delayFeatures) {
+      f.cancel();
+    }
+    for (var f in _animationControllers) {
+      f.dispose();
+    }
     super.dispose();
   }
 
