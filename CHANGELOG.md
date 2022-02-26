@@ -1,3 +1,6 @@
+### [3.0.3] 2022/02/26
+* Configure the strokeWidth from decorate data [#25](https://github.com/TinoGuo/loading_indicator/issues/25)
+
 ### [3.0.2] 2021/09/25
 * Apply Lint and analyzer
 
