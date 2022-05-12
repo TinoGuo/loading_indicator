@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   async: ^2.6.1
+  collection: ^1.16.0
 
 dev_dependencies:
   flutter_lints: ^1.0.4
