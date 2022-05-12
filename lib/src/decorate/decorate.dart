@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -27,6 +28,8 @@ class DecorateData {
 
   double get strokeWidth => _strokeWidth ?? _kDefaultStrokeWidth;
 
+  Function get _deepEq => const DeepCollectionEquality().equals;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -34,19 +37,21 @@ class DecorateData {
           runtimeType == other.runtimeType &&
           backgroundColor == other.backgroundColor &&
           indicator == other.indicator &&
-          colors == other.colors &&
-          strokeWidth == other.strokeWidth;
+          _deepEq(colors, other.colors) &&
+          _strokeWidth == other._strokeWidth &&
+          pathBackgroundColor == other.pathBackgroundColor;
 
   @override
   int get hashCode =>
       backgroundColor.hashCode ^
       indicator.hashCode ^
       colors.hashCode ^
-      strokeWidth.hashCode;
+      _strokeWidth.hashCode ^
+      pathBackgroundColor.hashCode;
 
   @override
   String toString() {
-    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors, strokeWidth: $strokeWidth}';
+    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors, _strokeWidth: $_strokeWidth, pathBackgroundColor: $pathBackgroundColor}';
   }
 }
 
@@ -62,7 +67,7 @@ class DecorateContext extends InheritedWidget {
 
   @override
   bool updateShouldNotify(DecorateContext oldWidget) =>
-      oldWidget.decorateData == decorateData;
+      oldWidget.decorateData != decorateData;
 
   static DecorateContext? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();
