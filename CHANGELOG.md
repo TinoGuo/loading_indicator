@@ -1,3 +1,6 @@
+### [3.0.4] 2022/05/12
+* Fix rebuild not work [#27](https://github.com/TinoGuo/loading_indicator/issues/27)
+
 ### [3.0.3] 2022/02/26
 * Configure the strokeWidth from decorate data [#25](https://github.com/TinoGuo/loading_indicator/issues/25)
 
