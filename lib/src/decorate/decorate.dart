@@ -51,7 +51,7 @@ class DecorateData {
 
   @override
   String toString() {
-    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors, _strokeWidth: $_strokeWidth, pathBackgroundColor: $pathBackgroundColor}';
+    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors, strokeWidth: $_strokeWidth, pathBackgroundColor: $pathBackgroundColor}';
   }
 }
 
