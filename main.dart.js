@@ -54381,7 +54381,7 @@ return s},
 gu(a){var s=this
 return(B.Au.gu(null)^A.f2(s.b)^A.f2(s.c)^B.i.gu(s.d)^J.l(s.e))>>>0},
 h(a){var s=this
-return"DecorateData{backgroundColor: null, indicator: "+s.b.h(0)+", colors: "+A.e(s.c)+", _strokeWidth: "+s.d+", pathBackgroundColor: "+A.e(s.e)+"}"},
+return"DecorateData{backgroundColor: null, indicator: "+s.b.h(0)+", colors: "+A.e(s.c)+", strokeWidth: "+s.d+", pathBackgroundColor: "+A.e(s.e)+"}"},
 Pq(a,b){return this.gPp().$2(a,b)}}
 A.rE.prototype={
 c8(a){return!a.f.k(0,this.f)}}
