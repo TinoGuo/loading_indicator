@@ -9,7 +9,7 @@ class BallTrianglePathColored extends StatefulWidget {
       : super(key: key);
 
   @override
-  _BallTrianglePathColoredState createState() =>
+  State<BallTrianglePathColored> createState() =>
       _BallTrianglePathColoredState();
 }
 

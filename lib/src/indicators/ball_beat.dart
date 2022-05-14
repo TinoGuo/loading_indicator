@@ -7,7 +7,7 @@ class BallBeat extends StatefulWidget {
   const BallBeat({Key? key}) : super(key: key);
 
   @override
-  _BallBeatState createState() => _BallBeatState();
+  State<BallBeat> createState() => _BallBeatState();
 }
 
 class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {

@@ -6,7 +6,7 @@ class AudioEqualizer extends StatefulWidget {
   const AudioEqualizer({Key? key}) : super(key: key);
 
   @override
-  _AudioEqualizerState createState() => _AudioEqualizerState();
+  State<AudioEqualizer> createState() => _AudioEqualizerState();
 }
 
 class _AudioEqualizerState extends State<AudioEqualizer>
@@ -72,8 +72,8 @@ class _AudioEqualizerState extends State<AudioEqualizer>
               return Transform(
                 transform: Matrix4.identity()
                   ..scale(1.0, _animations[i ~/ 2].value),
-                child: child,
                 alignment: Alignment.bottomCenter,
+                child: child,
               );
             },
             child: IndicatorShapeWidget(

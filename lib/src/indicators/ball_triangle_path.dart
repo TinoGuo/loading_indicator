@@ -6,7 +6,7 @@ class BallTrianglePath extends StatefulWidget {
   const BallTrianglePath({Key? key}) : super(key: key);
 
   @override
-  _BallTrianglePathState createState() => _BallTrianglePathState();
+  State<BallTrianglePath> createState() => _BallTrianglePathState();
 }
 
 class _BallTrianglePathState extends State<BallTrianglePath>

@@ -9,7 +9,7 @@ class Pacman extends StatefulWidget {
   const Pacman({Key? key}) : super(key: key);
 
   @override
-  _PacmanState createState() => _PacmanState();
+  State<Pacman> createState() => _PacmanState();
 }
 
 class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
@@ -86,6 +86,12 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
       final pacmanSize = constraint.maxWidth / 2;
 
       final pacman = Positioned.fromRect(
+        rect: Rect.fromLTWH(
+          constraint.maxWidth / 8,
+          constraint.maxHeight / 4,
+          pacmanSize,
+          pacmanSize,
+        ),
         child: AnimatedBuilder(
           animation: _rotateAnimation,
           builder: (_, child) {
@@ -96,18 +102,17 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
             );
           },
         ),
-        rect: Rect.fromLTWH(
-          constraint.maxWidth / 8,
-          constraint.maxHeight / 4,
-          pacmanSize,
-          pacmanSize,
-        ),
       );
 
       final circleSize = constraint.maxWidth / 8;
       final widgets = List<Widget>.filled(_ballNum + 1, Container());
       for (int i = 0; i < _ballNum; i++) {
         widgets[i] = Positioned.fromRect(
+          rect: Rect.fromLTWH(
+              constraint.maxWidth - circleSize,
+              constraint.maxHeight / 2 - circleSize / 2,
+              circleSize,
+              circleSize),
           child: FadeTransition(
             opacity: _opacityAnimations[i],
             child: AnimatedBuilder(
@@ -126,11 +131,6 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
               },
             ),
           ),
-          rect: Rect.fromLTWH(
-              constraint.maxWidth - circleSize,
-              constraint.maxHeight / 2 - circleSize / 2,
-              circleSize,
-              circleSize),
         );
       }
       widgets[_ballNum] = pacman;

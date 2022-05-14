@@ -7,7 +7,7 @@ class BallScaleMultiple extends StatefulWidget {
   const BallScaleMultiple({Key? key}) : super(key: key);
 
   @override
-  _BallScaleMultipleState createState() => _BallScaleMultipleState();
+  State<BallScaleMultiple> createState() => _BallScaleMultipleState();
 }
 
 class _BallScaleMultipleState extends State<BallScaleMultiple>

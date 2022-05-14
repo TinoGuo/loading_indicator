@@ -6,7 +6,7 @@ class BallZigZagDeflect extends StatefulWidget {
   const BallZigZagDeflect({Key? key}) : super(key: key);
 
   @override
-  _BallZigZagDeflectState createState() => _BallZigZagDeflectState();
+  State<BallZigZagDeflect> createState() => _BallZigZagDeflectState();
 }
 
 class _BallZigZagDeflectState extends State<BallZigZagDeflect>

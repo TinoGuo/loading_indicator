@@ -7,7 +7,7 @@ class BallPulseSync extends StatefulWidget {
   const BallPulseSync({Key? key}) : super(key: key);
 
   @override
-  _BallPulseSyncState createState() => _BallPulseSyncState();
+  State<BallPulseSync> createState() => _BallPulseSyncState();
 }
 
 class _BallPulseSyncState extends State<BallPulseSync>

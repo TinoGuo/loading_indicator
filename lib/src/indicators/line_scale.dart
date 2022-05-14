@@ -7,7 +7,7 @@ class LineScale extends StatefulWidget {
   const LineScale({Key? key}) : super(key: key);
 
   @override
-  _LineScaleState createState() => _LineScaleState();
+  State<LineScale> createState() => _LineScaleState();
 }
 
 class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {

@@ -6,7 +6,7 @@ class BallScaleRipple extends StatefulWidget {
   const BallScaleRipple({Key? key}) : super(key: key);
 
   @override
-  _BallScaleRippleState createState() => _BallScaleRippleState();
+  State<BallScaleRipple> createState() => _BallScaleRippleState();
 }
 
 class _BallScaleRippleState extends State<BallScaleRipple>

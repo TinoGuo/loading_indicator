@@ -6,7 +6,7 @@ class BallPulseRise extends StatefulWidget {
   const BallPulseRise({Key? key}) : super(key: key);
 
   @override
-  _BallPulseRiseState createState() => _BallPulseRiseState();
+  State<BallPulseRise> createState() => _BallPulseRiseState();
 }
 
 class _BallPulseRiseState extends State<BallPulseRise>
@@ -68,13 +68,13 @@ class _BallPulseRiseState extends State<BallPulseRise>
         for (int i = 0; i < 5; i++) {
           Widget child = _buildSingleCircle(i, deltaY);
           widgets[i] = Positioned.fromRect(
-            child: child,
             rect: Rect.fromLTWH(
               x + circleSize * i + circleSpacing * i,
               y,
               circleSize,
               circleSize,
             ),
+            child: child,
           );
         }
         return Stack(

@@ -6,7 +6,7 @@ class BallRotate extends StatefulWidget {
   const BallRotate({Key? key}) : super(key: key);
 
   @override
-  _BallRotateState createState() => _BallRotateState();
+  State<BallRotate> createState() => _BallRotateState();
 }
 
 class _BallRotateState extends State<BallRotate>

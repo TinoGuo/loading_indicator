@@ -73,11 +73,11 @@ class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
       widgets[i] = FadeTransition(
         opacity: _opacityAnimations[i],
         child: ScaleTransition(
+          scale: _scaleAnimations[i],
           child: IndicatorShapeWidget(
             shape: Shape.circle,
             index: i,
           ),
-          scale: _scaleAnimations[i],
         ),
       );
     }
