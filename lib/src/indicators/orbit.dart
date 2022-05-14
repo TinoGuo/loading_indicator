@@ -8,7 +8,7 @@ class Orbit extends StatefulWidget {
   const Orbit({Key? key}) : super(key: key);
 
   @override
-  _OrbitState createState() => _OrbitState();
+  State<Orbit> createState() => _OrbitState();
 }
 
 class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {

@@ -6,7 +6,7 @@ class SemiCircleSpin extends StatefulWidget {
   const SemiCircleSpin({Key? key}) : super(key: key);
 
   @override
-  _SemiCircleSpinState createState() => _SemiCircleSpinState();
+  State<SemiCircleSpin> createState() => _SemiCircleSpinState();
 }
 
 class _SemiCircleSpinState extends State<SemiCircleSpin>

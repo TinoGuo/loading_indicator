@@ -8,7 +8,7 @@ class TriangleSkewSpin extends StatefulWidget {
   const TriangleSkewSpin({Key? key}) : super(key: key);
 
   @override
-  _TriangleSkewSpinState createState() => _TriangleSkewSpinState();
+  State<TriangleSkewSpin> createState() => _TriangleSkewSpinState();
 }
 
 class _TriangleSkewSpinState extends State<TriangleSkewSpin>

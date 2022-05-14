@@ -9,7 +9,7 @@ class BallGridBeat extends StatefulWidget {
   const BallGridBeat({Key? key}) : super(key: key);
 
   @override
-  _BallGridBeatState createState() => _BallGridBeatState();
+  State<BallGridBeat> createState() => _BallGridBeatState();
 }
 
 class _BallGridBeatState extends State<BallGridBeat>

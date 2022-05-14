@@ -8,7 +8,7 @@ class SquareSpin extends StatefulWidget {
   const SquareSpin({Key? key}) : super(key: key);
 
   @override
-  _SquareSpinState createState() => _SquareSpinState();
+  State<SquareSpin> createState() => _SquareSpinState();
 }
 
 class _SquareSpinState extends State<SquareSpin>

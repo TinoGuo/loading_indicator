@@ -7,7 +7,7 @@ class LineScalePulseOutRapid extends StatefulWidget {
   const LineScalePulseOutRapid({Key? key}) : super(key: key);
 
   @override
-  _LineScalePulseOutRapidState createState() => _LineScalePulseOutRapidState();
+  State<LineScalePulseOutRapid> createState() => _LineScalePulseOutRapidState();
 }
 
 class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>

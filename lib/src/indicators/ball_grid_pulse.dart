@@ -9,7 +9,7 @@ class BallGridPulse extends StatefulWidget {
   const BallGridPulse({Key? key}) : super(key: key);
 
   @override
-  _BallGridPulseState createState() => _BallGridPulseState();
+  State<BallGridPulse> createState() => _BallGridPulseState();
 }
 
 class _BallGridPulseState extends State<BallGridPulse>

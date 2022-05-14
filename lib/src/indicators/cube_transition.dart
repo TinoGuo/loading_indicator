@@ -8,7 +8,7 @@ class CubeTransition extends StatefulWidget {
   const CubeTransition({Key? key}) : super(key: key);
 
   @override
-  _CubeTransitionState createState() => _CubeTransitionState();
+  State<CubeTransition> createState() => _CubeTransitionState();
 }
 
 class _CubeTransitionState extends State<CubeTransition>

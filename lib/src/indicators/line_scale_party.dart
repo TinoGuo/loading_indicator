@@ -7,7 +7,7 @@ class LineScaleParty extends StatefulWidget {
   const LineScaleParty({Key? key}) : super(key: key);
 
   @override
-  _LineScalePartyState createState() => _LineScalePartyState();
+  State<LineScaleParty> createState() => _LineScalePartyState();
 }
 
 class _LineScalePartyState extends State<LineScaleParty>

@@ -9,7 +9,7 @@ class LineSpinFadeLoader extends StatefulWidget {
   const LineSpinFadeLoader({Key? key}) : super(key: key);
 
   @override
-  _LineSpinFadeLoaderState createState() => _LineSpinFadeLoaderState();
+  State<LineSpinFadeLoader> createState() => _LineSpinFadeLoaderState();
 }
 
 const int _kLineSize = 8;

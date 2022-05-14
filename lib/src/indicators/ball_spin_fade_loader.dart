@@ -9,7 +9,7 @@ class BallSpinFadeLoader extends StatefulWidget {
   const BallSpinFadeLoader({Key? key}) : super(key: key);
 
   @override
-  _BallSpinFadeLoaderState createState() => _BallSpinFadeLoaderState();
+  State<BallSpinFadeLoader> createState() => _BallSpinFadeLoaderState();
 }
 
 const int _kBallSize = 8;
