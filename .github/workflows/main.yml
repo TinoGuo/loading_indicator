@@ -9,10 +9,24 @@ on:
   pull_request:
 
 jobs:
+
+  matrix_prep:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      # Required as the JSON input file needs to be read
+      - uses: actions/checkout@v3
+      - id: set-matrix
+        uses: JoshuaTheMiller/conditional-build-matrix@main
+        with:
+          # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
+          filter: '[?runOnBranch==`${{ github.ref }}` || runOnBranch==`always`]'
+          addInclude: false
+
   # Set up Flutter for all other tasks.
   setup:
-    runs-on: ${{ matrix.os }}
-
+    needs: matrix_prep
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -24,6 +38,7 @@ jobs:
           - os: windows-latest
             flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
       fail-fast: false
+    runs-on: ${{ matrix.runs_on }}
 
     steps:
       - uses: actions/checkout@v3
@@ -37,7 +52,6 @@ jobs:
           channel: 'stable'
 
   build-and-test:
-    runs-on: ${{ matrix.os }}
     needs: setup
 
     strategy:
@@ -51,6 +65,7 @@ jobs:
           - os: windows-latest
             flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
       fail-fast: false
+    runs-on: ${{ matrix.runs_on }}
 
     steps:
       - uses: actions/checkout@v3
