@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallTrianglePath.
@@ -14,11 +15,14 @@ class BallTrianglePathColored extends StatefulWidget {
 }
 
 class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   Animation<Offset>? _topCenterAnimation;
   Animation<Offset>? _leftBottomAnimation;
   Animation<Offset>? _rightBottomAnimation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -66,12 +70,6 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
 
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

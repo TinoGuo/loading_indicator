@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallPulseRise.
@@ -10,13 +11,16 @@ class BallPulseRise extends StatefulWidget {
 }
 
 class _BallPulseRiseState extends State<BallPulseRise>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<double> _oddScaleAnimation;
   late Animation<double> _oddTranslateAnimation;
 
   late Animation<double> _evenScaleAnimation;
   late Animation<double> _evenTranslateAnimation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -46,12 +50,6 @@ class _BallPulseRiseState extends State<BallPulseRise>
     ]).animate(CurvedAnimation(parent: _animationController, curve: cubic));
 
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

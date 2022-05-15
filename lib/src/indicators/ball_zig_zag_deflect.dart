@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallZigZagDeflect.
@@ -10,16 +11,21 @@ class BallZigZagDeflect extends StatefulWidget {
 }
 
 class _BallZigZagDeflectState extends State<BallZigZagDeflect>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 700;
+
   late AnimationController _animationController;
   late Animation<Offset> _animation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
     super.initState();
 
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 700));
+        vsync: this, duration: const Duration(milliseconds: _durationInMills));
 
     _animation = TweenSequence([
       TweenSequenceItem(
@@ -35,12 +41,6 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
         CurvedAnimation(parent: _animationController, curve: Curves.linear));
 
     _animationController.repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

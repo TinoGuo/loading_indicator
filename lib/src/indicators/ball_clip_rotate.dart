@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallClipRotate.
@@ -12,17 +13,22 @@ class BallClipRotate extends StatefulWidget {
 }
 
 class _BallClipRotateState extends State<BallClipRotate>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 750;
+
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _rotateAnimation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 750),
+      duration: const Duration(milliseconds: _durationInMills),
     );
     _scaleAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.6), weight: 1),
@@ -35,12 +41,6 @@ class _BallClipRotateState extends State<BallClipRotate>
         CurvedAnimation(parent: _animationController, curve: Curves.linear));
 
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

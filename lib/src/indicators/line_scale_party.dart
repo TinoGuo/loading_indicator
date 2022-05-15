@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// LineScaleParty.
@@ -11,13 +11,15 @@ class LineScaleParty extends StatefulWidget {
 }
 
 class _LineScalePartyState extends State<LineScaleParty>
-    with TickerProviderStateMixin {
-  static const _beginTimes = [770, 290, 280, 740];
-  static const _durations = [1260, 430, 1010, 730];
+    with TickerProviderStateMixin, IndicatorController {
+  static const _delayInMills = [770, 290, 280, 740];
+  static const _durationInMills = [1260, 430, 1010, 730];
 
   final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _animations = [];
-  final List<CancelableOperation<int>> _delayFeatures = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
@@ -25,7 +27,10 @@ class _LineScalePartyState extends State<LineScaleParty>
 
     for (int i = 0; i < 4; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: Duration(milliseconds: _durations[i])));
+        value: _delayInMills[i] / _durationInMills[i],
+        vsync: this,
+        duration: Duration(milliseconds: _durationInMills[i]),
+      ));
 
       _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.5), weight: 1),
@@ -33,23 +38,8 @@ class _LineScalePartyState extends State<LineScaleParty>
       ]).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
-        _animationControllers[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

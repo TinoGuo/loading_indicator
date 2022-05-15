@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// TriangleSkewSpin.
@@ -12,9 +13,12 @@ class TriangleSkewSpin extends StatefulWidget {
 }
 
 class _TriangleSkewSpinState extends State<TriangleSkewSpin>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<Offset> _animation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -39,12 +43,6 @@ class _TriangleSkewSpinState extends State<TriangleSkewSpin>
           weight: 1),
     ]).animate(CurvedAnimation(parent: _animationController, curve: cubic));
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

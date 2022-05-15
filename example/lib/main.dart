@@ -105,7 +105,14 @@ class MainWidget extends StatelessWidget {
       );
 }
 
-class GridWidget extends StatelessWidget {
+class GridWidget extends StatefulWidget {
+  @override
+  State<GridWidget> createState() => _GridWidgetState();
+}
+
+class _GridWidgetState extends State<GridWidget> {
+  bool pause = true;
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
@@ -113,6 +120,16 @@ class GridWidget extends StatelessWidget {
           SliverAppBar(
             title: Text('Grid Demo'),
             floating: true,
+            pinned: true,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      pause = !pause;
+                    });
+                  },
+                  icon: Icon(pause ? Icons.play_arrow : Icons.pause))
+            ],
           ),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -130,6 +147,7 @@ class GridWidget extends StatelessWidget {
                       colors: _kDefaultRainbowColors,
                       indicatorType: Indicator.values[index],
                       strokeWidth: 3,
+                      pause: pause,
                       // pathBackgroundColor: Colors.black45,
                     ),
                   ),

@@ -1,7 +1,5 @@
-import 'dart:math';
-
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallGridPulse.
@@ -13,22 +11,48 @@ class BallGridPulse extends StatefulWidget {
 }
 
 class _BallGridPulseState extends State<BallGridPulse>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, IndicatorController {
   static const _ballNum = 9;
+
+  static const _durationInMills = [
+    720,
+    1020,
+    1280,
+    1420,
+    1450,
+    1180,
+    870,
+    1450,
+    1060,
+  ];
+
+  static const _delayInMills = [
+    660,
+    250,
+    1110,
+    480,
+    310,
+    30,
+    460,
+    480,
+    450,
+  ];
 
   final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _scaleAnimations = [];
   final List<Animation<double>> _opacityAnimations = [];
-  final List<CancelableOperation<int>> _delayFeatures = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
     super.initState();
-    final random = Random();
     for (int i = 0; i < _ballNum; i++) {
-      final duration = random.nextInt(1000) + 600;
-      final delay = random.nextInt(1000) - 200;
+      final duration = _durationInMills[i];
+      final delay = _delayInMills[i];
       _animationControllers.add(AnimationController(
+        value: delay / duration,
         vsync: this,
         duration: Duration(milliseconds: duration),
       ));
@@ -44,25 +68,8 @@ class _BallGridPulseState extends State<BallGridPulse>
         TweenSequenceItem(tween: Tween(begin: 0.7, end: 1.0), weight: 1),
       ]).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.linear)));
-      _animationControllers[i].repeat(reverse: true);
-
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: delay)).then((t) {
-        _animationControllers[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

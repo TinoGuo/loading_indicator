@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// Pacman.
@@ -12,8 +12,11 @@ class Pacman extends StatefulWidget {
   State<Pacman> createState() => _PacmanState();
 }
 
-class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
-  static const _beginTimes = [0, 500];
+class _PacmanState extends State<Pacman>
+    with TickerProviderStateMixin, IndicatorController {
+  static const _manDurationInMills = 500;
+  static const _ballDurationInMills = 1000;
+  static const _delayInMills = [0, 500];
   static const _ballNum = 2;
 
   late AnimationController _pacmanAnimationController;
@@ -23,7 +26,9 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   final List<Animation<double>> _translateXAnimations = [];
   final List<Animation<double>> _opacityAnimations = [];
 
-  final List<CancelableOperation<int>> _delayFeatures = [];
+  @override
+  List<AnimationController> get animationControllers =>
+      [_pacmanAnimationController, ..._ballAnimationControllers];
 
   @override
   void initState() {
@@ -34,7 +39,9 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
 
   void initPacmanAnimation() {
     _pacmanAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
+      vsync: this,
+      duration: const Duration(milliseconds: _manDurationInMills),
+    );
     _rotateAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: pi / 4, end: 0.0), weight: 1),
       TweenSequenceItem(tween: Tween(begin: 0.0, end: pi / 4), weight: 1),
@@ -49,7 +56,10 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
   void initBallAnimation() {
     for (int i = 0; i < _ballNum; i++) {
       _ballAnimationControllers.add(AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 1000)));
+        value: _delayInMills[i] / _ballDurationInMills,
+        vsync: this,
+        duration: const Duration(milliseconds: _ballDurationInMills),
+      ));
 
       _translateXAnimations.add(Tween(begin: 0.0, end: -1.0).animate(
           CurvedAnimation(
@@ -60,24 +70,8 @@ class _PacmanState extends State<Pacman> with TickerProviderStateMixin {
       ]).animate(CurvedAnimation(
           parent: _ballAnimationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
-        _ballAnimationControllers[i].repeat();
-        return 0;
-      })));
+      _ballAnimationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    _pacmanAnimationController.dispose();
-    for (var f in _ballAnimationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

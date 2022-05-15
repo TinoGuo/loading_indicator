@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// LineScalePulseOutRapid.
@@ -11,12 +11,15 @@ class LineScalePulseOutRapid extends StatefulWidget {
 }
 
 class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
-    with TickerProviderStateMixin {
-  static const _beginTimes = [500, 250, 0, 250, 500];
+    with TickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 900;
+  static const _delayInMills = [500, 250, 0, 250, 500];
 
   final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _animations = [];
-  final List<CancelableOperation<int>> _delayFeatures = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
@@ -24,7 +27,10 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
     const cubic = Cubic(0.11, 0.49, 0.38, 0.78);
     for (int i = 0; i < 5; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 900)));
+        value: _delayInMills[i] / _durationInMills,
+        vsync: this,
+        duration: const Duration(milliseconds: _durationInMills),
+      ));
       _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.3), weight: 80),
         TweenSequenceItem(tween: Tween(begin: 0.3, end: 1.0), weight: 10),
@@ -32,23 +38,8 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
       ]).animate(
           CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
 
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
-        _animationControllers[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override
