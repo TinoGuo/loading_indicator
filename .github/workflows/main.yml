@@ -27,6 +27,7 @@ jobs:
   # Set up Flutter for all other tasks.
   setup:
     needs: matrix_prep
+    runs-on: ${{ matrix.runs_on }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -38,7 +39,6 @@ jobs:
           - os: windows-latest
             flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
       fail-fast: false
-    runs-on: ${{ matrix.runs_on }}
 
     steps:
       - uses: actions/checkout@v3
@@ -53,7 +53,7 @@ jobs:
 
   build-and-test:
     needs: setup
-
+    runs-on: ${{ matrix.runs_on }}
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -65,7 +65,6 @@ jobs:
           - os: windows-latest
             flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
       fail-fast: false
-    runs-on: ${{ matrix.runs_on }}
 
     steps:
       - uses: actions/checkout@v3
