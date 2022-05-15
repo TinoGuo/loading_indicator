@@ -29,15 +29,7 @@ jobs:
     needs: matrix_prep
     runs-on: ${{ matrix.runs_on }}
     strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            flutter_path: /opt/hostedtoolcache/flutter
-          - os: macos-latest
-            flutter_path: /Users/runner/hostedtoolcache/flutter
-          - os: windows-latest
-            flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
+      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
       fail-fast: false
 
     steps:
@@ -55,15 +47,7 @@ jobs:
     needs: setup
     runs-on: ${{ matrix.runs_on }}
     strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            flutter_path: /opt/hostedtoolcache/flutter
-          - os: macos-latest
-            flutter_path: /Users/runner/hostedtoolcache/flutter
-          - os: windows-latest
-            flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
+      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
       fail-fast: false
 
     steps:
