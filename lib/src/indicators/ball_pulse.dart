@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallPulse.
@@ -12,58 +12,48 @@ class BallPulse extends StatefulWidget {
   }
 }
 
-class _BallPulseState extends State<BallPulse> with TickerProviderStateMixin {
-  static const _beginTimes = [
+class _BallPulseState extends State<BallPulse>
+    with TickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 750;
+
+  static const _delayInMills = [
     120,
     240,
     360,
   ];
 
-  final List<AnimationController> _animationController = [];
+  final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _scaleAnimations = [];
   final List<Animation<double>> _opacityAnimations = [];
-  final List<CancelableOperation<int>> _delayFeature = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
     super.initState();
     const cubic = Cubic(0.2, 0.68, 0.18, 0.08);
     for (int i = 0; i < 3; i++) {
-      _animationController.add(AnimationController(
+      _animationControllers.add(AnimationController(
+        value: _delayInMills[i] / _durationInMills,
         vsync: this,
-        duration: const Duration(milliseconds: 750),
+        duration: const Duration(milliseconds: _durationInMills),
       ));
       _scaleAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.1), weight: 45),
         TweenSequenceItem(tween: Tween(begin: 0.1, end: 1.0), weight: 35),
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.0), weight: 20),
       ]).animate(
-          CurvedAnimation(parent: _animationController[i], curve: cubic)));
+          CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
       _opacityAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.7), weight: 45),
         TweenSequenceItem(tween: Tween(begin: 0.7, end: 1.0), weight: 35),
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.0), weight: 20),
       ]).animate(
-          CurvedAnimation(parent: _animationController[i], curve: cubic)));
+          CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
 
-      /// Better solution is welcome!!! Very stupid work solution.
-      _delayFeature.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((_) {
-        _animationController[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeature) {
-      f.cancel();
-    }
-    for (var f in _animationController) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

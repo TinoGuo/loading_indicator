@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// SquareSpin.
@@ -12,12 +13,15 @@ class SquareSpin extends StatefulWidget {
 }
 
 class _SquareSpinState extends State<SquareSpin>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<double> _xAnimation;
   late Animation<double> _yAnimation;
   late Animation<double> _xAnimation2;
   late Animation<double> _yAnimation2;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -40,12 +44,6 @@ class _SquareSpinState extends State<SquareSpin>
             curve: const Interval(0.75, 1, curve: cubic)));
 
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallScaleRipple.
@@ -10,10 +11,13 @@ class BallScaleRipple extends StatefulWidget {
 }
 
 class _BallScaleRippleState extends State<BallScaleRipple>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
   late Animation<double> _scaleAnimation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -30,12 +34,6 @@ class _BallScaleRippleState extends State<BallScaleRipple>
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.0), weight: 70),
     ]).animate(CurvedAnimation(parent: _animationController, curve: cubic));
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

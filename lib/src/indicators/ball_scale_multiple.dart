@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallScaleMultiple.
@@ -11,20 +11,27 @@ class BallScaleMultiple extends StatefulWidget {
 }
 
 class _BallScaleMultipleState extends State<BallScaleMultiple>
-    with TickerProviderStateMixin {
-  static const _beginTimes = [0, 200, 400];
+    with TickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 1000;
+
+  static const _delayInMills = [0, 200, 400];
 
   final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _scaleAnimations = [];
   final List<Animation<double>> _opacityAnimations = [];
-  final List<CancelableOperation<int>> _delayFeatures = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: const Duration(seconds: 1)));
+        value: _delayInMills[i] / _durationInMills,
+        vsync: this,
+        duration: const Duration(milliseconds: _durationInMills),
+      ));
 
       _scaleAnimations.add(Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.linear)));
@@ -34,23 +41,8 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
       ]).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
-        _animationControllers[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// CubeTransition.
@@ -12,17 +13,22 @@ class CubeTransition extends StatefulWidget {
 }
 
 class _CubeTransitionState extends State<CubeTransition>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 1600;
+
   late AnimationController _animationController;
   late Animation<Size?> _translateAnimation;
   late Animation<double> _rotateAnimation;
   late Animation<double> _scaleAnimation;
 
   @override
+  List<AnimationController> get animationControllers => [_animationController];
+
+  @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1600));
+        vsync: this, duration: const Duration(milliseconds: _durationInMills));
     _translateAnimation = TweenSequence([
       TweenSequenceItem(
           tween:
@@ -61,12 +67,6 @@ class _CubeTransitionState extends State<CubeTransition>
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
 
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

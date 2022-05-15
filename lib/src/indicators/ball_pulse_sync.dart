@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallPulseSync.
@@ -11,19 +11,26 @@ class BallPulseSync extends StatefulWidget {
 }
 
 class _BallPulseSyncState extends State<BallPulseSync>
-    with TickerProviderStateMixin {
-  static const _beginTimes = [70, 140, 210];
+    with TickerProviderStateMixin, IndicatorController {
+  static const _delayInMills = [70, 140, 210];
+
+  static const _durationInMills = 600;
 
   final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _animations = [];
-  final List<CancelableOperation<int>> _delayFeatures = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 600)));
+        value: _delayInMills[i] / _durationInMills,
+        vsync: this,
+        duration: const Duration(milliseconds: _durationInMills),
+      ));
 
       _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 1),
@@ -32,23 +39,8 @@ class _BallPulseSyncState extends State<BallPulseSync>
       ]).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.easeInOut)));
 
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
-        _animationControllers[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

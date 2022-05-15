@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// LineScale.
@@ -10,12 +10,16 @@ class LineScale extends StatefulWidget {
   State<LineScale> createState() => _LineScaleState();
 }
 
-class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
-  static const _beginTimes = [100, 200, 300, 400, 500];
+class _LineScaleState extends State<LineScale>
+    with TickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 1000;
+  static const _delayInMills = [100, 200, 300, 400, 500];
 
   final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _animations = [];
-  final List<CancelableOperation<int>> _delayFeatures = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
@@ -24,7 +28,10 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
 
     for (int i = 0; i < 5; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: const Duration(seconds: 1)));
+        value: _delayInMills[i] / _durationInMills,
+        vsync: this,
+        duration: const Duration(seconds: 1),
+      ));
 
       _animations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.4), weight: 1),
@@ -32,23 +39,8 @@ class _LineScaleState extends State<LineScale> with TickerProviderStateMixin {
       ]).animate(
           CurvedAnimation(parent: _animationControllers[i], curve: cubic)));
 
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
-        _animationControllers[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

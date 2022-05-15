@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallRotateChase.
@@ -12,7 +13,9 @@ class BallRotateChase extends StatefulWidget {
 }
 
 class _BallRotateChaseState extends State<BallRotateChase>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 1500;
+
   static const _ballNum = 5;
 
   late AnimationController _animationController;
@@ -20,10 +23,15 @@ class _BallRotateChaseState extends State<BallRotateChase>
   final List<Animation<double>> _translateAnimations = [];
 
   @override
+  List<AnimationController> get animationControllers => [_animationController];
+
+  @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500));
+      vsync: this,
+      duration: const Duration(milliseconds: _durationInMills),
+    );
     for (int i = 0; i < _ballNum; i++) {
       final rate = i / 5;
       final cubic = Cubic(0.5, 0.15 + rate, 0.25, 1.0);
@@ -34,12 +42,6 @@ class _BallRotateChaseState extends State<BallRotateChase>
 
       _animationController.repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

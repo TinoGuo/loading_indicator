@@ -1,5 +1,5 @@
-import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallBeat.
@@ -10,20 +10,28 @@ class BallBeat extends StatefulWidget {
   State<BallBeat> createState() => _BallBeatState();
 }
 
-class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
-  static const _beginTimes = [350, 0, 350];
+class _BallBeatState extends State<BallBeat>
+    with TickerProviderStateMixin, IndicatorController {
+  static const _durationInMills = 700;
+
+  static const _delayInMills = [350, 0, 350];
 
   final List<AnimationController> _animationControllers = [];
   final List<Animation<double>> _scaleAnimations = [];
   final List<Animation<double>> _opacityAnimations = [];
-  final List<CancelableOperation<int>> _delayFeatures = [];
+
+  @override
+  List<AnimationController> get animationControllers => _animationControllers;
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 700)));
+        value: _delayInMills[i] / _durationInMills,
+        vsync: this,
+        duration: const Duration(milliseconds: _durationInMills),
+      ));
       _scaleAnimations.add(TweenSequence([
         TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.75), weight: 1),
         TweenSequenceItem(tween: Tween(begin: 0.75, end: 1.0), weight: 1),
@@ -35,23 +43,8 @@ class _BallBeatState extends State<BallBeat> with TickerProviderStateMixin {
       ]).animate(CurvedAnimation(
           parent: _animationControllers[i], curve: Curves.linear)));
 
-      _delayFeatures.add(CancelableOperation.fromFuture(
-          Future.delayed(Duration(milliseconds: _beginTimes[i])).then((t) {
-        _animationControllers[i].repeat();
-        return 0;
-      })));
+      _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _delayFeatures) {
-      f.cancel();
-    }
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

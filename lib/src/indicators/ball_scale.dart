@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallScale.
@@ -10,10 +11,13 @@ class BallScale extends StatefulWidget {
 }
 
 class _BallScaleState extends State<BallScale>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -24,12 +28,6 @@ class _BallScaleState extends State<BallScale>
         CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
     _opacityAnimation = ReverseAnimation(_scaleAnimation);
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

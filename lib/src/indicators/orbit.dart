@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// Orbit.
@@ -11,7 +12,8 @@ class Orbit extends StatefulWidget {
   State<Orbit> createState() => _OrbitState();
 }
 
-class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
+class _OrbitState extends State<Orbit>
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<double> _ring1ScaleAnimation;
   late Animation<double> _ring1OpacityAnimation;
@@ -19,6 +21,9 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
   late Animation<double> _ring2OpacityAnimation;
   late Animation<double> _coreAnimation;
   late Animation<double> _satelliteAnimation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -59,12 +64,6 @@ class _OrbitState extends State<Orbit> with SingleTickerProviderStateMixin {
     ]).animate(_animationController);
 
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// SemiCircleSpin.
@@ -10,9 +11,12 @@ class SemiCircleSpin extends StatefulWidget {
 }
 
 class _SemiCircleSpinState extends State<SemiCircleSpin>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<double> _animation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -25,12 +29,6 @@ class _SemiCircleSpinState extends State<SemiCircleSpin>
     ]).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.linear));
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override

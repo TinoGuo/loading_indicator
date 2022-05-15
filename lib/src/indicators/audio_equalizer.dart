@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// AudioEqualizer
@@ -10,14 +11,16 @@ class AudioEqualizer extends StatefulWidget {
 }
 
 class _AudioEqualizerState extends State<AudioEqualizer>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, IndicatorController {
   static const _lineNum = 4;
-  static const _durations = [
+
+  static const _durationInMills = [
     4300,
     2500,
     1700,
     3100,
   ];
+
   static const _values = [
     0.0,
     0.7,
@@ -36,11 +39,14 @@ class _AudioEqualizerState extends State<AudioEqualizer>
   final List<Animation<double>> _animations = [];
 
   @override
+  List<AnimationController> get animationControllers => _animationControllers;
+
+  @override
   void initState() {
     super.initState();
     for (int i = 0; i < _lineNum; i++) {
       _animationControllers.add(AnimationController(
-          vsync: this, duration: Duration(milliseconds: _durations[i])));
+          vsync: this, duration: Duration(milliseconds: _durationInMills[i])));
       final sequences = <TweenSequenceItem<double>>[];
       for (int j = 0; j < _values.length - 1; j++) {
         sequences.add(TweenSequenceItem(
@@ -50,14 +56,6 @@ class _AudioEqualizerState extends State<AudioEqualizer>
           .add(TweenSequence(sequences).animate(_animationControllers[i]));
       _animationControllers[i].repeat();
     }
-  }
-
-  @override
-  void dispose() {
-    for (var f in _animationControllers) {
-      f.dispose();
-    }
-    super.dispose();
   }
 
   @override

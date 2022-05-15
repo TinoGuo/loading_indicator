@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// BallRotate.
@@ -10,10 +11,13 @@ class BallRotate extends StatefulWidget {
 }
 
 class _BallRotateState extends State<BallRotate>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, IndicatorController {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _rotateAnimation;
+
+  @override
+  List<AnimationController> get animationControllers => [_animationController];
 
   @override
   void initState() {
@@ -30,12 +34,6 @@ class _BallRotateState extends State<BallRotate>
     _rotateAnimation = Tween(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: _animationController, curve: cubic));
     _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   @override
