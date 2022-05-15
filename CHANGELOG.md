@@ -1,3 +1,8 @@
+### [3.1.0] 2022/05/15
+* Remove delay future implementation
+* Smooth animation when start
+* Support pause animation
+
 ### [3.0.4] 2022/05/12
 * Fix rebuild not work [#27](https://github.com/TinoGuo/loading_indicator/issues/27)
 
