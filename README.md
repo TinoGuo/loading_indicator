@@ -1,6 +1,10 @@
 # LoadingIndicator
 ![](https://github.com/TinoGuo/loading_indicator/workflows/Flutter%20Build%20Test%20CI/badge.svg?branch=master)
+[![pub points](https://badges.bar/loading_indicator/pub%20points)](https://pub.dev/packages/loading_indicator/score)
+[![popularity](https://badges.bar/loading_indicator/popularity)](https://pub.dev/packages/loading_indicator/score)
+[![likes](https://badges.bar/loading_indicator/likes)](https://pub.dev/packages/loading_indicator/score)
 [![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
+![GitHub top language](https://img.shields.io/github/languages/top/TinoGuo/loading_indicator)
 
 A collection of out of the box loading animations written in pure dart, no extra dependency, inspired by [loaders.css](https://github.com/ConnorAtherton/loaders.css) and [NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView).
 

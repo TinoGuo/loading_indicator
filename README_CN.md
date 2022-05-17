@@ -1,6 +1,11 @@
 # LoadingIndicator
 ![](https://github.com/TinoGuo/loading_indicator/workflows/Flutter%20Build%20Test%20CI/badge.svg?branch=master)
 [![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
+[![pub points](https://badges.bar/loading_indicator/pub%20points)](https://pub.dev/packages/loading_indicator/score)
+[![popularity](https://badges.bar/loading_indicator/popularity)](https://pub.dev/packages/loading_indicator/score)
+[![likes](https://badges.bar/loading_indicator/likes)](https://pub.dev/packages/loading_indicator/score)
+[![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
+![GitHub top language](https://img.shields.io/github/languages/top/TinoGuo/loading_indicator)
 
 一个开箱即用的loading加载库，包含34个不同类型动画，灵感来源于[loaders.css](https://github.com/ConnorAtherton/loaders.css)和[NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView)。
 
