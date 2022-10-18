@@ -104,8 +104,12 @@ class _BallTrianglePathColoredState extends State<BallTrianglePathColored>
     );
   }
 
-  _buildAnimatedRing(
-      Size size, double circleSize, Animation<Offset>? animation, int index) {
+  Widget _buildAnimatedRing(
+    Size size,
+    double circleSize,
+    Animation<Offset>? animation,
+    int index,
+  ) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {

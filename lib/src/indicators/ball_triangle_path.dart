@@ -100,7 +100,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
     );
   }
 
-  _buildAnimatedRing(
+  Widget _buildAnimatedRing(
     Size size,
     double circleSize,
     Animation<Offset> animation,

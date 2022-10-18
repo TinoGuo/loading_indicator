@@ -32,7 +32,8 @@ class DecorateData {
 
   double get strokeWidth => _strokeWidth ?? _kDefaultStrokeWidth;
 
-  Function get _deepEq => const DeepCollectionEquality().equals;
+  bool Function(List<Color>, List<Color>) get _deepEq =>
+      const DeepCollectionEquality().equals;
 
   @override
   bool operator ==(Object other) =>

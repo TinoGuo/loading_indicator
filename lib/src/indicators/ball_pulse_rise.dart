@@ -82,7 +82,7 @@ class _BallPulseRiseState extends State<BallPulseRise>
     );
   }
 
-  _buildSingleCircle(int index, double deltaY) {
+  Widget _buildSingleCircle(int index, double deltaY) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {
