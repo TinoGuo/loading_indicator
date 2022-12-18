@@ -1,8 +1,5 @@
 # LoadingIndicator
 ![](https://github.com/TinoGuo/loading_indicator/workflows/Flutter%20Build%20Test%20CI/badge.svg?branch=master)
-[![pub points](https://badges.bar/loading_indicator/pub%20points)](https://pub.dev/packages/loading_indicator/score)
-[![popularity](https://badges.bar/loading_indicator/popularity)](https://pub.dev/packages/loading_indicator/score)
-[![likes](https://badges.bar/loading_indicator/likes)](https://pub.dev/packages/loading_indicator/score)
 [![pub package](https://img.shields.io/pub/v/loading_indicator.svg)](https://pub.dev/packages/loading_indicator)
 ![GitHub top language](https://img.shields.io/github/languages/top/TinoGuo/loading_indicator)
 
@@ -48,4 +45,19 @@ LoadingIndicator(
 [中文版](README_CN.md)
 
 ## License
-[Apache 2.0](LICENSE)
+
+```text
+Copyright 2019 Tino Guo.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
