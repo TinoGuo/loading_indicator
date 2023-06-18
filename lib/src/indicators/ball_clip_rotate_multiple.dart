@@ -72,7 +72,7 @@ class _BallClipRotateMultipleState extends State<BallClipRotateMultiple>
             ),
           ],
         ),
-        child: const IndicatorShapeWidget(shape: Shape.ringTwoHalfVertical),
+        child: const IndicatorShapeWidget(shape: RingTwoHalfVertical()),
       ),
     );
   }

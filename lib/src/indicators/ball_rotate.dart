@@ -63,7 +63,7 @@ class _BallRotateState extends State<BallRotate>
     return Opacity(
       opacity: opacity,
       child: IndicatorShapeWidget(
-        shape: Shape.circle,
+        shape: const Circle(),
         index: index,
       ),
     );

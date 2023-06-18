@@ -14,17 +14,17 @@ Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to 
 
 ## Animation types
 
-| Type | Type | Type | Type |
-|---|---|---|---|
-|1. ballPulse | 2. ballGridPulse | 3. ballClipRotate | 4. squareSpin|
-|5. ballClipRotatePulse | 6. ballClipRotateMultiple | 7. ballPulseRise | 8. ballRotate|
-|9. cubeTransition | 10. ballZigZag | 11. ballZigZagDeflect | 12. ballTrianglePath|
-|13. ballTrianglePathColored | 14.ballTrianglePathColoredFilled | 15. ballScale | 16. lineScale|
-|17. lineScaleParty | 18. ballScaleMultiple | 19. ballPulseSync | 20. ballBeat|
-|21. lineScalePulseOut | 22. lineScalePulseOutRapid |23. ballScaleRipple | 24. ballScaleRippleMultiple|
-|25. ballSpinFadeLoader | 26. lineSpinFadeLoader | 27. triangleSkewSpin | 28. pacman|
-|29. ballGridBeat | 30. semiCircleSpin| 31. ballRotateChase | 32. orbit|
-|33. audioEqualizer | 34. circleStrokeSpin|
+| Type                        | Type                             | Type                  | Type                        |
+|-----------------------------|----------------------------------|-----------------------|-----------------------------|
+| 1. ballPulse                | 2. ballGridPulse                 | 3. ballClipRotate     | 4. squareSpin               |
+| 5. ballClipRotatePulse      | 6. ballClipRotateMultiple        | 7. ballPulseRise      | 8. ballRotate               |
+| 9. cubeTransition           | 10. ballZigZag                   | 11. ballZigZagDeflect | 12. ballTrianglePath        |
+| 13. ballTrianglePathColored | 14.ballTrianglePathColoredFilled | 15. ballScale         | 16. lineScale               |
+| 17. lineScaleParty          | 18. ballScaleMultiple            | 19. ballPulseSync     | 20. ballBeat                |
+| 21. lineScalePulseOut       | 22. lineScalePulseOutRapid       | 23. ballScaleRipple   | 24. ballScaleRippleMultiple |
+| 25. ballSpinFadeLoader      | 26. lineSpinFadeLoader           | 27. triangleSkewSpin  | 28. pacman                  |
+| 29. ballGridBeat            | 30. semiCircleSpin               | 31. ballRotateChase   | 32. orbit                   |
+| 33. audioEqualizer          | 34. circleStrokeSpin             |
 
 ## Installing
 Install the latest version from [pub](https://pub.dev/packages/loading_indicator)

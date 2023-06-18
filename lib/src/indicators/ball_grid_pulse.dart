@@ -82,7 +82,7 @@ class _BallGridPulseState extends State<BallGridPulse>
         child: FadeTransition(
           opacity: _opacityAnimations[i],
           child: IndicatorShapeWidget(
-            shape: Shape.circle,
+            shape: const Circle(),
             index: i,
           ),
         ),

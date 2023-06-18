@@ -50,7 +50,7 @@ class MainWidget extends StatelessWidget {
                 child: LoadingIndicator(
                   indicatorType: indicator,
                   colors: _kDefaultRainbowColors,
-                  strokeWidth: 4.0,
+                  strokeWidth: 40.0,
                   pathBackgroundColor:
                       showPathBackground ? Colors.black45 : null,
                 ),

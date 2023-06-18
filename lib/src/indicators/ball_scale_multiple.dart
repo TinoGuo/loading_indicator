@@ -54,7 +54,7 @@ class _BallScaleMultipleState extends State<BallScaleMultiple>
         child: FadeTransition(
           opacity: _opacityAnimations[i],
           child: IndicatorShapeWidget(
-            shape: Shape.circle,
+            shape: const Circle(),
             index: i,
           ),
         ),

@@ -119,7 +119,7 @@ class _BallTrianglePathState extends State<BallTrianglePath>
         );
       },
       child: IndicatorShapeWidget(
-        shape: Shape.ring,
+        shape: const Ring(),
         index: index,
       ),
     );

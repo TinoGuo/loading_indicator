@@ -58,14 +58,14 @@ class _BallClipRotatePulseState extends State<BallClipRotatePulse>
               ..scale(_outCircleScale.value)
               ..rotateZ(_outCircleRotate.value),
             child: const IndicatorShapeWidget(
-              shape: Shape.ringTwoHalfVertical,
+              shape: RingTwoHalfVertical(),
               index: 0,
             ),
           ),
           Transform.scale(
             scale: _innerCircle.value * 0.3,
             child: const IndicatorShapeWidget(
-              shape: Shape.circle,
+              shape: Circle(),
               index: 1,
             ),
           ),

@@ -75,7 +75,7 @@ class _AudioEqualizerState extends State<AudioEqualizer>
               );
             },
             child: IndicatorShapeWidget(
-              shape: Shape.rectangle,
+              shape: const Square(),
               index: i ~/ 2,
             ),
           ),

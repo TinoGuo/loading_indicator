@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+import '../decorate/decorate.dart';
+
 /// LineScaleParty.
 class LineScaleParty extends StatefulWidget {
   const LineScaleParty({Key? key}) : super(key: key);
@@ -44,6 +46,7 @@ class _LineScalePartyState extends State<LineScaleParty>
 
   @override
   Widget build(BuildContext context) {
+    final strokeWidth = DecorateContext.of(context)!.decorateData.strokeWidth;
     List<Widget> widgets = _animations
         .asMap()
         .entries
@@ -55,7 +58,7 @@ class _LineScalePartyState extends State<LineScaleParty>
                 return FractionallySizedBox(
                   heightFactor: entry.value.value,
                   child: IndicatorShapeWidget(
-                    shape: Shape.line,
+                    shape: Line(strokeWidth: strokeWidth),
                     index: entry.key,
                   ),
                 );

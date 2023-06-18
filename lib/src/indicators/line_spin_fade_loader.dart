@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+import '../decorate/decorate.dart';
+
 /// LineSpinFadeLoader.
 class LineSpinFadeLoader extends StatefulWidget {
   const LineSpinFadeLoader({Key? key}) : super(key: key);
@@ -46,6 +48,7 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
 
   @override
   Widget build(BuildContext context) {
+    final strokeWidth = DecorateContext.of(context)!.decorateData.strokeWidth;
     return LayoutBuilder(builder: (ctx, constraint) {
       final circleSize = constraint.maxWidth / 3;
 
@@ -65,7 +68,7 @@ class _LineSpinFadeLoaderState extends State<LineSpinFadeLoader>
             child: Transform.rotate(
               angle: -angle,
               child: IndicatorShapeWidget(
-                shape: Shape.line,
+                shape: Line(strokeWidth: strokeWidth),
                 index: i,
               ),
             ),

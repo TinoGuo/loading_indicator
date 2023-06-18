@@ -2,8 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-const double _kDefaultStrokeWidth = 2;
-
 /// Information about a piece of animation (e.g., color).
 @immutable
 class DecorateData {
@@ -30,7 +28,7 @@ class DecorateData {
   })  : _strokeWidth = strokeWidth,
         assert(colors.length > 0);
 
-  double get strokeWidth => _strokeWidth ?? _kDefaultStrokeWidth;
+  double get strokeWidth => _strokeWidth ?? 0;
 
   Function get _deepEq => const DeepCollectionEquality().equals;
 

@@ -62,7 +62,7 @@ class _BallPulseSyncState extends State<BallPulseSync>
                 );
               },
               child: IndicatorShapeWidget(
-                shape: Shape.circle,
+                shape: const Circle(),
                 index: i,
               ),
             ),

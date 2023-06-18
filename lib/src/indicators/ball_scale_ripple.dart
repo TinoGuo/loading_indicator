@@ -42,7 +42,7 @@ class _BallScaleRippleState extends State<BallScaleRipple>
       opacity: _opacityAnimation,
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: const IndicatorShapeWidget(shape: Shape.ring),
+        child: const IndicatorShapeWidget(shape: Ring()),
       ),
     );
   }
