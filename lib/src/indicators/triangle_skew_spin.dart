@@ -49,7 +49,7 @@ class _TriangleSkewSpinState extends State<TriangleSkewSpin>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
         animation: _animationController,
-        child: const IndicatorShapeWidget(shape: Shape.triangle),
+        child: const IndicatorShapeWidget(shape: Square()),
         builder: (_, child) {
           return Transform(
             alignment: Alignment.center,

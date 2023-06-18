@@ -61,7 +61,7 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
                   ..translate(deltaX * _animation.value.dx,
                       deltaY * _animation.value.dy),
                 child: const IndicatorShapeWidget(
-                  shape: Shape.circle,
+                  shape: Circle(),
                   index: 0,
                 ),
               ),
@@ -73,7 +73,7 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
                   ..translate(deltaX * -_animation.value.dx,
                       deltaY * -_animation.value.dy),
                 child: const IndicatorShapeWidget(
-                  shape: Shape.circle,
+                  shape: Circle(),
                   index: 1,
                 ),
               ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
+import '../decorate/decorate.dart';
+
 /// LineScalePulseOutRapid.
 class LineScalePulseOutRapid extends StatefulWidget {
   const LineScalePulseOutRapid({Key? key}) : super(key: key);
@@ -44,6 +46,7 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
 
   @override
   Widget build(BuildContext context) {
+    final strokeWidth = DecorateContext.of(context)!.decorateData.strokeWidth;
     final widgets = List<Widget>.filled(9, Container());
     for (int i = 0; i < widgets.length; i++) {
       if (i.isEven) {
@@ -54,7 +57,7 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
               return FractionallySizedBox(
                 heightFactor: _animations[i ~/ 2].value,
                 child: IndicatorShapeWidget(
-                  shape: Shape.line,
+                  shape: Line(strokeWidth: strokeWidth),
                   index: i ~/ 2,
                 ),
               );

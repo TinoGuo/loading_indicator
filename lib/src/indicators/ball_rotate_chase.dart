@@ -75,7 +75,7 @@ class _BallRotateChaseState extends State<BallRotateChase>
               );
             },
             child: IndicatorShapeWidget(
-              shape: Shape.circle,
+              shape: const Circle(),
               index: i,
             ),
           ),

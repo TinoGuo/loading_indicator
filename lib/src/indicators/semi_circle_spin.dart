@@ -35,7 +35,7 @@ class _SemiCircleSpinState extends State<SemiCircleSpin>
   Widget build(BuildContext context) {
     return RotationTransition(
       turns: _animation,
-      child: const IndicatorShapeWidget(shape: Shape.circleSemi),
+      child: const IndicatorShapeWidget(shape: SemiCircle()),
     );
   }
 }

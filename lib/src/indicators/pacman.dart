@@ -90,7 +90,7 @@ class _PacmanState extends State<Pacman>
           animation: _rotateAnimation,
           builder: (_, child) {
             return IndicatorShapeWidget(
-              shape: Shape.arc,
+              shape: const Arc(),
               data: _rotateAnimation.value,
               index: 0,
             );
@@ -111,14 +111,14 @@ class _PacmanState extends State<Pacman>
             opacity: _opacityAnimations[i],
             child: AnimatedBuilder(
               animation: _translateXAnimations[i],
-              child: const IndicatorShapeWidget(shape: Shape.circle),
+              child: const IndicatorShapeWidget(shape: Circle()),
               builder: (_, child) {
                 return Transform.translate(
                   offset: Offset(
                       _translateXAnimations[i].value * constraint.maxWidth / 2,
                       0.0),
                   child: IndicatorShapeWidget(
-                    shape: Shape.circle,
+                    shape: const Circle(),
                     index: i + 1,
                   ),
                 );

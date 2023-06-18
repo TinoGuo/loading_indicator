@@ -59,7 +59,7 @@ class _BallBeatState extends State<BallBeat>
               child: ScaleTransition(
                 scale: _scaleAnimations[i ~/ 2],
                 child: IndicatorShapeWidget(
-                  shape: Shape.circle,
+                  shape: const Circle(),
                   index: i ~/ 2,
                 ),
               ),

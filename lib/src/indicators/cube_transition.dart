@@ -91,7 +91,7 @@ class _CubeTransitionState extends State<CubeTransition>
                   ..rotateZ(_rotateAnimation.value)
                   ..scale(_scaleAnimation.value),
                 child: const IndicatorShapeWidget(
-                  shape: Shape.rectangle,
+                  shape: Square(),
                   index: 0,
                 ),
               ),
@@ -107,7 +107,7 @@ class _CubeTransitionState extends State<CubeTransition>
                   ..rotateZ(_rotateAnimation.value)
                   ..scale(_scaleAnimation.value),
                 child: const IndicatorShapeWidget(
-                  shape: Shape.rectangle,
+                  shape: Square(),
                   index: 1,
                 ),
               ),

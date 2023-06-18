@@ -56,7 +56,7 @@ class _BallClipRotateState extends State<BallClipRotate>
           child: child,
         );
       },
-      child: const IndicatorShapeWidget(shape: Shape.ringThirdFour),
+      child: const IndicatorShapeWidget(shape: RingThirdFour()),
     );
   }
 }

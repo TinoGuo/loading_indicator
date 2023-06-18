@@ -65,7 +65,7 @@ class _BallPulseState extends State<BallPulse>
         child: ScaleTransition(
           scale: _scaleAnimations[i],
           child: IndicatorShapeWidget(
-            shape: Shape.circle,
+            shape: const Circle(),
             index: i,
           ),
         ),

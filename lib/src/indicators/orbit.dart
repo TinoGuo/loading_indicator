@@ -87,7 +87,7 @@ class _OrbitState extends State<Orbit>
               child: ScaleTransition(
                 scale: _coreAnimation,
                 child: const IndicatorShapeWidget(
-                  shape: Shape.circle,
+                  shape: Circle(),
                   index: 0,
                 ),
               ),
@@ -99,7 +99,7 @@ class _OrbitState extends State<Orbit>
                 child: ScaleTransition(
                   scale: _ring1ScaleAnimation,
                   child: const IndicatorShapeWidget(
-                    shape: Shape.circle,
+                    shape: Circle(),
                     index: 1,
                   ),
                 ),
@@ -112,7 +112,7 @@ class _OrbitState extends State<Orbit>
                 child: ScaleTransition(
                   scale: _ring2ScaleAnimation,
                   child: const IndicatorShapeWidget(
-                    shape: Shape.circle,
+                    shape: Circle(),
                     index: 2,
                   ),
                 ),
@@ -128,7 +128,7 @@ class _OrbitState extends State<Orbit>
                     offset: Offset(sin(_satelliteAnimation.value) * deltaX,
                         -cos(_satelliteAnimation.value) * deltaY),
                     child: const IndicatorShapeWidget(
-                      shape: Shape.circle,
+                      shape: Circle(),
                       index: 3,
                     ),
                   );

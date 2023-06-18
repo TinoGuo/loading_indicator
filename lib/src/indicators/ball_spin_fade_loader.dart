@@ -72,7 +72,7 @@ class _BallSpinFadeLoaderState extends State<BallSpinFadeLoader>
             child: ScaleTransition(
               scale: _scaleAnimations[i],
               child: IndicatorShapeWidget(
-                shape: Shape.circle,
+                shape: const Circle(),
                 index: i,
               ),
             ),

@@ -5,17 +5,51 @@ import 'package:loading_indicator/src/decorate/decorate.dart';
 
 const double _kMinIndicatorSize = 36.0;
 
-/// Basic shape.
-enum Shape {
-  circle,
-  ringThirdFour,
-  rectangle,
-  ringTwoHalfVertical,
-  ring,
-  line,
-  triangle,
-  arc,
-  circleSemi,
+sealed class Shape {}
+
+class Circle implements Shape {
+  final double radius;
+  const Circle({this.radius = 0});
+}
+
+class RingThirdFour implements Shape {
+  final double radius;
+  const RingThirdFour({this.radius = 0});
+}
+
+class Square implements Shape {
+  final double size;
+  const Square({this.size = 0});
+}
+
+class RingTwoHalfVertical implements Shape {
+  final double radius;
+  const RingTwoHalfVertical({this.radius = 0});
+}
+
+class Ring implements Shape {
+  final double radius;
+  const Ring({this.radius = 0});
+}
+
+class Line implements Shape {
+  final double strokeWidth;
+  const Line({this.strokeWidth = 0});
+}
+
+class Triangle implements Shape {
+  final double strokeWidth;
+  const Triangle({this.strokeWidth = 0});
+}
+
+class Arc implements Shape {
+  final double radius;
+  const Arc({this.radius = 0});
+}
+
+class SemiCircle implements Shape {
+  final double radius;
+  const SemiCircle({this.radius = 0});
 }
 
 /// Wrapper class for basic shape.
@@ -76,7 +110,7 @@ class _ShapePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     switch (shape) {
-      case Shape.circle:
+      case Circle _:
         _paint
           ..color = color
           ..style = PaintingStyle.fill;
@@ -86,7 +120,7 @@ class _ShapePainter extends CustomPainter {
           _paint,
         );
         break;
-      case Shape.ringThirdFour:
+      case RingThirdFour _:
         if (pathColor != null) {
           _paint
             ..color = pathColor!
@@ -113,13 +147,13 @@ class _ShapePainter extends CustomPainter {
           _paint,
         );
         break;
-      case Shape.rectangle:
+      case Square _:
         _paint
           ..color = color
           ..style = PaintingStyle.fill;
         canvas.drawRect(Offset.zero & size, _paint);
         break;
-      case Shape.ringTwoHalfVertical:
+      case RingTwoHalfVertical _:
         _paint
           ..color = color
           ..strokeWidth = strokeWidth
@@ -129,7 +163,7 @@ class _ShapePainter extends CustomPainter {
         canvas.drawArc(rect, -3 * pi / 4, pi / 2, false, _paint);
         canvas.drawArc(rect, 3 * pi / 4, -pi / 2, false, _paint);
         break;
-      case Shape.ring:
+      case Ring _:
         _paint
           ..color = color
           ..strokeWidth = strokeWidth
@@ -137,17 +171,29 @@ class _ShapePainter extends CustomPainter {
         canvas.drawCircle(Offset(size.width / 2, size.height / 2),
             size.shortestSide / 2, _paint);
         break;
-      case Shape.line:
+      case Line line:
         _paint
           ..color = color
           ..style = PaintingStyle.fill;
-        canvas.drawRRect(
-            RRect.fromRectAndRadius(
-                Rect.fromLTWH(0, 0, size.width, size.height),
-                Radius.circular(size.shortestSide / 2)),
-            _paint);
+        if (line.strokeWidth >= size.shortestSide || line.strokeWidth <= 0) {
+          canvas.drawRRect(
+              RRect.fromRectAndRadius(
+                  Rect.fromLTWH(0, 0, size.width, size.height),
+                  Radius.circular(size.shortestSide / 2)),
+              _paint);
+        } else {
+          canvas.drawRRect(
+              RRect.fromRectAndRadius(
+                  Rect.fromCenter(
+                      center: size.center(Offset.zero),
+                      width: line.strokeWidth,
+                      height: size.height),
+                  Radius.circular(
+                      min(line.strokeWidth, size.shortestSide) / 2)),
+              _paint);
+        }
         break;
-      case Shape.triangle:
+      case Triangle _:
         final offsetY = size.height / 4;
         _paint
           ..color = color
@@ -159,7 +205,7 @@ class _ShapePainter extends CustomPainter {
           ..close();
         canvas.drawPath(path, _paint);
         break;
-      case Shape.arc:
+      case Arc _:
         assert(data != null);
         _paint
           ..color = color
@@ -167,7 +213,7 @@ class _ShapePainter extends CustomPainter {
         canvas.drawArc(
             Offset.zero & size, data!, pi * 2 - 2 * data!, true, _paint);
         break;
-      case Shape.circleSemi:
+      case SemiCircle _:
         _paint
           ..color = color
           ..style = PaintingStyle.fill;

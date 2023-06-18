@@ -36,7 +36,7 @@ class _BallScaleState extends State<BallScale>
       opacity: _opacityAnimation,
       child: ScaleTransition(
         scale: _scaleAnimation,
-        child: const IndicatorShapeWidget(shape: Shape.circle),
+        child: const IndicatorShapeWidget(shape: Circle()),
       ),
     );
   }
