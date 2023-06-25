@@ -1,3 +1,7 @@
+### [3.1.1] 2023/06/25
+* Update SDK constraints
+* Fix CI issue
+
 ### [3.1.0] 2022/05/15
 * Remove delay future implementation
 * Smooth animation when start
