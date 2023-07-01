@@ -9,21 +9,28 @@ on:
   pull_request:
 
 jobs:
+
+  matrix_prep:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      # Required as the JSON input file needs to be read
+      - uses: actions/checkout@v3
+      - uses: nelonoel/branch-name@v1.0.1
+      - id: set-matrix
+        uses: JoshuaTheMiller/conditional-build-matrix@0.1.0
+        with:
+          # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
+          filter: '[?runOnBranch==`${{ github.ref }}` || runOnBranch==`always`]'
+          addInclude: false
+
   # Set up Flutter for all other tasks.
   setup:
-    runs-on: ${{ matrix.os }}
-
+    needs: matrix_prep
+    runs-on: ${{ matrix.runs_on }}
     strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            flutter_path: /opt/hostedtoolcache/flutter
-          - os: macos-latest
-            flutter_path: /Users/runner/hostedtoolcache/flutter
-          - os: windows-latest
-            flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
-      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
 
     steps:
       - uses: actions/checkout@v3
@@ -37,19 +44,10 @@ jobs:
           channel: 'stable'
 
   build-and-test:
-    runs-on: ${{ matrix.os }}
     needs: setup
-
+    runs-on: ${{ matrix.runs_on }}
     strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        include:
-          - os: ubuntu-latest
-            flutter_path: /opt/hostedtoolcache/flutter
-          - os: macos-latest
-            flutter_path: /Users/runner/hostedtoolcache/flutter
-          - os: windows-latest
-            flutter_path: C:\Users\runneradmin\hostedtoolcache\flutter
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
       fail-fast: false
 
     steps:

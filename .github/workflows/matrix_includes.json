@@ -1,0 +1,14 @@
+[
+  {
+    "runs_on":"ubuntu-latest",
+    "runOnBranch":"always"
+  },
+  {
+    "runs_on":"windows-latest",
+    "runOnBranch":"master"
+  },
+  {
+    "runs_on":"macos-latest",
+    "runOnBranch":"master"
+  }
+]
