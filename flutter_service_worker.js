@@ -26,7 +26,7 @@ const RESOURCES = {"canvaskit/chromium/canvaskit.js": "96ae916cd2d1b7320fff853ee
 "index.html": "00fa4d0e5c5956ceb97755d9981ce3d0",
 "/": "00fa4d0e5c5956ceb97755d9981ce3d0",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
-"main.dart.js": "dfbee69b7b0a5be9a889c6467f6c271f",
+"main.dart.js": "9a6ed1473f53c6481daf348d794369c6",
 "manifest.json": "00e0b69b49487ce4f9ff0c5fac8fda49"};
 // The application shell files that are downloaded before a service worker can
 // start.
