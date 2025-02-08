@@ -20471,7 +20471,7 @@ A.a7y.prototype={
 $1(a){var s=A.d0().b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/e672b006cb34c921db85b8e2f482ed3144a4574b/":s)+a},
+if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/82bd5b7209295a5b7ff8cae0df96e7870171e3a5/":s)+a},
 $S:92}
 A.OU.prototype={
 cV(){B.c.a3(this.a.a.save())},
