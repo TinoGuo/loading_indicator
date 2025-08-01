@@ -13,7 +13,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "693635b5258fe5f1cda720cf224f158c
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "33b7d9392238c04c131b6ce224e13711",
 "version.json": "ff966ab969ba381b900e61629bfb9789",
 "manifest.json": "00e0b69b49487ce4f9ff0c5fac8fda49",
-"flutter_bootstrap.js": "351ce9ff7d1678cbd6f8ea28ec9b5f7d",
+"flutter_bootstrap.js": "24cf650135dbfda316afa32987c9c7dd",
 "canvaskit/skwasm.wasm": "39dd80367a4e71582d234948adc521c0",
 "canvaskit/canvaskit.wasm": "7a3f4ae7d65fc1de6a6e7ddd3224bc93",
 "canvaskit/skwasm.js.symbols": "e72c79950c8a8483d826a7f0560573a1",
