@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// BallClipRotateMultiple.
 class BallClipRotateMultiple extends StatefulWidget {
@@ -53,7 +54,8 @@ class _BallClipRotateMultipleState extends State<BallClipRotateMultiple>
             Transform(
               alignment: Alignment.center,
               transform: Matrix4.identity()
-                ..scale(_scaleAnimation.value)
+                ..scaleWithValues(_scaleAnimation.value, _scaleAnimation.value,
+                    _scaleAnimation.value, 1.0)
                 ..rotateZ(_rotateAnimation.value),
               child: child,
             ),
@@ -65,7 +67,8 @@ class _BallClipRotateMultipleState extends State<BallClipRotateMultiple>
               child: Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..scale(_scaleAnimation.value)
+                  ..scaleWithValues(_scaleAnimation.value, _scaleAnimation.value,
+                      _scaleAnimation.value, 1.0)
                   ..rotateZ(-_rotateAnimation.value),
                 child: child,
               ),

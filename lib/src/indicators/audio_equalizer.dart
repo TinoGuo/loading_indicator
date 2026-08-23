@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// AudioEqualizer
 class AudioEqualizer extends StatefulWidget {
@@ -69,7 +70,8 @@ class _AudioEqualizerState extends State<AudioEqualizer>
             builder: (_, child) {
               return Transform(
                 transform: Matrix4.identity()
-                  ..scale(1.0, _animations[i ~/ 2].value),
+                  ..scaleWithValues(
+                      1.0, _animations[i ~/ 2].value, 1.0, 1.0),
                 alignment: Alignment.bottomCenter,
                 child: child,
               );

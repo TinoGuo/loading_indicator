@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// Animates the y axis scale of a transformed widget.
 class ScaleYTransition extends AnimatedWidget {
@@ -18,7 +19,8 @@ class ScaleYTransition extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     final double scaleYValue = scaleY.value;
-    final Matrix4 transform = Matrix4.identity()..scale(1.0, scaleYValue, 1.0);
+    final Matrix4 transform = Matrix4.identity()
+      ..scaleWithValues(1.0, scaleYValue, 1.0, 1.0);
     return Transform(
       transform: transform,
       alignment: alignment,

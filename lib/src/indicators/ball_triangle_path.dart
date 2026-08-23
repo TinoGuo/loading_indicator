@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// BallTrianglePath.
 class BallTrianglePath extends StatefulWidget {
@@ -111,9 +112,11 @@ class _BallTrianglePathState extends State<BallTrianglePath>
       builder: (_, child) {
         return Transform(
           transform: Matrix4.identity()
-            ..translate(
+            ..translateWithValues(
               animation.value.dx * (size.width - circleSize),
               animation.value.dy * (size.height - circleSize),
+              0.0,
+              1.0,
             ),
           child: child,
         );

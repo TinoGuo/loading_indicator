@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// BallZigZagDeflect.
 class BallZigZagDeflect extends StatefulWidget {
@@ -58,8 +59,8 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
               rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
               child: Transform(
                 transform: Matrix4.identity()
-                  ..translate(deltaX * _animation.value.dx,
-                      deltaY * _animation.value.dy),
+                  ..translateWithValues(deltaX * _animation.value.dx,
+                      deltaY * _animation.value.dy, 0.0, 1.0),
                 child: const IndicatorShapeWidget(
                   shape: Shape.circle,
                   index: 0,
@@ -70,8 +71,8 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
               rect: Rect.fromLTWH(deltaX, deltaY, circleSize, circleSize),
               child: Transform(
                 transform: Matrix4.identity()
-                  ..translate(deltaX * -_animation.value.dx,
-                      deltaY * -_animation.value.dy),
+                  ..translateWithValues(deltaX * -_animation.value.dx,
+                      deltaY * -_animation.value.dy, 0.0, 1.0),
                 child: const IndicatorShapeWidget(
                   shape: Shape.circle,
                   index: 1,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// BallPulseRise.
 class BallPulseRise extends StatefulWidget {
@@ -86,17 +87,17 @@ class _BallPulseRiseState extends State<BallPulseRise>
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {
+        final scale = index.isEven
+            ? _evenScaleAnimation.value
+            : _oddScaleAnimation.value;
+        final translateY = index.isEven
+            ? _evenTranslateAnimation.value * deltaY
+            : _oddTranslateAnimation.value * deltaY;
         return Transform(
           alignment: Alignment.center,
           transform: Matrix4.identity()
-            ..scale(index.isEven
-                ? _evenScaleAnimation.value
-                : _oddScaleAnimation.value)
-            ..translate(
-                0.0,
-                index.isEven
-                    ? _evenTranslateAnimation.value * deltaY
-                    : _oddTranslateAnimation.value * deltaY)
+            ..scaleWithValues(scale, scale, scale, 1.0)
+            ..translateWithValues(0.0, translateY, 0.0, 1.0)
             ..setEntry(3, 2, 0.006),
           child: child,
         );
