@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:loading_indicator/src/shape/indicator_painter.dart';
 import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 void main() {
@@ -81,5 +82,42 @@ void main() {
     }
 
     await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('lineSpinFadeLoader respects strokeWidth', (tester) async {
+    Future<void> pumpIndicator(double? strokeWidth) {
+      return tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: SizedBox.square(
+              dimension: 96,
+              child: LoadingIndicator(
+                indicatorType: Indicator.lineSpinFadeLoader,
+                colors: const [Colors.blue],
+                strokeWidth: strokeWidth,
+                pause: true,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    List<IndicatorShapeWidget> lineShapes() => tester
+        .widgetList<IndicatorShapeWidget>(find.byType(IndicatorShapeWidget))
+        .where((widget) => widget.shape == Shape.line)
+        .toList();
+
+    await pumpIndicator(null);
+    expect(lineShapes(), hasLength(8));
+    expect(lineShapes().map((shape) => shape.lineWidth), everyElement(isNull));
+
+    await pumpIndicator(2);
+    expect(lineShapes(), hasLength(8));
+    expect(lineShapes().map((shape) => shape.lineWidth), everyElement(2));
+
+    await pumpIndicator(12);
+    expect(lineShapes(), hasLength(8));
+    expect(lineShapes().map((shape) => shape.lineWidth), everyElement(12));
   });
 }
