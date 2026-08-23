@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// CubeTransition.
 class CubeTransition extends StatefulWidget {
@@ -86,10 +87,14 @@ class _CubeTransitionState extends State<CubeTransition>
               child: Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..translate(_translateAnimation.value!.width * deltaX,
-                      _translateAnimation.value!.height * deltaY)
+                  ..translateWithValues(
+                      _translateAnimation.value!.width * deltaX,
+                      _translateAnimation.value!.height * deltaY,
+                      0.0,
+                      1.0)
                   ..rotateZ(_rotateAnimation.value)
-                  ..scale(_scaleAnimation.value),
+                  ..scaleWithValues(_scaleAnimation.value, _scaleAnimation.value,
+                      _scaleAnimation.value, 1.0),
                 child: const IndicatorShapeWidget(
                   shape: Shape.rectangle,
                   index: 0,
@@ -102,10 +107,14 @@ class _CubeTransitionState extends State<CubeTransition>
               child: Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..translate(-_translateAnimation.value!.width * deltaX,
-                      -_translateAnimation.value!.height * deltaY)
+                  ..translateWithValues(
+                      -_translateAnimation.value!.width * deltaX,
+                      -_translateAnimation.value!.height * deltaY,
+                      0.0,
+                      1.0)
                   ..rotateZ(_rotateAnimation.value)
-                  ..scale(_scaleAnimation.value),
+                  ..scaleWithValues(_scaleAnimation.value, _scaleAnimation.value,
+                      _scaleAnimation.value, 1.0),
                 child: const IndicatorShapeWidget(
                   shape: Shape.rectangle,
                   index: 1,

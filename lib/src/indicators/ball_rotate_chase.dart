@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
+import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
 /// BallRotateChase.
 class BallRotateChase extends StatefulWidget {
@@ -62,9 +63,11 @@ class _BallRotateChaseState extends State<BallRotateChase>
               return Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..translate(
+                  ..translateWithValues(
                     deltaX * sin(_translateAnimations[i].value),
                     deltaY * -cos(_translateAnimations[i].value),
+                    0.0,
+                    1.0,
                   ),
 
                 /// scale must in child, if upper would align topLeft.
