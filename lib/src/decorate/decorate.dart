@@ -32,6 +32,10 @@ class DecorateData {
 
   double get strokeWidth => _strokeWidth ?? _kDefaultStrokeWidth;
 
+  /// The explicitly configured stroke width, or null when the indicator
+  /// should keep its size-derived default.
+  double? get configuredStrokeWidth => _strokeWidth;
+
   Function get _deepEq => const DeepCollectionEquality().equals;
 
   @override

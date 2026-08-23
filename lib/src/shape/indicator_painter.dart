@@ -22,6 +22,7 @@ enum Shape {
 class IndicatorShapeWidget extends StatelessWidget {
   final Shape shape;
   final double? data;
+  final double? lineWidth;
 
   /// The index of shape in the widget.
   final int index;
@@ -30,6 +31,7 @@ class IndicatorShapeWidget extends StatelessWidget {
     Key? key,
     required this.shape,
     this.data,
+    this.lineWidth,
     this.index = 0,
   }) : super(key: key);
 
@@ -49,6 +51,7 @@ class IndicatorShapeWidget extends StatelessWidget {
           shape,
           data,
           decorateData.strokeWidth,
+          lineWidth: lineWidth,
           pathColor: decorateData.pathBackgroundColor,
         ),
       ),
@@ -62,6 +65,7 @@ class _ShapePainter extends CustomPainter {
   final Paint _paint;
   final double? data;
   final double strokeWidth;
+  final double? lineWidth;
   final Color? pathColor;
 
   _ShapePainter(
@@ -69,6 +73,7 @@ class _ShapePainter extends CustomPainter {
     this.shape,
     this.data,
     this.strokeWidth, {
+    this.lineWidth,
     this.pathColor,
   })  : _paint = Paint()..isAntiAlias = true,
         super();
@@ -141,11 +146,25 @@ class _ShapePainter extends CustomPainter {
         _paint
           ..color = color
           ..style = PaintingStyle.fill;
+        final configuredLineWidth = lineWidth;
+        final lineRect =
+            configuredLineWidth == null ||
+                !configuredLineWidth.isFinite ||
+                configuredLineWidth <= 0 ||
+                configuredLineWidth >= size.shortestSide
+            ? Offset.zero & size
+            : Rect.fromCenter(
+                center: size.center(Offset.zero),
+                width: configuredLineWidth,
+                height: size.height,
+              );
         canvas.drawRRect(
-            RRect.fromRectAndRadius(
-                Rect.fromLTWH(0, 0, size.width, size.height),
-                Radius.circular(size.shortestSide / 2)),
-            _paint);
+          RRect.fromRectAndRadius(
+            lineRect,
+            Radius.circular(lineRect.shortestSide / 2),
+          ),
+          _paint,
+        );
         break;
       case Shape.triangle:
         final offsetY = size.height / 4;
@@ -182,5 +201,6 @@ class _ShapePainter extends CustomPainter {
       color != oldDelegate.color ||
       data != oldDelegate.data ||
       strokeWidth != oldDelegate.strokeWidth ||
+      lineWidth != oldDelegate.lineWidth ||
       pathColor != oldDelegate.pathColor;
 }
