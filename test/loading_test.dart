@@ -85,6 +85,7 @@ void main() {
   });
 
   testWidgets('line indicators respect strokeWidth', (tester) async {
+    final controller = LoadingIndicatorController()..pause();
     const lineIndicators = <Indicator, int>{
       Indicator.lineScale: 5,
       Indicator.lineScaleParty: 4,
@@ -106,7 +107,7 @@ void main() {
                 indicatorType: indicator,
                 colors: const [Colors.blue],
                 strokeWidth: strokeWidth,
-                pause: true,
+                controller: controller,
               ),
             ),
           ),
@@ -137,5 +138,6 @@ void main() {
     }
 
     await tester.pumpWidget(const SizedBox.shrink());
+    controller.dispose();
   });
 }

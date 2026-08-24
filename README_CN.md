@@ -28,24 +28,93 @@
 | 33. audioEqualizer          | 34. circleStrokeSpin             |
 
 ## 安装
+
 从[pub](https://pub.dev/packages/loading_indicator)安装最新版本。
 
 ## 使用
+
 简单且强大的API。
 
-```
+```dart
 LoadingIndicator(
-    colors: const [Colors.white],       /// 必须, 颜色集合
-    indicatorType: Indicator.ballPulse, /// 可选, loading的类型
-    strokeWidth: 2,                     /// 可选, 描边图形及线条动画的宽度
-    backgroundColor: Colors.black,      /// 可选, 组件背景色
-    pathBackgroundColor: Colors.black   /// 可选, 线条背景色
+  indicatorType: Indicator.ballPulse, // 必须：动画类型
+  colors: const [Colors.white],        // 可选：颜色集合
+  strokeWidth: 2,                      // 可选：描边和线条宽度
+  backgroundColor: Colors.black,       // 可选：组件背景色
+  pathBackgroundColor: Colors.black,   // 可选：线条背景色
 )
 ```
 
 `strokeWidth` 可调整 `lineScale`、`lineScaleParty`、`lineScalePulseOut`、
 `lineScalePulseOutRapid` 和 `lineSpinFadeLoader` 的线条宽度。如果不设置，
 这些动画会保持原本根据组件尺寸自动计算的宽度。
+
+不传 Controller 时，所有动画会自动循环播放。需要控制动画时，在组件的生命周期内创建并释放
+`LoadingIndicatorController`：
+
+```dart
+late final LoadingIndicatorController _controller;
+
+@override
+void initState() {
+  super.initState();
+  _controller = LoadingIndicatorController();
+}
+
+@override
+void dispose() {
+  _controller.dispose();
+  super.dispose();
+}
+
+@override
+Widget build(BuildContext context) {
+  return LoadingIndicator(
+    indicatorType: Indicator.ballScaleMultiple,
+    controller: _controller,
+  );
+}
+```
+
+Controller 支持全部 34 种动画：
+
+```dart
+_controller.pause(); // 立即冻结当前帧。
+
+await _controller.pauseAt(0.5); // 下一次自然运行到 50% 时暂停。
+
+await _controller.pauseAt(
+  1.0,
+  behavior: LoadingIndicatorPauseBehavior.jumpToTarget,
+); // 整组动画立即前进到目标位置并暂停。
+
+_controller.resume();
+```
+
+`progress` 是 indicator 参考动画轨道的归一化进度，范围为 `0.0–1.0`：`0.0`
+表示循环刚开始，`1.0` 表示重置前的最后一帧。`pauseAt` 会在真正暂停后完成；待执行命令
+被替换或 Controller 被释放时，Future 会以 `LoadingIndicatorCommandCanceled` 结束。
+一个 Controller 同时只能绑定一个 `LoadingIndicator`；未挂载时提交的最后一条命令会在
+下次挂载时执行。
+
+### 从 3.x 迁移
+
+4.0 删除了组件的 `pause` 参数，请改用 Controller：
+
+```dart
+// 3.x
+LoadingIndicator(indicatorType: Indicator.ballPulse, pause: isPaused);
+
+// 4.0
+LoadingIndicator(
+  indicatorType: Indicator.ballPulse,
+  controller: controller,
+);
+
+void setPaused(bool isPaused) {
+  isPaused ? controller.pause() : controller.resume();
+}
+```
 
 ## License
 

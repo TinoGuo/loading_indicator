@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
+import 'package:loading_indicator/src/control/loading_indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 import 'package:loading_indicator/src/transition/matrix4_transform.dart';
 
@@ -20,6 +20,10 @@ class _BallZigZagDeflectState extends State<BallZigZagDeflect>
 
   @override
   List<AnimationController> get animationControllers => [_animationController];
+
+  @override
+  bool repeatsInReverse(AnimationController controller) =>
+      identical(controller, _animationController);
 
   @override
   void initState() {

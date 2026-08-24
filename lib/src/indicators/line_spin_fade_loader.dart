@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/control/loading_indicator_controller.dart';
 import 'package:loading_indicator/src/decorate/decorate.dart';
-import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
 /// LineSpinFadeLoader.
