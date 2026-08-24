@@ -1,5 +1,10 @@
-### Unreleased
+### [4.0.0] 2026/08/24
+* **Breaking:** Remove the `pause` parameter from `LoadingIndicator` and add `LoadingIndicatorController`.
+* Support immediate pause, natural `pauseAt`, virtual-time jump, resume, playback status, progress, and command cancellation.
+* Add controllable playback to all 34 indicators, including a package-owned `circleStrokeSpin` animation.
+* Preserve the direction and relative timing of multi-track and reversing animations when pausing or jumping.
 * Apply `strokeWidth` to every line indicator [#36](https://github.com/TinoGuo/loading_indicator/pull/36)
+* Update the example and English/Chinese migration documentation.
 
 ### [3.1.1] 2023/06/25
 * Update SDK constraints

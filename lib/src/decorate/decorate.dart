@@ -17,16 +17,12 @@ class DecorateData {
   /// Applicable to which has cut edge of the shape
   final Color? pathBackgroundColor;
 
-  /// Animation status, true will pause the animation
-  final bool pause;
-
   const DecorateData({
     required this.indicator,
     required this.colors,
     this.backgroundColor,
     double? strokeWidth,
     this.pathBackgroundColor,
-    required this.pause,
   })  : _strokeWidth = strokeWidth,
         assert(colors.length > 0);
 
@@ -47,8 +43,7 @@ class DecorateData {
           indicator == other.indicator &&
           _deepEq(colors, other.colors) &&
           _strokeWidth == other._strokeWidth &&
-          pathBackgroundColor == other.pathBackgroundColor &&
-          pause == other.pause;
+          pathBackgroundColor == other.pathBackgroundColor;
 
   @override
   int get hashCode =>
@@ -56,12 +51,11 @@ class DecorateData {
       indicator.hashCode ^
       colors.hashCode ^
       _strokeWidth.hashCode ^
-      pathBackgroundColor.hashCode ^
-      pause.hashCode;
+      pathBackgroundColor.hashCode;
 
   @override
   String toString() {
-    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors, strokeWidth: $_strokeWidth, pathBackgroundColor: $pathBackgroundColor, pause: $pause}';
+    return 'DecorateData{backgroundColor: $backgroundColor, indicator: $indicator, colors: $colors, strokeWidth: $_strokeWidth, pathBackgroundColor: $pathBackgroundColor}';
   }
 }
 

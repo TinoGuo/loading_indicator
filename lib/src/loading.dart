@@ -2,6 +2,7 @@ library loading;
 
 import 'package:flutter/material.dart';
 
+import 'control/loading_indicator_controller.dart';
 import 'decorate/decorate.dart';
 import 'indicators/audio_equalizer.dart';
 import 'indicators/ball_beat.dart';
@@ -92,8 +93,10 @@ class LoadingIndicator extends StatelessWidget {
   /// Applicable to which has cut edge of the shape
   final Color? pathBackgroundColor;
 
-  /// Animation status, true will pause the animation, default is false
-  final bool pause;
+  /// Controls the playback of this indicator.
+  ///
+  /// When null, the indicator plays continuously.
+  final LoadingIndicatorController? controller;
 
   const LoadingIndicator({
     Key? key,
@@ -102,31 +105,29 @@ class LoadingIndicator extends StatelessWidget {
     this.backgroundColor,
     this.strokeWidth,
     this.pathBackgroundColor,
-    this.pause = false,
+    this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (indicatorType == Indicator.circleStrokeSpin && pause) {
-      debugPrint(
-          "LoadingIndicator: it will not take any effect when set pause:true on ${Indicator.circleStrokeSpin}");
-    }
     List<Color> safeColors = colors == null || colors!.isEmpty
         ? [Theme.of(context).primaryColor]
         : colors!;
-    return DecorateContext(
-      decorateData: DecorateData(
-        indicator: indicatorType,
-        colors: safeColors,
-        strokeWidth: strokeWidth,
-        pathBackgroundColor: pathBackgroundColor,
-        pause: pause,
-      ),
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Container(
-          color: backgroundColor,
-          child: _buildIndicator(),
+    return IndicatorControlScope(
+      controller: controller,
+      child: DecorateContext(
+        decorateData: DecorateData(
+          indicator: indicatorType,
+          colors: safeColors,
+          strokeWidth: strokeWidth,
+          pathBackgroundColor: pathBackgroundColor,
+        ),
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: Container(
+            color: backgroundColor,
+            child: _buildIndicator(),
+          ),
         ),
       ),
     );

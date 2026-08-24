@@ -27,24 +27,95 @@ Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to 
 | 33. audioEqualizer          | 34. circleStrokeSpin             |
 
 ## Installing
+
 Install the latest version from [pub](https://pub.dev/packages/loading_indicator)
 
 ## Usage
+
 Simple but powerful parameters
 
-```
+```dart
 LoadingIndicator(
-    indicatorType: Indicator.ballPulse, /// Required, The loading type of the widget
-    colors: const [Colors.white],       /// Optional, The color collections
-    strokeWidth: 2,                     /// Optional, The width of stroked shapes and line indicators
-    backgroundColor: Colors.black,      /// Optional, Background of the widget
-    pathBackgroundColor: Colors.black   /// Optional, the stroke backgroundColor
+  indicatorType: Indicator.ballPulse, // Required: animation type
+  colors: const [Colors.white],        // Optional: color collection
+  strokeWidth: 2,                      // Optional: stroke and line width
+  backgroundColor: Colors.black,       // Optional: widget background
+  pathBackgroundColor: Colors.black,   // Optional: stroke background
 )
 ```
 
 `strokeWidth` controls the bar width of `lineScale`, `lineScaleParty`,
 `lineScalePulseOut`, `lineScalePulseOutRapid`, and `lineSpinFadeLoader`.
 When omitted, these indicators keep their original size-derived bar width.
+
+Without a controller, every indicator plays continuously. To control playback,
+create and dispose a `LoadingIndicatorController` with your widget:
+
+```dart
+late final LoadingIndicatorController _controller;
+
+@override
+void initState() {
+  super.initState();
+  _controller = LoadingIndicatorController();
+}
+
+@override
+void dispose() {
+  _controller.dispose();
+  super.dispose();
+}
+
+@override
+Widget build(BuildContext context) {
+  return LoadingIndicator(
+    indicatorType: Indicator.ballScaleMultiple,
+    controller: _controller,
+  );
+}
+```
+
+The controller works with all 34 animation types:
+
+```dart
+_controller.pause(); // Freeze the current frame immediately.
+
+await _controller.pauseAt(0.5); // Pause the next time progress reaches 50%.
+
+await _controller.pauseAt(
+  1.0,
+  behavior: LoadingIndicatorPauseBehavior.jumpToTarget,
+); // Advance the complete animation group to the target and pause now.
+
+_controller.resume();
+```
+
+`progress` is the normalized position (`0.0` to `1.0`) of an indicator's
+reference animation track: `0.0` is the start of a loop and `1.0` is its final
+frame before reset. `pauseAt` completes only after the indicator has paused.
+Replacing a pending command or disposing the controller completes that Future
+with `LoadingIndicatorCommandCanceled`. One controller can be attached to only
+one `LoadingIndicator` at a time; the last command sent while detached is
+applied on the next attachment.
+
+### Migrating from 3.x
+
+Version 4.0 removes the `pause` widget parameter. Replace it with a controller:
+
+```dart
+// 3.x
+LoadingIndicator(indicatorType: Indicator.ballPulse, pause: isPaused);
+
+// 4.0
+LoadingIndicator(
+  indicatorType: Indicator.ballPulse,
+  controller: controller,
+);
+
+void setPaused(bool isPaused) {
+  isPaused ? controller.pause() : controller.resume();
+}
+```
 
 [中文版](README_CN.md)
 
