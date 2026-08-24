@@ -36,11 +36,15 @@ Simple but powerful parameters
 LoadingIndicator(
     indicatorType: Indicator.ballPulse, /// Required, The loading type of the widget
     colors: const [Colors.white],       /// Optional, The color collections
-    strokeWidth: 2,                     /// Optional, The stroke of the line, only applicable to widget which contains line
+    strokeWidth: 2,                     /// Optional, The width of stroked shapes and line indicators
     backgroundColor: Colors.black,      /// Optional, Background of the widget
     pathBackgroundColor: Colors.black   /// Optional, the stroke backgroundColor
 )
 ```
+
+`strokeWidth` controls the bar width of `lineScale`, `lineScaleParty`,
+`lineScalePulseOut`, `lineScalePulseOutRapid`, and `lineSpinFadeLoader`.
+When omitted, these indicators keep their original size-derived bar width.
 
 [中文版](README_CN.md)
 

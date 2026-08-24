@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/decorate/decorate.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
@@ -44,6 +45,8 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
 
   @override
   Widget build(BuildContext context) {
+    final lineWidth =
+        DecorateContext.of(context)!.decorateData.configuredStrokeWidth;
     final widgets = List<Widget>.filled(9, Container());
     for (int i = 0; i < widgets.length; i++) {
       if (i.isEven) {
@@ -55,6 +58,7 @@ class _LineScalePulseOutRapidState extends State<LineScalePulseOutRapid>
                 heightFactor: _animations[i ~/ 2].value,
                 child: IndicatorShapeWidget(
                   shape: Shape.line,
+                  lineWidth: lineWidth,
                   index: i ~/ 2,
                 ),
               );

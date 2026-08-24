@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/src/decorate/decorate.dart';
 import 'package:loading_indicator/src/indicators/base/indicator_controller.dart';
 import 'package:loading_indicator/src/shape/indicator_painter.dart';
 
@@ -45,6 +46,8 @@ class _LineScaleState extends State<LineScale>
 
   @override
   Widget build(BuildContext context) {
+    final lineWidth =
+        DecorateContext.of(context)!.decorateData.configuredStrokeWidth;
     List<Widget> widgets = _animations
         .asMap()
         .entries
@@ -57,6 +60,7 @@ class _LineScaleState extends State<LineScale>
                   heightFactor: entry.value.value,
                   child: IndicatorShapeWidget(
                     shape: Shape.line,
+                    lineWidth: lineWidth,
                     index: entry.key,
                   ),
                 );
