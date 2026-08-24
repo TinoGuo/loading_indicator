@@ -1,3 +1,6 @@
+### Unreleased
+* Apply `strokeWidth` to every line indicator [#36](https://github.com/TinoGuo/loading_indicator/pull/36)
+
 ### [3.1.1] 2023/06/25
 * Update SDK constraints
 * Fix CI issue

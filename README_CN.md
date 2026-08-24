@@ -37,11 +37,15 @@
 LoadingIndicator(
     colors: const [Colors.white],       /// 必须, 颜色集合
     indicatorType: Indicator.ballPulse, /// 可选, loading的类型
-    strokeWidth: 2,                     /// 可选, 线条宽度，只对含有线条的组件有效
+    strokeWidth: 2,                     /// 可选, 描边图形及线条动画的宽度
     backgroundColor: Colors.black,      /// 可选, 组件背景色
     pathBackgroundColor: Colors.black   /// 可选, 线条背景色
 )
 ```
+
+`strokeWidth` 可调整 `lineScale`、`lineScaleParty`、`lineScalePulseOut`、
+`lineScalePulseOutRapid` 和 `lineSpinFadeLoader` 的线条宽度。如果不设置，
+这些动画会保持原本根据组件尺寸自动计算的宽度。
 
 ## License
 

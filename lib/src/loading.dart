@@ -84,7 +84,9 @@ class LoadingIndicator extends StatelessWidget {
   final List<Color>? colors;
   final Color? backgroundColor;
 
-  /// The stroke width of line.
+  /// The width of stroked shapes and line indicators.
+  ///
+  /// Line indicators keep their size-derived bar width when this is null.
   final double? strokeWidth;
 
   /// Applicable to which has cut edge of the shape

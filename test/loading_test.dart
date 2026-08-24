@@ -84,15 +84,26 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
   });
 
-  testWidgets('lineSpinFadeLoader respects strokeWidth', (tester) async {
-    Future<void> pumpIndicator(double? strokeWidth) {
+  testWidgets('line indicators respect strokeWidth', (tester) async {
+    const lineIndicators = <Indicator, int>{
+      Indicator.lineScale: 5,
+      Indicator.lineScaleParty: 4,
+      Indicator.lineScalePulseOut: 5,
+      Indicator.lineScalePulseOutRapid: 5,
+      Indicator.lineSpinFadeLoader: 8,
+    };
+
+    Future<void> pumpIndicator(
+      Indicator indicator,
+      double? strokeWidth,
+    ) {
       return tester.pumpWidget(
         MaterialApp(
           home: Center(
             child: SizedBox.square(
               dimension: 96,
               child: LoadingIndicator(
-                indicatorType: Indicator.lineSpinFadeLoader,
+                indicatorType: indicator,
                 colors: const [Colors.blue],
                 strokeWidth: strokeWidth,
                 pause: true,
@@ -108,16 +119,23 @@ void main() {
         .where((widget) => widget.shape == Shape.line)
         .toList();
 
-    await pumpIndicator(null);
-    expect(lineShapes(), hasLength(8));
-    expect(lineShapes().map((shape) => shape.lineWidth), everyElement(isNull));
+    for (final entry in lineIndicators.entries) {
+      await pumpIndicator(entry.key, null);
+      expect(lineShapes(), hasLength(entry.value));
+      expect(
+        lineShapes().map((shape) => shape.lineWidth),
+        everyElement(isNull),
+      );
 
-    await pumpIndicator(2);
-    expect(lineShapes(), hasLength(8));
-    expect(lineShapes().map((shape) => shape.lineWidth), everyElement(2));
+      await pumpIndicator(entry.key, 2);
+      expect(lineShapes(), hasLength(entry.value));
+      expect(lineShapes().map((shape) => shape.lineWidth), everyElement(2));
 
-    await pumpIndicator(12);
-    expect(lineShapes(), hasLength(8));
-    expect(lineShapes().map((shape) => shape.lineWidth), everyElement(12));
+      await pumpIndicator(entry.key, 12);
+      expect(lineShapes(), hasLength(entry.value));
+      expect(lineShapes().map((shape) => shape.lineWidth), everyElement(12));
+    }
+
+    await tester.pumpWidget(const SizedBox.shrink());
   });
 }
