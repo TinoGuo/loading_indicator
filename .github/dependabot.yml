@@ -11,6 +11,12 @@ updates:
       time: "09:00"
       timezone: "Asia/Singapore"
     open-pull-requests-limit: 5
+    rebase-strategy: "auto"
+    allow:
+      - dependency-type: "direct"
+    labels:
+      - "dependencies"
+      - "chore"
     groups:
       pub-minor-and-patch:
         patterns:
@@ -29,6 +35,12 @@ updates:
       time: "09:00"
       timezone: "Asia/Singapore"
     open-pull-requests-limit: 5
+    rebase-strategy: "auto"
+    allow:
+      - dependency-type: "direct"
+    labels:
+      - "dependencies"
+      - "chore"
     groups:
       actions-minor-and-patch:
         patterns:
