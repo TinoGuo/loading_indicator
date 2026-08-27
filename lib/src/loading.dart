@@ -134,7 +134,7 @@ class LoadingIndicator extends StatelessWidget {
   }
 
   /// return the animation indicator.
-  _buildIndicator() {
+  Widget _buildIndicator() {
     switch (indicatorType) {
       case Indicator.ballPulse:
         return const BallPulse();

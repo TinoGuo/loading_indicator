@@ -83,13 +83,12 @@ class _BallPulseRiseState extends State<BallPulseRise>
     );
   }
 
-  _buildSingleCircle(int index, double deltaY) {
+  Widget _buildSingleCircle(int index, double deltaY) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (_, child) {
-        final scale = index.isEven
-            ? _evenScaleAnimation.value
-            : _oddScaleAnimation.value;
+        final scale =
+            index.isEven ? _evenScaleAnimation.value : _oddScaleAnimation.value;
         final translateY = index.isEven
             ? _evenTranslateAnimation.value * deltaY
             : _oddTranslateAnimation.value * deltaY;
