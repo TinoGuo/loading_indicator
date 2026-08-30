@@ -96,6 +96,35 @@ tag_version() {
   printf '%s\n' "${1#v}"
 }
 
+tag_list_contains() {
+  local candidate="$1"
+  local tag
+
+  while IFS= read -r tag; do
+    [ "$tag" = "$candidate" ] && return 0
+  done <<< "$tag_list"
+
+  return 1
+}
+
+tag_is_reachable_or_equivalent() {
+  local tag_commit="$1"
+  local side
+
+  if git merge-base --is-ancestor "$tag_commit" HEAD 2>/dev/null; then
+    return 0
+  fi
+
+  # A release tag can point to a parallel checkout whose commits were
+  # cherry-picked into the current branch. Treat that history as equivalent
+  # only when the tag side has no commits left after patch-equivalence filtering.
+  while IFS= read -r side; do
+    [ "$side" != '<' ] || return 1
+  done < <(git log --left-right --cherry-pick --format='%m' "$tag_commit...HEAD" 2>/dev/null)
+
+  return 0
+}
+
 prefer_tag() {
   local candidate="$1"
   local current="$2"
@@ -183,6 +212,16 @@ if [ "$NO_FETCH" -eq 0 ] && git config --get remote.origin.url >/dev/null 2>&1; 
   fi
 fi
 
+if [ "$NO_FETCH" -eq 0 ] && git config --get remote.origin.url >/dev/null 2>&1; then
+  # Fetching does not prune local tags deleted from the remote. Read the
+  # remote refs directly so deleted releases cannot affect the next version.
+  tag_list=$(git ls-remote --tags --refs origin | \
+    sed -n 's#^[^[:space:]]*[[:space:]]refs/tags/##p') || \
+    die 'could not read origin tags; use --no-fetch only if the local tags are current'
+else
+  tag_list=$(git tag --list)
+fi
+
 if [ "$AUTO_RELEASE" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
   origin_master_commit=$(git rev-parse --verify refs/remotes/origin/master^{commit} 2>/dev/null) || \
     die 'origin/master was not found; fetch it before running an automatic patch release'
@@ -209,17 +248,17 @@ while IFS= read -r tag; do
   fi
 
   tag_commit=$(git rev-parse --verify "${tag}^{commit}" 2>/dev/null) || continue
-  if git merge-base --is-ancestor "$tag_commit" HEAD 2>/dev/null; then
+  if tag_is_reachable_or_equivalent "$tag_commit"; then
     if [ -z "$reachable_version" ] || version_is_greater "$version" "$reachable_version" || \
       { versions_are_equal "$version" "$reachable_version" && prefer_tag "$tag" "$reachable_tag"; }; then
       reachable_tag="$tag"
       reachable_version="$version"
     fi
   fi
-done < <(git tag --list)
+done <<< "$tag_list"
 
 if [ -n "$latest_version" ] && [ "$latest_version" != "$reachable_version" ]; then
-  die "latest tag $latest_tag ($latest_version) is not reachable from HEAD; latest reachable tag is ${reachable_tag:-none}. Update the checkout or repair the tag history before releasing"
+  die "latest tag $latest_tag ($latest_version) is not reachable from HEAD or represented by cherry-picked commits; latest supported tag is ${reachable_tag:-none}. Update the checkout or repair the tag history before releasing"
 fi
 
 previous_tag="$reachable_tag"
@@ -250,7 +289,8 @@ if [ -n "$latest_version" ]; then
     die "next version $next_version must be greater than latest tag $latest_tag"
 fi
 
-if [ "$AUTO_RELEASE" -eq 1 ] && [ -n "$(git tag --list "$next_version" "v$next_version")" ]; then
+if [ "$AUTO_RELEASE" -eq 1 ] && \
+  { tag_list_contains "$next_version" || tag_list_contains "v$next_version"; }; then
   die "tag $next_version or v$next_version already exists"
 fi
 

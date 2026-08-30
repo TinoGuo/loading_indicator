@@ -41,8 +41,10 @@ version from the existing stable tags and update the root `pubspec.yaml`:
 ```
 
 `patch`, `minor`, and `major` are supported, as well as an explicit version
-such as `4.0.2`. The helper refreshes tags from `origin` and refuses to
-continue when the latest tag is not part of the current history. A real patch
+such as `4.0.2`. The helper refreshes tags from `origin` and ignores local tags
+that no longer exist remotely. It accepts a release tag that is either in the
+current history or fully represented by cherry-picked commits, and refuses to
+continue when the latest tag cannot be matched to the current history. A real patch
 run (not `--dry-run`) requires a clean `master` matching `origin/master`,
 updates only the root `pubspec.yaml`, commits it, pushes `master`, creates and
 pushes the next version tag, and invokes `gh release create` with

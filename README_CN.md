@@ -42,7 +42,8 @@ tag 自动计算下一个版本，并更新根目录的 `pubspec.yaml`：
 ```
 
 支持 `patch`、`minor`、`major`，也支持直接指定版本号，例如 `4.0.2`。
-脚本默认会从 `origin` 刷新 tag；如果最新 tag 不在当前提交历史中，会停止执行，
+脚本默认会从 `origin` 刷新 tag，并忽略远端已经删除但本地仍残留的 tag。
+如果 release tag 在当前提交历史中，或其提交已经被完整 cherry-pick 到当前分支，则可以继续；否则会停止，
 避免 Release changelog 使用错误的起始版本。实际执行 `patch`（不是
 `--dry-run`）时，要求本地 `master` 干净且与 `origin/master` 一致，随后只更新根目录
 `pubspec.yaml`，自动 commit、push `master`、创建并 push 下一个版本 tag，最后调用
