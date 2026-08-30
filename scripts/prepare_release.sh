@@ -6,9 +6,10 @@ usage() {
   cat <<'EOF'
 Usage: scripts/prepare_release.sh [patch|minor|major|VERSION] [--dry-run] [--no-fetch]
 
-Prepare the next package release. A real patch release commits and pushes only
-the root pubspec.yaml and CHANGELOG.md, creates and pushes the version tag, and
-generates the GitHub Release notes through the `gh` CLI.
+Prepare the next package release. A real patch release asks GitHub for release
+notes before changing files, commits and pushes only the root pubspec.yaml and
+CHANGELOG.md, creates and pushes the version tag, and uses those notes for the
+GitHub Release.
 Minor, major, and explicit versions update the local root pubspec.yaml and
 CHANGELOG.md.
 The default bump is patch. VERSION may optionally start with "v".
@@ -25,28 +26,74 @@ die() {
   exit 1
 }
 
-generate_release_notes() {
-  command -v gh >/dev/null 2>&1 || die 'gh CLI is required to generate patch release notes'
+require_gh_auth() {
+  command -v gh >/dev/null 2>&1 || die 'gh CLI is required to generate release notes'
+  gh auth status >/dev/null 2>&1 || die 'gh CLI is not authenticated; run gh auth login first'
+}
 
+cleanup_release_notes() {
+  [ -z "$release_notes_file" ] || rm -f "$release_notes_file"
+}
+
+generate_release_notes_preview() {
+  local target_commit
+
+  require_gh_auth
+  target_commit=$(git rev-parse HEAD) || die 'could not determine the current commit for release notes'
+  release_notes_file=$(mktemp "${TMPDIR:-/tmp}/loading-indicator-release-notes.XXXXXX") || \
+    die 'could not create a temporary release-notes file'
+
+  local -a gh_command=(
+    api
+    --method POST
+    'repos/{owner}/{repo}/releases/generate-notes'
+    --raw-field "tag_name=$next_version"
+    --raw-field "target_commitish=$target_commit"
+  )
+
+  if [ -n "$previous_tag" ]; then
+    gh_command+=(--raw-field "previous_tag_name=$previous_tag")
+  fi
+  gh_command+=(--jq .body)
+
+  if ! gh "${gh_command[@]}" > "$release_notes_file"; then
+    cleanup_release_notes
+    release_notes_file=
+    die "could not generate GitHub release notes for $next_version"
+  fi
+  [ -s "$release_notes_file" ] || {
+    cleanup_release_notes
+    release_notes_file=
+    die "GitHub returned empty release notes for $next_version"
+  }
+
+  printf 'Generated GitHub release notes for %s.\n' "$next_version"
+}
+
+generate_release_notes() {
   local -a gh_command=(
     release create
     "$next_version"
     --verify-tag
-    --generate-notes
     --title "$next_version"
   )
 
-  if [ -n "$previous_tag" ]; then
-    gh_command+=(--notes-start-tag "$previous_tag")
+  if [ -n "$release_notes_file" ]; then
+    gh_command+=(--notes-file "$release_notes_file")
+  else
+    gh_command+=(--generate-notes)
+    if [ -n "$previous_tag" ]; then
+      gh_command+=(--notes-start-tag "$previous_tag")
+    fi
   fi
 
-  printf '\nGenerating GitHub release notes for %s...\n' "$next_version"
+  printf '\nCreating GitHub Release %s with generated notes...\n' "$next_version"
   if gh "${gh_command[@]}"; then
     printf 'Created GitHub Release %s.\n' "$next_version"
   elif gh release view "$next_version" >/dev/null 2>&1; then
     printf 'GitHub Release %s already exists; continuing.\n' "$next_version"
   else
-    die "could not generate GitHub release notes for $next_version"
+    die "could not create GitHub Release $next_version"
   fi
 }
 
@@ -79,10 +126,17 @@ update_changelog() {
 
   temporary_changelog=$(mktemp "${TMPDIR:-/tmp}/loading-indicator-changelog.XXXXXX") || \
     die 'could not create a temporary CHANGELOG.md'
-  if ! awk -v next_version="$next_version" -v release_date="$release_date" '
+  if ! awk -v next_version="$next_version" -v release_date="$release_date" \
+    -v notes_file="$release_notes_file" '
     !inserted && /^### \[/ {
       print "### [" next_version "] " release_date
-      print "* See the generated GitHub Release for detailed release notes."
+      print ""
+      if (notes_file != "") {
+        while ((getline note < notes_file) > 0) print note
+        close(notes_file)
+      } else {
+        print "* See the generated GitHub Release for detailed release notes."
+      }
       print ""
       inserted = 1
     }
@@ -187,6 +241,8 @@ BUMP_KIND=patch
 EXPLICIT_VERSION=
 DRY_RUN=0
 NO_FETCH=0
+release_notes_file=
+trap cleanup_release_notes EXIT HUP INT TERM
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -235,8 +291,7 @@ if [ "$AUTO_RELEASE" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
   [ -z "$(git status --porcelain)" ] || \
     die 'the working tree must be clean before an automatic patch release'
 
-  command -v gh >/dev/null 2>&1 || die 'gh CLI is required for an automatic patch release'
-  gh auth status >/dev/null 2>&1 || die 'gh CLI is not authenticated; run gh auth login first'
+  require_gh_auth
 fi
 
 if ! git diff --quiet HEAD -- pubspec.yaml; then
@@ -337,6 +392,11 @@ if [ "$AUTO_RELEASE" -eq 1 ] && \
   die "tag $next_version or v$next_version already exists"
 fi
 
+if [ "$AUTO_RELEASE" -eq 1 ]; then
+  # Generate the notes before the release-preparation commit changes HEAD.
+  generate_release_notes_preview
+fi
+
 printf 'Previous reachable release: %s\n' "${previous_tag:-none}"
 printf 'Current package version:   %s\n' "$package_version"
 printf 'Next package version:      %s\n' "$next_version"
@@ -349,6 +409,7 @@ else
   original_mode=$(stat -f '%Lp' pubspec.yaml 2>/dev/null) || original_mode=$(stat -c '%a' pubspec.yaml)
   cleanup() {
     rm -f "$temporary_pubspec"
+    cleanup_release_notes
   }
   trap cleanup EXIT HUP INT TERM
 
@@ -366,7 +427,6 @@ else
 
   chmod "$original_mode" "$temporary_pubspec"
   mv "$temporary_pubspec" pubspec.yaml
-  trap - EXIT HUP INT TERM
   printf 'Updated pubspec.yaml to %s.\n' "$next_version"
 fi
 

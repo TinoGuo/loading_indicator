@@ -45,17 +45,18 @@ version from the existing stable tags and update the root `pubspec.yaml` and
 such as `4.0.2`. The helper refreshes tags from `origin` and ignores local tags
 that no longer exist remotely. It accepts a release tag that is either in the
 current history or fully represented by cherry-picked commits, and refuses to
-continue when the latest tag cannot be matched to the current history. The
-script adds a dated entry stating that detailed notes are generated in the
-GitHub Release. A real patch
+continue when the latest tag cannot be matched to the current history. For an
+automatic patch, it asks GitHub for notes before changing files and copies the
+returned Markdown into the dated changelog entry. A real patch
 run (not `--dry-run`) requires a clean `master` matching `origin/master`,
 updates only the root `pubspec.yaml` and `CHANGELOG.md`, commits them, pushes
 `master`, creates and pushes the next version tag, and invokes `gh release create` with
-`--generate-notes` and the detected previous release tag. It does not modify
+the generated notes. It does not modify
 `example/pubspec.yaml`. `gh` must be installed and authenticated. The existing
 tag-triggered workflow safely skips release creation when the script has
-already created it. `minor`, `major`, and explicit versions only update the
-local root `pubspec.yaml` and `CHANGELOG.md`, then print the release-notes command.
+already created it. `minor`, `major`, and explicit versions update the local
+root `pubspec.yaml` and `CHANGELOG.md` with a placeholder, then print the
+release-notes command.
 
 ## Usage
 
