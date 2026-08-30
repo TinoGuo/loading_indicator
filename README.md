@@ -41,11 +41,16 @@ version from the existing stable tags and update the root `pubspec.yaml`:
 ```
 
 `patch`, `minor`, and `major` are supported, as well as an explicit version
-such as `4.0.2`. The helper refreshes tags from `origin`, refuses to continue
-when the latest tag is not part of the current history, and does not create a
-commit, tag, or push. If you create the GitHub Release manually, use the
-printed `--notes-start-tag` value so its changelog starts at the detected
-previous release.
+such as `4.0.2`. The helper refreshes tags from `origin` and refuses to
+continue when the latest tag is not part of the current history. A real patch
+run (not `--dry-run`) requires a clean `master` matching `origin/master`,
+updates only the root `pubspec.yaml`, commits it, pushes `master`, creates and
+pushes the next version tag, and invokes `gh release create` with
+`--generate-notes` and the detected previous release tag. It does not modify
+`example/pubspec.yaml`. `gh` must be installed and authenticated. The existing
+tag-triggered workflow safely skips release creation when the script has
+already created it. `minor`, `major`, and explicit versions only update the
+local root `pubspec.yaml` and print the release-notes command.
 
 ## Usage
 

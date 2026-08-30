@@ -6,7 +6,10 @@ usage() {
   cat <<'EOF'
 Usage: scripts/prepare_release.sh [patch|minor|major|VERSION] [--dry-run] [--no-fetch]
 
-Prepare the next package release without creating a commit or pushing anything.
+Prepare the next package release. A real patch release commits and pushes only
+the root pubspec.yaml, creates and pushes the version tag, and generates the
+GitHub Release notes through the `gh` CLI.
+Minor, major, and explicit versions only update the local root pubspec.yaml.
 The default bump is patch. VERSION may optionally start with "v".
 
 Examples:
@@ -19,6 +22,45 @@ EOF
 die() {
   printf 'error: %s\n' "$1" >&2
   exit 1
+}
+
+generate_release_notes() {
+  command -v gh >/dev/null 2>&1 || die 'gh CLI is required to generate patch release notes'
+
+  local -a gh_command=(
+    release create
+    "$next_version"
+    --verify-tag
+    --generate-notes
+    --title "$next_version"
+  )
+
+  if [ -n "$previous_tag" ]; then
+    gh_command+=(--notes-start-tag "$previous_tag")
+  fi
+
+  printf '\nGenerating GitHub release notes for %s...\n' "$next_version"
+  if gh "${gh_command[@]}"; then
+    printf 'Created GitHub Release %s.\n' "$next_version"
+  elif gh release view "$next_version" >/dev/null 2>&1; then
+    printf 'GitHub Release %s already exists; continuing.\n' "$next_version"
+  else
+    die "could not generate GitHub release notes for $next_version"
+  fi
+}
+
+commit_and_push_release() {
+  git add -- pubspec.yaml || die 'could not stage the root pubspec.yaml'
+  git diff --cached --quiet -- pubspec.yaml && die 'the root pubspec.yaml version was not changed'
+
+  git commit -m "chore(release): prepare $next_version" || \
+    die "could not commit the root pubspec.yaml for $next_version"
+  git push origin master || die 'could not push master to origin'
+
+  git tag -a "$next_version" -m "Release $next_version" || \
+    die "could not create tag $next_version"
+  git push origin "refs/tags/$next_version" || \
+    die "could not push tag $next_version to origin"
 }
 
 version_is_valid() {
@@ -106,15 +148,46 @@ while [ "$#" -gt 0 ]; do
   shift
 done
 
+AUTO_RELEASE=0
+if [ "$BUMP_KIND" = patch ] && [ -z "$EXPLICIT_VERSION" ]; then
+  AUTO_RELEASE=1
+fi
+
 [ -f pubspec.yaml ] || die 'pubspec.yaml was not found at the repository root'
 git rev-parse --show-toplevel >/dev/null 2>&1 || die 'this script must run inside a Git repository'
 
-if ! git diff --quiet -- pubspec.yaml; then
+if [ "$AUTO_RELEASE" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
+  current_branch=$(git symbolic-ref --quiet --short HEAD) || \
+    die 'patch releases must run from a named branch'
+  [ "$current_branch" = master ] || die "patch releases must run from master, not $current_branch"
+
+  git config --get remote.origin.url >/dev/null 2>&1 || \
+    die 'an origin remote is required for an automatic patch release'
+
+  [ -z "$(git status --porcelain)" ] || \
+    die 'the working tree must be clean before an automatic patch release'
+
+  command -v gh >/dev/null 2>&1 || die 'gh CLI is required for an automatic patch release'
+  gh auth status >/dev/null 2>&1 || die 'gh CLI is not authenticated; run gh auth login first'
+fi
+
+if ! git diff --quiet HEAD -- pubspec.yaml; then
   die 'pubspec.yaml already has local changes; review or commit them before running this script'
 fi
 
 if [ "$NO_FETCH" -eq 0 ] && git config --get remote.origin.url >/dev/null 2>&1; then
-  git fetch --tags origin || die 'could not refresh origin tags; use --no-fetch only if the local tags are current'
+  if [ "$AUTO_RELEASE" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
+    git fetch origin master --tags || die 'could not refresh origin/master and tags; use --no-fetch only if the local refs are current'
+  else
+    git fetch --tags origin || die 'could not refresh origin tags; use --no-fetch only if the local tags are current'
+  fi
+fi
+
+if [ "$AUTO_RELEASE" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
+  origin_master_commit=$(git rev-parse --verify refs/remotes/origin/master^{commit} 2>/dev/null) || \
+    die 'origin/master was not found; fetch it before running an automatic patch release'
+  [ "$(git rev-parse HEAD)" = "$origin_master_commit" ] || \
+    die 'local master must match origin/master before an automatic patch release'
 fi
 
 package_version=$(sed -n 's/^version:[[:space:]]*\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\)[[:space:]]*$/\1/p' pubspec.yaml | head -n 1)
@@ -177,6 +250,10 @@ if [ -n "$latest_version" ]; then
     die "next version $next_version must be greater than latest tag $latest_tag"
 fi
 
+if [ "$AUTO_RELEASE" -eq 1 ] && [ -n "$(git tag --list "$next_version" "v$next_version")" ]; then
+  die "tag $next_version or v$next_version already exists"
+fi
+
 printf 'Previous reachable release: %s\n' "${previous_tag:-none}"
 printf 'Current package version:   %s\n' "$package_version"
 printf 'Next package version:      %s\n' "$next_version"
@@ -209,7 +286,14 @@ else
   printf 'Updated pubspec.yaml to %s.\n' "$next_version"
 fi
 
-if [ -n "$previous_tag" ]; then
+if [ "$AUTO_RELEASE" -eq 1 ]; then
+  if [ "$DRY_RUN" -eq 1 ]; then
+    printf '\nDry run: would commit pubspec.yaml, push master, create and push tag %s, and generate its GitHub release notes.\n' "$next_version"
+  else
+    commit_and_push_release
+    generate_release_notes
+  fi
+elif [ -n "$previous_tag" ]; then
   printf '\nUse this previous tag for generated release notes:\n'
   printf '  gh release create %s --verify-tag --generate-notes --notes-start-tag %s --title %s\n' \
     "$next_version" "$previous_tag" "$next_version"
