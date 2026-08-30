@@ -31,6 +31,22 @@
 
 从[pub](https://pub.dev/packages/loading_indicator)安装最新版本。
 
+## 准备发布版本
+
+请在最新的 `master` checkout 中运行发布脚本。脚本会从已有的稳定版本
+tag 自动计算下一个版本，并更新根目录的 `pubspec.yaml`：
+
+```bash
+./scripts/prepare_release.sh --dry-run
+./scripts/prepare_release.sh patch
+```
+
+支持 `patch`、`minor`、`major`，也支持直接指定版本号，例如 `4.0.2`。
+脚本默认会从 `origin` 刷新 tag；如果最新 tag 不在当前提交历史中，会停止执行，
+避免 Release changelog 使用错误的起始版本。脚本不会自动提交、创建 tag 或推送，
+如果手动创建 GitHub Release，脚本会打印应使用的 `--notes-start-tag`，
+以确保 changelog 从检测到的上一个版本开始。
+
 ## 使用
 
 简单且强大的API。

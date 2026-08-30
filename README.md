@@ -30,6 +30,23 @@ Now, you can click [this site](https://tinoguo.github.io/loading_indicator/) to 
 
 Install the latest version from [pub](https://pub.dev/packages/loading_indicator)
 
+## Preparing a release
+
+Use the release helper from the latest `master` checkout to calculate the next
+version from the existing stable tags and update the root `pubspec.yaml`:
+
+```bash
+./scripts/prepare_release.sh --dry-run
+./scripts/prepare_release.sh patch
+```
+
+`patch`, `minor`, and `major` are supported, as well as an explicit version
+such as `4.0.2`. The helper refreshes tags from `origin`, refuses to continue
+when the latest tag is not part of the current history, and does not create a
+commit, tag, or push. If you create the GitHub Release manually, use the
+printed `--notes-start-tag` value so its changelog starts at the detected
+previous release.
+
 ## Usage
 
 Simple but powerful parameters
