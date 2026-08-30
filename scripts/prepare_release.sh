@@ -7,9 +7,10 @@ usage() {
 Usage: scripts/prepare_release.sh [patch|minor|major|VERSION] [--dry-run] [--no-fetch]
 
 Prepare the next package release. A real patch release commits and pushes only
-the root pubspec.yaml, creates and pushes the version tag, and generates the
-GitHub Release notes through the `gh` CLI.
-Minor, major, and explicit versions only update the local root pubspec.yaml.
+the root pubspec.yaml and CHANGELOG.md, creates and pushes the version tag, and
+generates the GitHub Release notes through the `gh` CLI.
+Minor, major, and explicit versions update the local root pubspec.yaml and
+CHANGELOG.md.
 The default bump is patch. VERSION may optionally start with "v".
 
 Examples:
@@ -50,17 +51,55 @@ generate_release_notes() {
 }
 
 commit_and_push_release() {
-  git add -- pubspec.yaml || die 'could not stage the root pubspec.yaml'
+  git add -- pubspec.yaml CHANGELOG.md || die 'could not stage the release files'
   git diff --cached --quiet -- pubspec.yaml && die 'the root pubspec.yaml version was not changed'
+  git diff --cached --quiet -- CHANGELOG.md && die 'CHANGELOG.md was not updated'
 
   git commit -m "chore(release): prepare $next_version" || \
-    die "could not commit the root pubspec.yaml for $next_version"
+    die "could not commit the release files for $next_version"
   git push origin master || die 'could not push master to origin'
 
   git tag -a "$next_version" -m "Release $next_version" || \
     die "could not create tag $next_version"
   git push origin "refs/tags/$next_version" || \
     die "could not push tag $next_version to origin"
+}
+
+update_changelog() {
+  local release_date temporary_changelog original_mode
+
+  [ -f CHANGELOG.md ] || die 'CHANGELOG.md was not found at the repository root'
+  release_date=$(date '+%Y/%m/%d') || die 'could not determine the release date'
+
+  if awk -v version="$next_version" \
+    'index($0, "### [" version "]") == 1 { found = 1 } END { exit !found }' \
+    CHANGELOG.md; then
+    die "CHANGELOG.md already contains version $next_version"
+  fi
+
+  temporary_changelog=$(mktemp "${TMPDIR:-/tmp}/loading-indicator-changelog.XXXXXX") || \
+    die 'could not create a temporary CHANGELOG.md'
+  if ! awk -v next_version="$next_version" -v release_date="$release_date" '
+    !inserted && /^### \[/ {
+      print "### [" next_version "] " release_date
+      print "* See the generated GitHub Release for detailed release notes."
+      print ""
+      inserted = 1
+    }
+    { print }
+    END {
+      if (!inserted) exit 1
+    }
+  ' CHANGELOG.md > "$temporary_changelog"; then
+    rm -f "$temporary_changelog"
+    die 'could not add the new version to CHANGELOG.md'
+  fi
+
+  original_mode=$(stat -f '%Lp' CHANGELOG.md 2>/dev/null) || \
+    original_mode=$(stat -c '%a' CHANGELOG.md)
+  chmod "$original_mode" "$temporary_changelog" || die 'could not preserve CHANGELOG.md permissions'
+  mv "$temporary_changelog" CHANGELOG.md || die 'could not update CHANGELOG.md'
+  printf 'Updated CHANGELOG.md with %s.\n' "$next_version"
 }
 
 version_is_valid() {
@@ -204,6 +243,10 @@ if ! git diff --quiet HEAD -- pubspec.yaml; then
   die 'pubspec.yaml already has local changes; review or commit them before running this script'
 fi
 
+if ! git diff --quiet HEAD -- CHANGELOG.md; then
+  die 'CHANGELOG.md already has local changes; review or commit them before running this script'
+fi
+
 if [ "$NO_FETCH" -eq 0 ] && git config --get remote.origin.url >/dev/null 2>&1; then
   if [ "$AUTO_RELEASE" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
     git fetch origin master --tags || die 'could not refresh origin/master and tags; use --no-fetch only if the local refs are current'
@@ -299,8 +342,9 @@ printf 'Current package version:   %s\n' "$package_version"
 printf 'Next package version:      %s\n' "$next_version"
 
 if [ "$DRY_RUN" -eq 1 ]; then
-  printf 'Dry run: pubspec.yaml was not changed.\n'
+  printf 'Dry run: pubspec.yaml and CHANGELOG.md were not changed.\n'
 else
+  update_changelog
   temporary_pubspec=$(mktemp "${TMPDIR:-/tmp}/loading-indicator-pubspec.XXXXXX")
   original_mode=$(stat -f '%Lp' pubspec.yaml 2>/dev/null) || original_mode=$(stat -c '%a' pubspec.yaml)
   cleanup() {
@@ -328,7 +372,7 @@ fi
 
 if [ "$AUTO_RELEASE" -eq 1 ]; then
   if [ "$DRY_RUN" -eq 1 ]; then
-    printf '\nDry run: would commit pubspec.yaml, push master, create and push tag %s, and generate its GitHub release notes.\n' "$next_version"
+    printf '\nDry run: would commit pubspec.yaml and CHANGELOG.md, push master, create and push tag %s, and generate its GitHub release notes.\n' "$next_version"
   else
     commit_and_push_release
     generate_release_notes

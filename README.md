@@ -33,7 +33,8 @@ Install the latest version from [pub](https://pub.dev/packages/loading_indicator
 ## Preparing a release
 
 Use the release helper from the latest `master` checkout to calculate the next
-version from the existing stable tags and update the root `pubspec.yaml`:
+version from the existing stable tags and update the root `pubspec.yaml` and
+`CHANGELOG.md`:
 
 ```bash
 ./scripts/prepare_release.sh --dry-run
@@ -44,15 +45,17 @@ version from the existing stable tags and update the root `pubspec.yaml`:
 such as `4.0.2`. The helper refreshes tags from `origin` and ignores local tags
 that no longer exist remotely. It accepts a release tag that is either in the
 current history or fully represented by cherry-picked commits, and refuses to
-continue when the latest tag cannot be matched to the current history. A real patch
+continue when the latest tag cannot be matched to the current history. The
+script adds a dated entry stating that detailed notes are generated in the
+GitHub Release. A real patch
 run (not `--dry-run`) requires a clean `master` matching `origin/master`,
-updates only the root `pubspec.yaml`, commits it, pushes `master`, creates and
-pushes the next version tag, and invokes `gh release create` with
+updates only the root `pubspec.yaml` and `CHANGELOG.md`, commits them, pushes
+`master`, creates and pushes the next version tag, and invokes `gh release create` with
 `--generate-notes` and the detected previous release tag. It does not modify
 `example/pubspec.yaml`. `gh` must be installed and authenticated. The existing
 tag-triggered workflow safely skips release creation when the script has
 already created it. `minor`, `major`, and explicit versions only update the
-local root `pubspec.yaml` and print the release-notes command.
+local root `pubspec.yaml` and `CHANGELOG.md`, then print the release-notes command.
 
 ## Usage
 

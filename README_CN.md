@@ -34,7 +34,7 @@
 ## 准备发布版本
 
 请在最新的 `master` checkout 中运行发布脚本。脚本会从已有的稳定版本
-tag 自动计算下一个版本，并更新根目录的 `pubspec.yaml`：
+tag 自动计算下一个版本，并更新根目录的 `pubspec.yaml` 和 `CHANGELOG.md`：
 
 ```bash
 ./scripts/prepare_release.sh --dry-run
@@ -44,13 +44,14 @@ tag 自动计算下一个版本，并更新根目录的 `pubspec.yaml`：
 支持 `patch`、`minor`、`major`，也支持直接指定版本号，例如 `4.0.2`。
 脚本默认会从 `origin` 刷新 tag，并忽略远端已经删除但本地仍残留的 tag。
 如果 release tag 在当前提交历史中，或其提交已经被完整 cherry-pick 到当前分支，则可以继续；否则会停止，
-避免 Release changelog 使用错误的起始版本。实际执行 `patch`（不是
+避免 Release changelog 使用错误的起始版本。脚本会在 changelog 顶部加入带日期的版本条目，
+并说明详细内容由 GitHub 自动生成。实际执行 `patch`（不是
 `--dry-run`）时，要求本地 `master` 干净且与 `origin/master` 一致，随后只更新根目录
-`pubspec.yaml`，自动 commit、push `master`、创建并 push 下一个版本 tag，最后调用
+`pubspec.yaml` 和 `CHANGELOG.md`，自动 commit、push `master`、创建并 push 下一个版本 tag，最后调用
 `gh release create --generate-notes`，并使用检测到的上一个 release tag。
 脚本不会修改 `example/pubspec.yaml`。需要本机已安装并登录 `gh`；现有按 tag 触发的
 workflow 会在脚本已经创建 Release 时自动跳过，避免重复创建。执行 `minor`、`major`
-或直接指定版本时，只更新本地根目录 `pubspec.yaml`，并打印 release note 命令供手动执行。
+或直接指定版本时，只更新本地根目录 `pubspec.yaml` 和 `CHANGELOG.md`，并打印 release note 命令供手动执行。
 
 ## 使用
 
