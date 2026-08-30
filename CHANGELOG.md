@@ -1,3 +1,6 @@
+### [4.0.2] 2026/08/30
+* See the generated GitHub Release for detailed release notes.
+
 ### [4.0.0] 2026/08/24
 * **Breaking:** Remove the `pause` parameter from `LoadingIndicator` and add `LoadingIndicatorController`.
 * Support immediate pause, natural `pauseAt`, virtual-time jump, resume, playback status, progress, and command cancellation.
