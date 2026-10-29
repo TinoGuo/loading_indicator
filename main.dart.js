@@ -22213,7 +22213,7 @@ $iEi:1}
 A.acj.prototype={
 $1(a){var s=A.cj().b
 s=s==null?null:s.canvasKitBaseUrl
-return(s==null?"https://www.gstatic.com/flutter-canvaskit/deb287481e3ce9468f3434937ced4240a70539ca/":s)+a},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/cf636b1dfb818dd6a3ff16e390e93b1a036969c8/":s)+a},
 $S:104}
 A.H5.prototype={
 gkb(){var s=this.b
